@@ -10,6 +10,7 @@ import UIKit
 
 class RecipeViewController: UIViewController {
 
+    @IBOutlet weak var lbTitle: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,7 +22,10 @@ class RecipeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    @IBAction func backController(sender: AnyObject) {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
     /*
     // MARK: - Navigation
 

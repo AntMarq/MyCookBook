@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <animations/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="apero" translatesAutoresizingMaskIntoConstraints="NO" id="Ycg-Os-U8Z">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="apero" translatesAutoresizingMaskIntoConstraints="NO" id="Ycg-Os-U8Z">
                                 <rect key="frame" x="333" y="48" width="240" height="261"/>
                                 <animations/>
                             </imageView>
@@ -37,7 +37,7 @@
                                 <rect key="frame" x="764" y="318" width="240" height="261"/>
                                 <animations/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dessert" translatesAutoresizingMaskIntoConstraints="NO" id="Fyc-ez-R4I">
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dessert" translatesAutoresizingMaskIntoConstraints="NO" id="Fyc-ez-R4I">
                                 <rect key="frame" x="67" y="295" width="240" height="261"/>
                                 <animations/>
                             </imageView>
@@ -48,15 +48,17 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
                     <connections>
+                        <outlet property="imgDessert" destination="Fyc-ez-R4I" id="zJ4-RL-ZMa"/>
+                        <outlet property="imgEntree" destination="Ycg-Os-U8Z" id="jBH-Ze-7fU"/>
                         <outlet property="view" destination="8bC-Xf-vdC" id="lVW-OY-379"/>
-                        <segue destination="xKJ-ri-FFB" kind="show" identifier="HomeToRecipe" id="dRb-gY-Luv"/>
+                        <segue destination="xKJ-ri-FFB" kind="show" identifier="HomeToRecipe" id="2qn-As-ns9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-469" y="237"/>
         </scene>
-        <!--Recipe View Controller-->
+        <!--Mes Recettes-->
         <scene sceneID="ZaH-Aw-YyN">
             <objects>
                 <viewController id="Qoj-Hj-fQk" customClass="RecipeViewController" sceneMemberID="viewController">
@@ -65,13 +67,9 @@
                         <viewControllerLayoutGuide type="bottom" id="DnQ-ll-mo2"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ZOs-ce-LVQ">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rfp-ND-ka0">
-                                <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
-                                <animations/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mes Recettes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kW8-8A-XDg">
                                 <rect key="frame" x="382" y="373" width="279" height="21"/>
                                 <animations/>
@@ -79,27 +77,41 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rfp-ND-ka0">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="704"/>
+                                <animations/>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="nhX-M6-biQ"/>
+                    <navigationItem key="navigationItem" title="Mes Recettes" id="PMi-2u-SBB">
+                        <barButtonItem key="leftBarButtonItem" image="chevron" id="r0G-Ix-hBi">
+                            <connections>
+                                <action selector="backController:" destination="Qoj-Hj-fQk" id="KQT-sb-FWe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
+                    <connections>
+                        <outlet property="lbTitle" destination="kW8-8A-XDg" id="02B-SH-j3C"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nbj-av-OdY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1887" y="321"/>
+            <point key="canvasLocation" x="2023" y="237"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="de0-Gc-A5z">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xKJ-ri-FFB" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mlU-iR-QAS">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="mlU-iR-QAS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
+                        <color key="barTintColor" red="0.0" green="0.21978542979999999" blue="0.97634548610000005" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -108,12 +120,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZRv-YR-KN0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="803" y="237"/>
+            <point key="canvasLocation" x="699" y="-259"/>
         </scene>
     </scenes>
     <resources>
         <image name="apero" width="1267" height="1309"/>
         <image name="background_1" width="1024" height="768"/>
+        <image name="chevron" width="9" height="15"/>
         <image name="dessert" width="1267" height="1309"/>
         <image name="placeholder" width="2535" height="2618"/>
     </resources>
