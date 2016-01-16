@@ -9,11 +9,19 @@
 import UIKit
 
 class RecipeViewController: UIViewController {
+    
+    var titleViewController:String = String()
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBarHidden = false
+    }
 
-    @IBOutlet weak var lbTitle: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
+       navigationItem.title = titleViewController
         // Do any additional setup after loading the view.
     }
 
