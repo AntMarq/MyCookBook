@@ -8,9 +8,10 @@
 
 import UIKit
 
-class RecipeViewController: UIViewController {
+class RecipeViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     
     var titleViewController:String = String()
+    
     
     override func viewWillAppear(animated: Bool)
     {
@@ -34,7 +35,20 @@ class RecipeViewController: UIViewController {
         navigationController?.popViewControllerAnimated(true)
     }
     
+    @IBAction func showRecipesList(sender: AnyObject) {
+        
+        self.performSegueWithIdentifier("showRecipesList", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showRecipesList" {
+            let popoverViewController = segue.destinationViewController as! RecipeViewController
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.popoverPresentationController!.delegate = self
+        }
+    }
     /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

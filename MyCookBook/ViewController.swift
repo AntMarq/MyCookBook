@@ -71,9 +71,6 @@ class ViewController: UIViewController {
                 }
             }
         }
-        else{
-            print("coucou")
-        }
     }
     
     func addGestureToImageView(img:UIImageView){
