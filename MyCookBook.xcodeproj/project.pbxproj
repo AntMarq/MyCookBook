@@ -8,17 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		386B32DE1C48172D00F834C6 /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386B32DD1C48172D00F834C6 /* RecipeViewController.swift */; };
+		386B32EC1C4D106700F834C6 /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386B32EB1C4D106700F834C6 /* NetworkConstants.swift */; };
+		386B32EF1C4D137500F834C6 /* AllRecipesListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386B32EE1C4D137500F834C6 /* AllRecipesListCollectionViewController.swift */; };
+		386B32F21C4D16DD00F834C6 /* RecipeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386B32F11C4D16DD00F834C6 /* RecipeCollectionViewCell.swift */; };
+		386B32F41C4D18FB00F834C6 /* RecipeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 386B32F31C4D18FB00F834C6 /* RecipeCollectionViewCell.xib */; };
 		483D15139CD960FEEB7C998D /* Pods_MyCookBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02DAF57A00D55378ED49ADC /* Pods_MyCookBook.framework */; };
 		FC05DC171C46EEC1000E9534 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC05DC161C46EEC0000E9534 /* AppDelegate.swift */; };
-		FC05DC191C46EEC1000E9534 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC05DC181C46EEC1000E9534 /* ViewController.swift */; };
+		FC05DC191C46EEC1000E9534 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC05DC181C46EEC1000E9534 /* MainViewController.swift */; };
 		FC05DC1C1C46EEC1000E9534 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC05DC1A1C46EEC1000E9534 /* Main.storyboard */; };
 		FC05DC1E1C46EEC1000E9534 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC05DC1D1C46EEC1000E9534 /* Assets.xcassets */; };
 		FC05DC211C46EEC1000E9534 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC05DC1F1C46EEC1000E9534 /* LaunchScreen.storyboard */; };
 		FC05DC2C1C46EEC1000E9534 /* MyCookBookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC05DC2B1C46EEC1000E9534 /* MyCookBookTests.swift */; };
 		FC05DC371C46EEC1000E9534 /* MyCookBookUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC05DC361C46EEC1000E9534 /* MyCookBookUITests.swift */; };
-		FCD8A0361C49D64300529944 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0351C49D64300529944 /* Recipe.swift */; settings = {ASSET_TAGS = (); }; };
-		FCD8A0381C4BD57400529944 /* RecipesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		FCD8A03C1C4BDC4100529944 /* RecipesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A03B1C4BDC4100529944 /* RecipesTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		FCD8A0361C49D64300529944 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0351C49D64300529944 /* Recipe.swift */; };
+		FCD8A0381C4BD57400529944 /* RecipesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */; };
+		FCD8A03C1C4BDC4100529944 /* RecipesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A03B1C4BDC4100529944 /* RecipesTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,12 +44,16 @@
 
 /* Begin PBXFileReference section */
 		10AB2964082664CF65C85F57 /* Pods-MyCookBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCookBook.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyCookBook/Pods-MyCookBook.release.xcconfig"; sourceTree = "<group>"; };
-		386B32DD1C48172D00F834C6 /* RecipeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecipeViewController.swift; path = ../RecipeViewController.swift; sourceTree = "<group>"; };
+		386B32DD1C48172D00F834C6 /* RecipeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = RecipeViewController.swift; path = ../RecipeViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		386B32EB1C4D106700F834C6 /* NetworkConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
+		386B32EE1C4D137500F834C6 /* AllRecipesListCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AllRecipesListCollectionViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		386B32F11C4D16DD00F834C6 /* RecipeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeCollectionViewCell.swift; sourceTree = "<group>"; };
+		386B32F31C4D18FB00F834C6 /* RecipeCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecipeCollectionViewCell.xib; sourceTree = "<group>"; };
 		C02DAF57A00D55378ED49ADC /* Pods_MyCookBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyCookBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBC1E859DA13FC33A61C6E0A /* Pods-MyCookBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCookBook.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyCookBook/Pods-MyCookBook.debug.xcconfig"; sourceTree = "<group>"; };
 		FC05DC131C46EEC0000E9534 /* MyCookBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCookBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC05DC161C46EEC0000E9534 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FC05DC181C46EEC1000E9534 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FC05DC181C46EEC1000E9534 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MainViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FC05DC1B1C46EEC1000E9534 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FC05DC1D1C46EEC1000E9534 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC05DC201C46EEC1000E9534 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -57,7 +65,7 @@
 		FC05DC361C46EEC1000E9534 /* MyCookBookUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCookBookUITests.swift; sourceTree = "<group>"; };
 		FC05DC381C46EEC1000E9534 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FCD8A0351C49D64300529944 /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Recipe.swift; path = ../Recipe.swift; sourceTree = "<group>"; };
-		FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecipesListViewController.swift; path = ../RecipesListViewController.swift; sourceTree = "<group>"; };
+		FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = RecipesListViewController.swift; path = ../RecipesListViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FCD8A03B1C4BDC4100529944 /* RecipesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipesTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,6 +95,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		386B32ED1C4D119600F834C6 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				386B32EB1C4D106700F834C6 /* NetworkConstants.swift */,
+			);
+			name = Configuration;
+			sourceTree = "<group>";
+		};
+		386B32F01C4D16AE00F834C6 /* ECCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				386B32F11C4D16DD00F834C6 /* RecipeCollectionViewCell.swift */,
+			);
+			name = ECCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		48A4F2C2F357102BD969C100 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,8 +153,9 @@
 		FC05DC151C46EEC0000E9534 /* MyCookBook */ = {
 			isa = PBXGroup;
 			children = (
-				FCD8A0391C4BDC0D00529944 /* Cells */,
 				FC05DC161C46EEC0000E9534 /* AppDelegate.swift */,
+				386B32ED1C4D119600F834C6 /* Configuration */,
+				FCD8A0391C4BDC0D00529944 /* Cells */,
 				FCD8A0311C49D5C400529944 /* Controller */,
 				FCD8A0331C49D5DC00529944 /* Manager */,
 				FCD8A0321C49D5CB00529944 /* Models */,
@@ -162,8 +187,9 @@
 		FCD8A0311C49D5C400529944 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				386B32EE1C4D137500F834C6 /* AllRecipesListCollectionViewController.swift */,
+				FC05DC181C46EEC1000E9534 /* MainViewController.swift */,
 				FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */,
-				FC05DC181C46EEC1000E9534 /* ViewController.swift */,
 				386B32DD1C48172D00F834C6 /* RecipeViewController.swift */,
 			);
 			name = Controller;
@@ -189,6 +215,7 @@
 			children = (
 				FC05DC1A1C46EEC1000E9534 /* Main.storyboard */,
 				FC05DC1F1C46EEC1000E9534 /* LaunchScreen.storyboard */,
+				386B32F31C4D18FB00F834C6 /* RecipeCollectionViewCell.xib */,
 			);
 			name = IHM;
 			sourceTree = "<group>";
@@ -196,6 +223,7 @@
 		FCD8A0391C4BDC0D00529944 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				386B32F01C4D16AE00F834C6 /* ECCollectionViewCell */,
 				FCD8A03A1C4BDC1600529944 /* TableViewCell */,
 			);
 			name = Cells;
@@ -315,6 +343,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				386B32F41C4D18FB00F834C6 /* RecipeCollectionViewCell.xib in Resources */,
 				FC05DC211C46EEC1000E9534 /* LaunchScreen.storyboard in Resources */,
 				FC05DC1E1C46EEC1000E9534 /* Assets.xcassets in Resources */,
 				FC05DC1C1C46EEC1000E9534 /* Main.storyboard in Resources */,
@@ -390,8 +419,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				386B32F21C4D16DD00F834C6 /* RecipeCollectionViewCell.swift in Sources */,
+				386B32EC1C4D106700F834C6 /* NetworkConstants.swift in Sources */,
 				FCD8A0381C4BD57400529944 /* RecipesListViewController.swift in Sources */,
-				FC05DC191C46EEC1000E9534 /* ViewController.swift in Sources */,
+				386B32EF1C4D137500F834C6 /* AllRecipesListCollectionViewController.swift in Sources */,
+				FC05DC191C46EEC1000E9534 /* MainViewController.swift in Sources */,
 				FC05DC171C46EEC1000E9534 /* AppDelegate.swift in Sources */,
 				386B32DE1C48172D00F834C6 /* RecipeViewController.swift in Sources */,
 				FCD8A0361C49D64300529944 /* Recipe.swift in Sources */,

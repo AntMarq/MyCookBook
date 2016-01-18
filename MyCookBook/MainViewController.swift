@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  MyCookBook
 //
 //  Created by Anthony MARQUET on 13/01/2016.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
     
     var imgID = 0
     let titleImgEntree:String = "Mes Entrées"
@@ -53,13 +53,13 @@ class ViewController: UIViewController {
         else if sender.view?.tag == 4{
             imgID = 4
         }
-        self.performSegueWithIdentifier("HomeToRecipe", sender: self)
+        self.performSegueWithIdentifier("HomeToRecipesList", sender: self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "HomeToRecipe"
+        if segue.identifier == "HomeToRecipesList"
         {
-            if let destinationVC = segue.destinationViewController as? RecipeViewController{
+            if let destinationVC = segue.destinationViewController as? AllRecipesListCollectionViewController{
                 if imgID == 1{
                     destinationVC.titleViewController = self.titleImgEntree
                 }
