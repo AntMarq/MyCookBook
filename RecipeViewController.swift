@@ -29,6 +29,7 @@ class RecipeViewController: UIViewController, UIPopoverPresentationControllerDel
        navigationItem.title = recipeDetail.title
        imageRecipe.image = UIImage(named: recipeDetail.image)
        titleRecipeDetail.text = recipeDetail.title
+        ingredientsDetail.text = recipeDetail.ingredients
      
     }
 
@@ -41,7 +42,7 @@ class RecipeViewController: UIViewController, UIPopoverPresentationControllerDel
         navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func showRecipesList(sender: AnyObject) {
+   /* @IBAction func showRecipesList(sender: AnyObject) {
         
         self.performSegueWithIdentifier("showRecipesList", sender: self)
     }
@@ -53,4 +54,5 @@ class RecipeViewController: UIViewController, UIPopoverPresentationControllerDel
             popoverViewController.popoverPresentationController!.delegate = self
         }
     }
+*/
 }
