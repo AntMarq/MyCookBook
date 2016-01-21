@@ -8,41 +8,49 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="7dD-7G-v1E" customClass="RecipeCollectionViewCell" customModule="MyCookBook" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="350" height="200"/>
+            <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="350" height="200"/>
+                <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6hQ-wu-wHJ">
-                        <rect key="frame" x="8" y="8" width="143" height="144"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="postit" translatesAutoresizingMaskIntoConstraints="NO" id="6hQ-wu-wHJ">
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
                         <animations/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Vp-HX-XcR">
-                        <rect key="frame" x="164" y="56" width="178" height="105"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" fixedFrame="YES" text="Risotto au poulet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mnM-JA-gj7">
+                        <rect key="frame" x="35" y="36" width="181" height="29"/>
                         <animations/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.21978542979999999" blue="0.97634548610000005" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MON TITRE" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mnM-JA-gj7">
-                        <rect key="frame" x="159" y="8" width="183" height="35"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="miniature_recette_risotto" translatesAutoresizingMaskIntoConstraints="NO" id="uuc-4O-OaX">
+                        <rect key="frame" x="32" y="79" width="186" height="143"/>
                         <animations/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    </imageView>
                 </subviews>
                 <animations/>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <animations/>
-            <color key="backgroundColor" red="1" green="0.12749280430000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="6hQ-wu-wHJ" secondAttribute="bottom" id="bTE-0J-CIj"/>
+                <constraint firstItem="6hQ-wu-wHJ" firstAttribute="leading" secondItem="7dD-7G-v1E" secondAttribute="leading" id="crL-iZ-bLj"/>
+                <constraint firstItem="6hQ-wu-wHJ" firstAttribute="top" secondItem="7dD-7G-v1E" secondAttribute="top" id="hJm-Qt-fDh"/>
+                <constraint firstAttribute="trailing" secondItem="6hQ-wu-wHJ" secondAttribute="trailing" id="qox-XU-0st"/>
+            </constraints>
             <size key="customSize" width="453" height="382"/>
             <connections>
-                <outlet property="title" destination="mnM-JA-gj7" id="cWY-r2-K9e"/>
+                <outlet property="imageRecipe" destination="uuc-4O-OaX" id="OGt-Fw-c6K"/>
+                <outlet property="titleRecipe" destination="mnM-JA-gj7" id="O4V-pZ-1dH"/>
             </connections>
-            <point key="canvasLocation" x="598" y="433"/>
+            <point key="canvasLocation" x="805" y="166"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="miniature_recette_risotto" width="305" height="205"/>
+        <image name="postit" width="132" height="132"/>
+    </resources>
 </document>

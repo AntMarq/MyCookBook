@@ -10,8 +10,12 @@ import UIKit
 
 class RecipeViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     
-    var titleViewController:String = String()
-    
+    var titleViewController:String = String()    
+    var recipeDetail:Recipe = Recipe()
+    @IBOutlet weak var imageRecipe: UIImageView!
+    @IBOutlet weak var ingredientsDetail: UITextView!
+    @IBOutlet weak var titleRecipeDetail: UILabel!
+    @IBOutlet weak var preparationRecipeDetail: UITextView!
     
     override func viewWillAppear(animated: Bool)
     {
@@ -22,8 +26,10 @@ class RecipeViewController: UIViewController, UIPopoverPresentationControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
 
-       navigationItem.title = titleViewController
-        // Do any additional setup after loading the view.
+       navigationItem.title = recipeDetail.title
+       imageRecipe.image = UIImage(named: recipeDetail.image)
+       titleRecipeDetail.text = recipeDetail.title
+     
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,15 +53,4 @@ class RecipeViewController: UIViewController, UIPopoverPresentationControllerDel
             popoverViewController.popoverPresentationController!.delegate = self
         }
     }
-    /*
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

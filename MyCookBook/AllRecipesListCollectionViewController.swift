@@ -14,7 +14,8 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
     
     @IBOutlet weak var recipeCollectionView: UICollectionView!
     var titleViewController:String = String()
-
+    var listRecipes:Array<Recipe> = Array<Recipe>()
+    var recipeDetail:Recipe = Recipe()
     
     override func viewWillAppear(animated: Bool)
     {
@@ -25,18 +26,13 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        //self.collectionView!.registerClass(RecipeCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         self.recipeCollectionView?.registerNib(UINib (nibName: "RecipeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
-      //  [self.collectionView registerClass:[RecipeCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-        
-
-
-        // Do any additional setup after loading the view.
         navigationItem.title = titleViewController
+        
+        recipeDetail.title = "Risotto"
+        recipeDetail.image = "miniature_recette_risotto"
+        
+        listRecipes.append(recipeDetail)
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,21 +63,41 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 10
+        return 1
     }
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
-    
-        // Configure the cell
-    
+        let cell:RecipeCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! RecipeCollectionViewCell
+        cell.titleRecipe.text = listRecipes[indexPath.row].title
+        cell.imageRecipe.image = UIImage(named: listRecipes[indexPath.row].image)
+        
+        
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
-    {
-        return CGSize(width: self.recipeCollectionView.frame.size.width/3, height: self.recipeCollectionView.frame.size.height/3)
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
+            performSegueWithIdentifier("RecipesListToRecipeDetail", sender: cell)
+        }
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let indexPath = self.recipeCollectionView?.indexPathForCell(sender as! UICollectionViewCell) {
+            if segue.identifier == "RecipesListToRecipeDetail"
+            {
+                if let destinationVC = segue.destinationViewController as? RecipeViewController{
+                    let objectData:Recipe = listRecipes[indexPath.row]
+                    destinationVC.recipeDetail = objectData
+                }
+            }
+        }
+    }
+    
+  /*  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+    {
+        return CGSize(width: 250, height: 250)
+    }
+   */
 
     // MARK: UICollectionViewDelegate
 

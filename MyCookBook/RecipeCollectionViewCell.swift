@@ -10,12 +10,14 @@ import UIKit
 
 class RecipeCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var title: UILabel!
+    
+    @IBOutlet weak var titleRecipe: UILabel!
+    @IBOutlet weak var imageRecipe: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        setupView()
+       // setupView()
     }
     
     func setupView(){

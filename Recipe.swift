@@ -16,4 +16,14 @@ class Recipe: Object {
 //  override static func ignoredProperties() -> [String] {
 //    return []
 //  }
+    
+    dynamic var title = ""
+    dynamic var image = ""
+    dynamic var date = ""
+    dynamic var preparation = ""
+    dynamic var ingredients = ""
+    dynamic var tps_preparation = ""
+    dynamic var tps_cuisson = ""
+    dynamic var categorie = ""
+    dynamic var nb_personne = ""
 }
