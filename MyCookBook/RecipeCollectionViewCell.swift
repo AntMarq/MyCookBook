@@ -17,12 +17,12 @@ class RecipeCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-       // setupView()
+        setupView()
     }
     
     func setupView(){
         self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.grayColor().CGColor
+        self.layer.borderColor = UIColor.blackColor().CGColor
     }
     
     func setData(sport: Recipe) {

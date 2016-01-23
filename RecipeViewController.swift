@@ -30,6 +30,7 @@ class RecipeViewController: UIViewController, UIPopoverPresentationControllerDel
        imageRecipe.image = UIImage(named: recipeDetail.image)
        titleRecipeDetail.text = recipeDetail.title
         ingredientsDetail.text = recipeDetail.ingredients
+        preparationRecipeDetail.text = recipeDetail.preparation
      
     }
 
