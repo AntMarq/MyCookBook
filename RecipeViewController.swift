@@ -26,9 +26,9 @@ class RecipeViewController: UIViewController, UIPopoverPresentationControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
 
-       navigationItem.title = recipeDetail.title
-       imageRecipe.image = UIImage(named: recipeDetail.image)
-       titleRecipeDetail.text = recipeDetail.title
+        navigationItem.title = recipeDetail.title
+        imageRecipe.image = UIImage(named: recipeDetail.image)
+        titleRecipeDetail.text = recipeDetail.title
         ingredientsDetail.text = recipeDetail.ingredients
         preparationRecipeDetail.text = recipeDetail.preparation
      

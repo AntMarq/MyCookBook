@@ -5,7 +5,7 @@ target 'MyCookBook' do
 pod 'RealmSwift', '~> 0.96'
 pod 'SwiftyJSON', '~> 2.3'
 pod 'Alamofire', '~> 3.1'
-pod 'IQKeyboardManagerSwift', '3.3.3.1'
+pod 'IQKeyboardManagerSwift'
 end
 
 target 'MyCookBookTests' do

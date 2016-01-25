@@ -29,6 +29,8 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
         self.recipeCollectionView?.registerNib(UINib (nibName: "RecipeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
         navigationItem.title = titleViewController
         
+        AlamofireManager .getToken(AlamofireManager)
+        
         recipeDetail.title = "Risotto au poulet"
         recipeDetail.image = "miniature_recette_risotto"
         recipeDetail.tps_cuisson = "30 minutes"

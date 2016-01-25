@@ -40,11 +40,6 @@ public class IQKeyboardReturnKeyHandler: NSObject , UITextFieldDelegate, UITextV
     public var delegate: protocol<UITextFieldDelegate, UITextViewDelegate>?
     
     /**
-    It help to choose the lastTextField instance from sibling responderViews. Default is IQAutoToolbarBySubviews.
-    */
-    @available(*, deprecated, message="This property will be removed in future release, from now changing this property have no effect and it will read from [[IQKeyboardManager sharedManager] toolbarManageBehaviour.") public var toolbarManageBehaviour = IQAutoToolbarManageBehaviour.BySubviews
-    
-    /**
     Set the last textfield return key type. Default is UIReturnKeyDefault.
     */
     public var lastTextFieldReturnKeyType : UIReturnKeyType = UIReturnKeyType.Default {
@@ -53,7 +48,7 @@ public class IQKeyboardReturnKeyHandler: NSObject , UITextFieldDelegate, UITextV
             
             for infoDict in textFieldInfoCache {
                 
-                if let view = infoDict[kIQTextField] as? UIView {
+                if let view = infoDict.objectForKey(kIQTextField) as? UIView {
                     updateReturnKeyTypeOnTextField(view)
                 }
             }
@@ -81,12 +76,12 @@ public class IQKeyboardReturnKeyHandler: NSObject , UITextFieldDelegate, UITextV
         
         for infoDict in textFieldInfoCache {
             
-            let view : AnyObject = infoDict[kIQTextField]!!
+            let view : AnyObject = infoDict.objectForKey(kIQTextField)!
             
             if let textField = view as? UITextField {
                 
                 let returnKeyTypeValue = infoDict[kIQTextFieldReturnKeyType] as! NSNumber
-                textField.returnKeyType = UIReturnKeyType(rawValue: returnKeyTypeValue.unsignedIntegerValue)!
+                textField.returnKeyType = UIReturnKeyType(rawValue: returnKeyTypeValue.integerValue)!
                 
                 textField.delegate = infoDict[kIQTextFieldDelegate] as! UITextFieldDelegate?
             } else if let textView = view as? UITextView {
@@ -94,7 +89,7 @@ public class IQKeyboardReturnKeyHandler: NSObject , UITextFieldDelegate, UITextV
                 textView.returnKeyType = UIReturnKeyType(rawValue: (infoDict[kIQTextFieldReturnKeyType] as! NSNumber).integerValue)!
                 
                 let returnKeyTypeValue = infoDict[kIQTextFieldReturnKeyType] as! NSNumber
-                textView.returnKeyType = UIReturnKeyType(rawValue: returnKeyTypeValue.unsignedIntegerValue)!
+                textView.returnKeyType = UIReturnKeyType(rawValue: returnKeyTypeValue.integerValue)!
                 
                 textView.delegate = infoDict[kIQTextFieldDelegate] as! UITextViewDelegate?
             }
@@ -120,7 +115,7 @@ public class IQKeyboardReturnKeyHandler: NSObject , UITextFieldDelegate, UITextV
         
         for infoDict in textFieldInfoCache {
             
-            if infoDict[kIQTextField] as! NSObject == textField {
+            if infoDict.objectForKey(kIQTextField) as! NSObject == textField {
                 return infoDict as? [String : AnyObject]
             }
         }
@@ -130,15 +125,25 @@ public class IQKeyboardReturnKeyHandler: NSObject , UITextFieldDelegate, UITextV
 
     private func updateReturnKeyTypeOnTextField(view : UIView)
     {
-        var tableView : UIView? = view.superviewOfClassType(UITableView)
-        if tableView == nil {
-            tableView = tableView?.superviewOfClassType(UICollectionView)
-        }
+        var superConsideredView : UIView?
         
+        //If find any consider responderView in it's upper hierarchy then will get deepResponderView. (Bug ID: #347)
+        for disabledClassString in IQKeyboardManager.sharedManager().consideredToolbarPreviousNextViewClassesString() {
+            
+            if let disabledClass = NSClassFromString(disabledClassString) {
+                
+                superConsideredView = view.superviewOfClassType(disabledClass)
+                
+                if superConsideredView != nil {
+                    break
+                }
+            }
+        }
+
         var textFields : [UIView]?
         
         //If there is a tableView in view's hierarchy, then fetching all it's subview that responds.
-        if let unwrappedTableView = tableView {     //   (Enhancement ID: #22)
+        if let unwrappedTableView = superConsideredView {     //   (Enhancement ID: #22)
             textFields = unwrappedTableView.deepResponderViews()
         } else {  //Otherwise fetching all the siblings
             
@@ -219,13 +224,13 @@ public class IQKeyboardReturnKeyHandler: NSObject , UITextFieldDelegate, UITextV
             if let textField = view as? UITextField {
                 
                 let returnKeyTypeValue = dict[kIQTextFieldReturnKeyType] as! NSNumber
-                textField.returnKeyType = UIReturnKeyType(rawValue: returnKeyTypeValue.unsignedIntegerValue)!
+                textField.returnKeyType = UIReturnKeyType(rawValue: returnKeyTypeValue.integerValue)!
                 
                 textField.delegate = dict[kIQTextFieldDelegate] as! UITextFieldDelegate?
             } else if let textView = view as? UITextView {
                 
                 let returnKeyTypeValue = dict[kIQTextFieldReturnKeyType] as! NSNumber
-                textView.returnKeyType = UIReturnKeyType(rawValue: returnKeyTypeValue.unsignedIntegerValue)!
+                textView.returnKeyType = UIReturnKeyType(rawValue: returnKeyTypeValue.integerValue)!
                 
                 textView.delegate = dict[kIQTextFieldDelegate] as! UITextViewDelegate?
             }
@@ -266,15 +271,25 @@ public class IQKeyboardReturnKeyHandler: NSObject , UITextFieldDelegate, UITextV
     
     private func goToNextResponderOrResign(view : UIView) {
         
-        var tableView : UIView? = view.superviewOfClassType(UITableView)
-        if tableView == nil {
-            tableView = tableView?.superviewOfClassType(UICollectionView)
+        var superConsideredView : UIView?
+        
+        //If find any consider responderView in it's upper hierarchy then will get deepResponderView. (Bug ID: #347)
+        for disabledClassString in IQKeyboardManager.sharedManager().consideredToolbarPreviousNextViewClassesString() {
+            
+            if let disabledClass = NSClassFromString(disabledClassString) {
+                
+                superConsideredView = view.superviewOfClassType(disabledClass)
+                
+                if superConsideredView != nil {
+                    break
+                }
+            }
         }
-
+        
         var textFields : [UIView]?
         
         //If there is a tableView in view's hierarchy, then fetching all it's subview that responds.
-        if let unwrappedTableView = tableView {     //   (Enhancement ID: #22)
+        if let unwrappedTableView = superConsideredView {     //   (Enhancement ID: #22)
             textFields = unwrappedTableView.deepResponderViews()
         } else {  //Otherwise fetching all the siblings
             
