@@ -23,6 +23,8 @@
 		FCD8A0381C4BD57400529944 /* RecipesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */; };
 		FCD8A03C1C4BDC4100529944 /* RecipesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A03B1C4BDC4100529944 /* RecipesTableViewCell.swift */; };
 		FCD8A0401C52B0A100529944 /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A03F1C52B0A100529944 /* NetworkConstants.swift */; settings = {ASSET_TAGS = (); }; };
+		FCD8A0421C53C36D00529944 /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0411C53C36D00529944 /* AlamofireManager.swift */; settings = {ASSET_TAGS = (); }; };
+		FCD8A0441C53C44A00529944 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0431C53C44A00529944 /* RealmManager.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = RecipesListViewController.swift; path = ../RecipesListViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FCD8A03B1C4BDC4100529944 /* RecipesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipesTableViewCell.swift; sourceTree = "<group>"; };
 		FCD8A03F1C52B0A100529944 /* NetworkConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
+		FCD8A0411C53C36D00529944 /* AlamofireManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireManager.swift; sourceTree = "<group>"; };
+		FCD8A0431C53C44A00529944 /* RealmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +210,8 @@
 		FCD8A0331C49D5DC00529944 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				FCD8A0431C53C44A00529944 /* RealmManager.swift */,
+				FCD8A0411C53C36D00529944 /* AlamofireManager.swift */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -421,12 +427,14 @@
 			files = (
 				FCD8A0401C52B0A100529944 /* NetworkConstants.swift in Sources */,
 				386B32F21C4D16DD00F834C6 /* RecipeCollectionViewCell.swift in Sources */,
+				FCD8A0441C53C44A00529944 /* RealmManager.swift in Sources */,
 				FCD8A0381C4BD57400529944 /* RecipesListViewController.swift in Sources */,
 				386B32EF1C4D137500F834C6 /* AllRecipesListCollectionViewController.swift in Sources */,
 				FC05DC191C46EEC1000E9534 /* MainViewController.swift in Sources */,
 				FC05DC171C46EEC1000E9534 /* AppDelegate.swift in Sources */,
 				386B32DE1C48172D00F834C6 /* RecipeViewController.swift in Sources */,
 				FCD8A0361C49D64300529944 /* Recipe.swift in Sources */,
+				FCD8A0421C53C36D00529944 /* AlamofireManager.swift in Sources */,
 				FCD8A03C1C4BDC4100529944 /* RecipesTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

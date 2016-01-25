@@ -26,7 +26,7 @@
                         <rect key="frame" x="222" y="44" width="115" height="61"/>
                         <animations/>
                         <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="20"/>
-                        <color key="textColor" red="0.0" green="0.21978542979999999" blue="0.97634548610000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -34,7 +34,7 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <animations/>
-            <color key="backgroundColor" red="0.85490196080000003" green="0.87843137250000003" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.67252155172413797" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="uuc-4O-OaX" secondAttribute="bottom" id="Ayl-Jd-shi"/>
                 <constraint firstItem="mnM-JA-gj7" firstAttribute="leading" secondItem="uuc-4O-OaX" secondAttribute="trailing" constant="8" id="FQj-mT-qxJ"/>
