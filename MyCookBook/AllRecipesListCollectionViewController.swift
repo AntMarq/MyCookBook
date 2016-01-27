@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 private let reuseIdentifier = "Cell"
 
@@ -21,6 +22,7 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
     {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBarHidden = false
+        IQKeyboardManager.sharedManager().canAdjustTextView = true
     }
     
     override func viewDidLoad() {
