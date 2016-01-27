@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
-class RecipeViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+class RecipeViewController: UIViewController, UITextFieldDelegate {
     
     var titleViewController:String = String()    
     var recipeDetail:Recipe = Recipe()
@@ -21,11 +22,13 @@ class RecipeViewController: UIViewController, UIPopoverPresentationControllerDel
     {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBarHidden = false
+       // IQKeyboardManager.sharedManager().canAdjustTextView = true;
+        
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         navigationItem.title = recipeDetail.title
         imageRecipe.image = UIImage(named: recipeDetail.image)
         titleRecipeDetail.text = recipeDetail.title

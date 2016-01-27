@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        // RealmManager.SharedInstance.startFeed()
         IQKeyboardManager.sharedManager().enable = true
 
-
         return true
     }
 
