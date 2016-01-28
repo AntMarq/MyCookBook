@@ -18,12 +18,11 @@ class RecipeViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var titleRecipeDetail: UILabel!
     @IBOutlet weak var preparationRecipeDetail: UITextView!
     
+    @IBOutlet weak var editBtn: UIButton!
     override func viewWillAppear(animated: Bool)
     {
-        super.viewWillDisappear(animated)
+        super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = false
-       // IQKeyboardManager.sharedManager().canAdjustTextView = true;
-        
     }
 
     override func viewDidLoad() {
@@ -32,6 +31,8 @@ class RecipeViewController: UIViewController, UITextFieldDelegate {
         navigationItem.title = recipeDetail.title
         imageRecipe.image = UIImage(named: recipeDetail.image)
         titleRecipeDetail.text = recipeDetail.title
+        ingredientsDetail.editable = false
+        preparationRecipeDetail.editable = false
         ingredientsDetail.text = recipeDetail.ingredients
         preparationRecipeDetail.text = recipeDetail.preparation
      
@@ -44,6 +45,19 @@ class RecipeViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func backController(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func pressEdit(sender: AnyObject) {
+        if(!ingredientsDetail.editable){
+            editBtn.setImage(UIImage(named: "edit-validated"), forState: UIControlState.Normal)
+            ingredientsDetail.editable = true
+            preparationRecipeDetail.editable = true
+        }
+        else{
+            editBtn.setImage(UIImage(named: "edit-unvalidated"), forState: UIControlState.Normal)
+            ingredientsDetail.editable = false
+            preparationRecipeDetail.editable = false
+        }
     }
     
    /* @IBAction func showRecipesList(sender: AnyObject) {

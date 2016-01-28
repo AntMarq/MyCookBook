@@ -32,10 +32,19 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
         navigationItem.title = titleViewController
         
         AlamofireManager.SharedInstance.getToken { (success) -> Void in
-            print("coucou")
+             AlamofireManager.SharedInstance.downloadOrderedRecipes({ (recipes) -> Void in                
+                RealmManager.SharedInstance.writeRecipesInDB(recipes, needUpdate: false, completion: { (bool) -> Void in
+                    self.getRecipesfromDB({ (recipeArray) -> Void in
+                        self.recipeCollectionView.reloadData()
+                    })
+                })
+             })
         }
+
+      /*  self.recipeCollectionView.reloadData()
+        print(RealmManager.SharedInstance.getAllRecipes())*/
         
-        recipeDetail.title = "Risotto au poulet"
+       /* recipeDetail.title = "Risotto au poulet"
         recipeDetail.image = "miniature_recette_risotto"
         recipeDetail.tps_cuisson = "30 minutes"
         recipeDetail.tps_preparation = "30 minutes"
@@ -68,7 +77,14 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
         listRecipes.append(recipeDetail)
         listRecipes.append(recipeDetail)
         listRecipes.append(recipeDetail)
-        listRecipes.append(recipeDetail)
+        listRecipes.append(recipeDetail)*/
+    }
+    
+    func getRecipesfromDB(completion: (recipeArray: Array<Recipe>) -> Void){
+        RealmManager.SharedInstance.getAllRecipeFromDB { (news) -> Void in
+            self.listRecipes = news
+            completion(recipeArray: self.listRecipes)
+        }
     }
 
     override func didReceiveMemoryWarning() {

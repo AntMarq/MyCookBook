@@ -16,6 +16,55 @@ class RealmManager: NSObject {
     
     static let SharedInstance = RealmManager()
     
+    func writeRecipesInDB(result: JSON, needUpdate: Bool, completion:(bool:Bool)->Void) {
+        for object in result {
+            let recipeResult = self.generateRecipes(object.1)
+            getRecipeWithId(recipeResult.id, completion: { (recipe) -> Void in
+                if (recipe.count==0){
+                    self.writeData(recipeResult)
+                }
+                else if(needUpdate){
+                    //TODO UPDATE
+                }
+            })
+        }
+        completion(bool: true)
+    }
+    
+    //Mapping => creation d'objet
+    func generateRecipes(dictionary: JSON) -> Recipe {
+        return Recipe().setData(dictionary)
+    }
+    
+    //DB => recherche d'un objet similaire
+    func getRecipeWithId(_id: String, completion: (description: Results<(Recipe)>) -> Void) {
+        completion(description: realm.objects(Recipe).filter("id = %@", _id))
+    }
+    
+    //DB => ecriture en base
+    func writeData(object:Object){
+        try! self.realm.write {
+            self.realm.add(object)
+        }
+    }
+    
+    //Print all db
+    func getAllRecipes() -> Results<(Recipe)> {
+        return realm.objects(Recipe)
+    }
+    
+    //Get DB Recipes
+    func getAllRecipeFromDB(completion: (news: Array<Recipe>) -> Void) {
+        let recipes = realm.objects(Recipe)
+        var newsArray: Array<Recipe> = Array<Recipe>()
+        
+        for recipe in recipes {
+            let result:Recipe = recipe.mapper(recipe)
+            newsArray.append(result)
+        }
+        completion(news: newsArray)
+    }
+    
     // MARK: - Generateur d'objets
     
    /* func startFeed(){
@@ -124,16 +173,7 @@ class RealmManager: NSObject {
         }
     }
     
-    func writeSportsDescriptionsInDB(result: JSON) {
-        for object in result {
-            let newObject = self.generateSportDescription(object.1)
-            getSportDescriptionWithId(newObject.key_sport, completion: { (new) -> Void in
-                if (new.count==0){
-                    self.writeData(newObject)
-                }
-            })
-        }
-    }
+    
     
     func writeObjectivesInDB(result: JSON) {
         for object in result {

@@ -18,7 +18,7 @@ class AlamofireManager: NSObject {
     let login_params            = NetworkConstants.login_parameters
     let post_token              = NetworkConstants.ip_server+NetworkConstants.post_token
     let get_recipes             = NetworkConstants.ip_server+NetworkConstants.get_recipes
-    let get_order_recipes             = NetworkConstants.ip_server+NetworkConstants.order_recipe
+    let get_order_recipes       = NetworkConstants.ip_server+NetworkConstants.order_recipe
 
     func setChallenge(){
     
@@ -52,7 +52,6 @@ class AlamofireManager: NSObject {
             print("Authentification : \(post_token)...")
             Alamofire.request(.POST, post_token, parameters: login_params, encoding: .JSON) .responseJSON{
                 response in
-                
                 switch response.result {
                     
                 case .Success:
@@ -75,10 +74,9 @@ class AlamofireManager: NSObject {
         }
     }
     
-    func downloadOrderedRecipes(completion: (news: JSON) -> Void) {
+    func downloadOrderedRecipes(completion: (recipes: JSON) -> Void) {
        
         let uriNews = get_recipes+token+get_order_recipes
-        //print("Get news : \(uriNews)...")
         Alamofire.request(.GET,uriNews).responseJSON{
             response in
             
@@ -86,12 +84,11 @@ class AlamofireManager: NSObject {
                 
             case .Success:
                 if response.response!.statusCode == 200 {
-                    print("News ok")
-                    //print("...News ok : \(response.result.value)")
-                    completion(news:JSON(response.result.value!))
+                    print("recipes ok")
+                    completion(recipes:JSON(response.result.value!))
                 } else {
                     print("Request failed with error: \(response.response!.statusCode)")
-                    completion(news:[])
+                    completion(recipes:[])
                 }
             case .Failure(let error):
                 print("Request failed with error: \(error)")
