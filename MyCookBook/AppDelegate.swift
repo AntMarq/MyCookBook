@@ -7,15 +7,19 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        AlamofireManager.SharedInstance.setChallenge()
+       // RealmManager.SharedInstance.startFeed()
+        IQKeyboardManager.sharedManager().enable = true
+
         return true
     }
 
