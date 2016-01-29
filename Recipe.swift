@@ -34,6 +34,8 @@ class Recipe: Object {
         id                 = dictionary["id"].stringValue
         title              = dictionary["title"].stringValue
         categorie          = dictionary["categorie"].stringValue
+        
+        //Gestion  image : Si image non présente dans l'appel WS, on entre en base l'image par de la catégorie corespodnante
         if(dictionary["image"].stringValue == ""){
             if(categorie == "1"){
                 image          = "placeholder_categorie1"
@@ -45,6 +47,7 @@ class Recipe: Object {
         else{
             image          = dictionary["image"].stringValue
         }
+        //Fin gestion image
         date               = dictionary["day"].stringValue
         preparation        = dictionary["preparation"].stringValue
         ingredients        = dictionary["ingredients"].stringValue
