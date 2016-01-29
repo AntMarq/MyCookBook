@@ -22,9 +22,9 @@
 		FCD8A0361C49D64300529944 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0351C49D64300529944 /* Recipe.swift */; };
 		FCD8A0381C4BD57400529944 /* RecipesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */; };
 		FCD8A03C1C4BDC4100529944 /* RecipesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A03B1C4BDC4100529944 /* RecipesTableViewCell.swift */; };
-		FCD8A0401C52B0A100529944 /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A03F1C52B0A100529944 /* NetworkConstants.swift */; settings = {ASSET_TAGS = (); }; };
-		FCD8A0421C53C36D00529944 /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0411C53C36D00529944 /* AlamofireManager.swift */; settings = {ASSET_TAGS = (); }; };
-		FCD8A0441C53C44A00529944 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0431C53C44A00529944 /* RealmManager.swift */; settings = {ASSET_TAGS = (); }; };
+		FCD8A0401C52B0A100529944 /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A03F1C52B0A100529944 /* NetworkConstants.swift */; };
+		FCD8A0421C53C36D00529944 /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0411C53C36D00529944 /* AlamofireManager.swift */; };
+		FCD8A0441C53C44A00529944 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0431C53C44A00529944 /* RealmManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +115,14 @@
 			name = ECCollectionViewCell;
 			sourceTree = "<group>";
 		};
+		38AE4A381C5B9854004EBAF0 /* In progress */ = {
+			isa = PBXGroup;
+			children = (
+				FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */,
+			);
+			name = "In progress";
+			sourceTree = "<group>";
+		};
 		48A4F2C2F357102BD969C100 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,9 +199,9 @@
 		FCD8A0311C49D5C400529944 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				38AE4A381C5B9854004EBAF0 /* In progress */,
 				386B32EE1C4D137500F834C6 /* AllRecipesListCollectionViewController.swift */,
 				FC05DC181C46EEC1000E9534 /* MainViewController.swift */,
-				FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */,
 				386B32DD1C48172D00F834C6 /* RecipeViewController.swift */,
 			);
 			name = Controller;

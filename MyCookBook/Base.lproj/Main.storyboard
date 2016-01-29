@@ -141,7 +141,7 @@
                         <viewControllerLayoutGuide type="bottom" id="q0y-b6-KGQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background_1" translatesAutoresizingMaskIntoConstraints="NO" id="8x5-05-JaQ" userLabel="background">
@@ -192,7 +192,9 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ardoise" translatesAutoresizingMaskIntoConstraints="NO" id="Rfp-ND-ka0">
                                 <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="704" id="SwW-zs-CQf"/>
+                                    <constraint firstAttribute="height" constant="704" id="SwW-zs-CQf">
+                                        <variation key="widthClass=regular" constant="768"/>
+                                    </constraint>
                                     <constraint firstAttribute="width" constant="1024" id="hXw-h7-pXO"/>
                                 </constraints>
                             </imageView>
@@ -304,14 +306,15 @@
                             <constraint firstItem="ueg-ED-QBO" firstAttribute="top" secondItem="dkB-KJ-iLc" secondAttribute="bottom" constant="13" id="Oxs-PE-jwC"/>
                             <constraint firstItem="YJ2-U1-ZLu" firstAttribute="leading" secondItem="ZOs-ce-LVQ" secondAttribute="leading" constant="36" id="QK4-tU-YnA"/>
                             <constraint firstItem="bqc-7c-rLG" firstAttribute="leading" secondItem="ZOs-ce-LVQ" secondAttribute="leading" constant="43" id="SeD-dC-F7O"/>
-                            <constraint firstAttribute="trailing" secondItem="Rfp-ND-ka0" secondAttribute="trailing" id="Tx0-JF-zp7"/>
                             <constraint firstItem="N1Y-Mw-jGA" firstAttribute="top" secondItem="YJ2-U1-ZLu" secondAttribute="bottom" constant="17" id="UNe-w4-ylp"/>
                             <constraint firstItem="ueg-ED-QBO" firstAttribute="top" secondItem="Rfp-ND-ka0" secondAttribute="bottom" constant="-591" id="XlM-bN-PQq"/>
                             <constraint firstItem="dkB-KJ-iLc" firstAttribute="top" secondItem="yYi-bA-Wsd" secondAttribute="bottom" constant="22" id="YZj-Qb-slh"/>
                             <constraint firstItem="Rfp-ND-ka0" firstAttribute="leading" secondItem="ZOs-ce-LVQ" secondAttribute="leading" id="aij-vg-vFI"/>
                             <constraint firstItem="N1Y-Mw-jGA" firstAttribute="leading" secondItem="ZOs-ce-LVQ" secondAttribute="leading" constant="36" id="bS6-BR-USP"/>
                             <constraint firstItem="Fab-9w-2fA" firstAttribute="bottom" secondItem="ueg-ED-QBO" secondAttribute="bottom" id="gSd-0v-5RB"/>
-                            <constraint firstItem="Rfp-ND-ka0" firstAttribute="top" secondItem="F6z-Ya-cdX" secondAttribute="bottom" id="ga5-DL-zOt"/>
+                            <constraint firstItem="Rfp-ND-ka0" firstAttribute="top" secondItem="F6z-Ya-cdX" secondAttribute="bottom" id="ga5-DL-zOt">
+                                <variation key="widthClass=regular" constant="-64"/>
+                            </constraint>
                             <constraint firstAttribute="trailing" secondItem="ueg-ED-QBO" secondAttribute="trailing" constant="20" id="uIv-B1-2Si"/>
                             <constraint firstItem="bqc-7c-rLG" firstAttribute="top" secondItem="N1Y-Mw-jGA" secondAttribute="bottom" constant="14" id="zbx-Ll-aXk"/>
                         </constraints>

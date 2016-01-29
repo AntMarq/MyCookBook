@@ -55,14 +55,7 @@ class RealmManager: NSObject {
     
     //Get DB Recipes
     func getAllRecipeFromDB(completion: (news: Array<Recipe>) -> Void) {
-        let recipes = realm.objects(Recipe)
-        var newsArray: Array<Recipe> = Array<Recipe>()
-        
-        for recipe in recipes {
-            let result:Recipe = recipe.mapper(recipe)
-            newsArray.append(result)
-        }
-        completion(news: newsArray)
+        completion(news: Array<Recipe>(realm.objects(Recipe)))
     }
     
     // MARK: - Generateur d'objets

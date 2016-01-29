@@ -81,8 +81,8 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
     }
     
     func getRecipesfromDB(completion: (recipeArray: Array<Recipe>) -> Void){
-        RealmManager.SharedInstance.getAllRecipeFromDB { (news) -> Void in
-            self.listRecipes = news
+        RealmManager.SharedInstance.getAllRecipeFromDB { (recipe) -> Void in
+            self.listRecipes = recipe
             completion(recipeArray: self.listRecipes)
         }
     }
@@ -123,7 +123,16 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
         let cell:RecipeCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! RecipeCollectionViewCell
         cell.titleRecipe.text = listRecipes[indexPath.row].title
         cell.imageRecipe.image = UIImage(named: listRecipes[indexPath.row].image)
-        
+
+        /*if(listRecipes[indexPath.row].image == ""){
+            if(listRecipes[indexPath.row].categorie == "1"){
+                cell.imageRecipe.image = UIImage(named: "placeholder_categorie1")
+            }
+            else if(listRecipes[indexPath.row].categorie == "2"){
+                cell.imageRecipe.image = UIImage(named: "placeholder_categorie2")
+            }
+        }
+        */
         
         return cell
     }

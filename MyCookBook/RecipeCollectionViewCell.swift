@@ -25,7 +25,5 @@ class RecipeCollectionViewCell: UICollectionViewCell {
         self.layer.borderColor = UIColor.blackColor().CGColor
     }
     
-    func setData(sport: Recipe) {
-        
-    }
+    
 }
