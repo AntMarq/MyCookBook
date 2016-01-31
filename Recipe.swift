@@ -28,6 +28,9 @@ class Recipe: Object {
     dynamic var categorie = ""
     dynamic var nb_personne = ""
     
+    override class func primaryKey() -> String {
+        return "id"
+    }
     
     func setData(dictionary: JSON) -> Recipe{
         

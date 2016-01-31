@@ -76,7 +76,7 @@ class AlamofireManager: NSObject {
     
     func downloadOrderedRecipes(completion: (recipes: JSON) -> Void) {
        
-        let uriNews = get_recipes+token+get_order_recipes
+        let uriNews = get_recipes+token
         Alamofire.request(.GET,uriNews).responseJSON{
             response in
             

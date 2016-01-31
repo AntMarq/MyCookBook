@@ -9,16 +9,20 @@
 import UIKit
 import IQKeyboardManagerSwift
 
-class RecipeViewController: UIViewController, UITextFieldDelegate {
+class RecipeViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate {
     
     var titleViewController:String = String()    
     var recipeDetail:Recipe = Recipe()
+    var imagePicker: UIImagePickerController!
+
     @IBOutlet weak var imageRecipe: UIImageView!
     @IBOutlet weak var ingredientsDetail: UITextView!
     @IBOutlet weak var titleRecipeDetail: UILabel!
     @IBOutlet weak var preparationRecipeDetail: UITextView!
     
     @IBOutlet weak var editBtn: UIButton!
+    @IBOutlet weak var btnTakePhoto: UIButton!
+    
     override func viewWillAppear(animated: Bool)
     {
         super.viewWillAppear(animated)
@@ -31,9 +35,11 @@ class RecipeViewController: UIViewController, UITextFieldDelegate {
         navigationItem.title = recipeDetail.title
         imageRecipe.image = UIImage(named: recipeDetail.image)
         titleRecipeDetail.text = recipeDetail.title
+        
+        let modifiedIngredient = recipeDetail.ingredients.stringByReplacingOccurrencesOfString(", ", withString: "\n", options: NSStringCompareOptions.LiteralSearch, range: nil)
         ingredientsDetail.editable = false
         preparationRecipeDetail.editable = false
-        ingredientsDetail.text = recipeDetail.ingredients
+        ingredientsDetail.text = modifiedIngredient
         preparationRecipeDetail.text = recipeDetail.preparation
      
     }
@@ -52,13 +58,29 @@ class RecipeViewController: UIViewController, UITextFieldDelegate {
             editBtn.setImage(UIImage(named: "edit-validated"), forState: UIControlState.Normal)
             ingredientsDetail.editable = true
             preparationRecipeDetail.editable = true
+            btnTakePhoto.hidden = false
         }
         else{
             editBtn.setImage(UIImage(named: "edit-unvalidated"), forState: UIControlState.Normal)
             ingredientsDetail.editable = false
             preparationRecipeDetail.editable = false
+            btnTakePhoto.hidden = true
         }
     }
+    
+    @IBAction func takePhoto(sender: AnyObject) {
+        imagePicker =  UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .Camera
+        
+        presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+        imageRecipe.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+    }
+    
     
    /* @IBAction func showRecipesList(sender: AnyObject) {
         

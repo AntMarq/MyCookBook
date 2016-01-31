@@ -23,8 +23,8 @@ class RealmManager: NSObject {
                 if (recipe.count==0){
                     self.writeData(recipeResult)
                 }
-                else if(needUpdate){
-                    //TODO UPDATE
+                else if(recipe.count == 1){
+                    self.updateData(recipeResult)
                 }
             })
         }
@@ -48,7 +48,13 @@ class RealmManager: NSObject {
         }
     }
     
-    //Print all db
+    func updateData(object:Object){
+        try! realm.write {
+            realm.add(object, update: true)
+        }
+    }
+    
+    //Print all db recipe
     func getAllRecipes() -> Results<(Recipe)> {
         return realm.objects(Recipe)
     }
