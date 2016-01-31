@@ -64,6 +64,10 @@ class RealmManager: NSObject {
         completion(news: Array<Recipe>(realm.objects(Recipe)))
     }
     
+    func getRecipesCategoryFromDB(category:String, completion: (news: Array<Recipe>) -> Void) {
+        completion(news: Array<Recipe>(realm.objects(Recipe).filter("categorie = %@",category)))
+    }
+    
     // MARK: - Generateur d'objets
     
    /* func startFeed(){

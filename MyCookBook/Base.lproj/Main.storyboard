@@ -164,11 +164,11 @@
                                 <rect key="frame" x="68" y="264" width="240" height="261"/>
                                 <animations/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" tag="4" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="ygj-ZZ-yXp">
+                            <imageView tag="4" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="ygj-ZZ-yXp">
                                 <rect key="frame" x="718" y="264" width="240" height="261"/>
                                 <animations/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="2nE-a7-w8T">
+                            <imageView tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="2nE-a7-w8T">
                                 <rect key="frame" x="367" y="264" width="240" height="261"/>
                                 <animations/>
                             </imageView>
@@ -185,8 +185,10 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
                     <connections>
+                        <outlet property="imgApero" destination="ygj-ZZ-yXp" id="cyc-ig-pTb"/>
                         <outlet property="imgDessert" destination="Fyc-ez-R4I" id="zJ4-RL-ZMa"/>
                         <outlet property="imgEntree" destination="Ycg-Os-U8Z" id="jBH-Ze-7fU"/>
+                        <outlet property="imgPlat" destination="2nE-a7-w8T" id="5dO-AF-4HQ"/>
                         <outlet property="view" destination="8bC-Xf-vdC" id="lVW-OY-379"/>
                         <segue destination="66S-A6-t8E" kind="show" identifier="HomeToRecipesList" id="cpL-Gq-wGs"/>
                     </connections>
@@ -324,14 +326,14 @@
                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pch-o1-eBE">
-                                <rect key="frame" x="189" y="207" width="116" height="30"/>
+                            <button hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pch-o1-eBE">
+                                <rect key="frame" x="36" y="72" width="422" height="300"/>
                                 <animations/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="A2R-dD-njW"/>
-                                    <constraint firstAttribute="width" constant="116" id="UvZ-4t-Dus"/>
+                                    <constraint firstAttribute="height" constant="300" id="A2R-dD-njW"/>
+                                    <constraint firstAttribute="width" constant="422" id="UvZ-4t-Dus"/>
                                 </constraints>
-                                <state key="normal" title="Take a photo"/>
                                 <connections>
                                     <action selector="takePhoto:" destination="Qoj-Hj-fQk" eventType="touchUpInside" id="qgT-U6-OfM"/>
                                 </connections>
@@ -343,7 +345,7 @@
                             <constraint firstItem="HZV-Nx-i81" firstAttribute="top" secondItem="Rfp-ND-ka0" secondAttribute="bottom" id="10G-tX-USS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="yYi-bA-Wsd" secondAttribute="trailing" constant="36" id="2AT-sc-sdM"/>
                             <constraint firstItem="Fab-9w-2fA" firstAttribute="leading" secondItem="N1Y-Mw-jGA" secondAttribute="leading" id="4Cr-ra-SF2"/>
-                            <constraint firstItem="Pch-o1-eBE" firstAttribute="leading" secondItem="YJ2-U1-ZLu" secondAttribute="trailing" constant="-269" id="9r7-rD-0gz"/>
+                            <constraint firstItem="Pch-o1-eBE" firstAttribute="leading" secondItem="YJ2-U1-ZLu" secondAttribute="trailing" constant="-422" id="9r7-rD-0gz"/>
                             <constraint firstItem="HZV-Nx-i81" firstAttribute="top" secondItem="ueg-ED-QBO" secondAttribute="bottom" constant="20" id="AFw-7d-Yot"/>
                             <constraint firstItem="Fab-9w-2fA" firstAttribute="top" secondItem="bqc-7c-rLG" secondAttribute="bottom" constant="16" id="ARe-Zu-GYG"/>
                             <constraint firstItem="Fab-9w-2fA" firstAttribute="trailing" secondItem="N1Y-Mw-jGA" secondAttribute="trailing" id="BCu-Nc-1Wl"/>
@@ -355,7 +357,7 @@
                             <constraint firstItem="N1Y-Mw-jGA" firstAttribute="top" secondItem="YJ2-U1-ZLu" secondAttribute="bottom" constant="17" id="UNe-w4-ylp"/>
                             <constraint firstItem="ueg-ED-QBO" firstAttribute="top" secondItem="Rfp-ND-ka0" secondAttribute="bottom" constant="-591" id="XlM-bN-PQq"/>
                             <constraint firstItem="dkB-KJ-iLc" firstAttribute="top" secondItem="yYi-bA-Wsd" secondAttribute="bottom" constant="22" id="YZj-Qb-slh"/>
-                            <constraint firstItem="Pch-o1-eBE" firstAttribute="top" secondItem="YJ2-U1-ZLu" secondAttribute="bottom" constant="-165" id="ZDo-nZ-FoD"/>
+                            <constraint firstItem="Pch-o1-eBE" firstAttribute="top" secondItem="YJ2-U1-ZLu" secondAttribute="bottom" constant="-300" id="ZDo-nZ-FoD"/>
                             <constraint firstItem="Rfp-ND-ka0" firstAttribute="leading" secondItem="ZOs-ce-LVQ" secondAttribute="leading" id="aij-vg-vFI"/>
                             <constraint firstItem="N1Y-Mw-jGA" firstAttribute="leading" secondItem="ZOs-ce-LVQ" secondAttribute="leading" constant="36" id="bS6-BR-USP"/>
                             <constraint firstItem="Fab-9w-2fA" firstAttribute="bottom" secondItem="ueg-ED-QBO" secondAttribute="bottom" id="gSd-0v-5RB"/>

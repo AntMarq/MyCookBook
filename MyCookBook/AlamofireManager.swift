@@ -17,7 +17,7 @@ class AlamofireManager: NSObject {
     
     let login_params            = NetworkConstants.login_parameters
     let post_token              = NetworkConstants.ip_server+NetworkConstants.post_token
-    let get_recipes             = NetworkConstants.ip_server+NetworkConstants.get_recipes
+    var get_recipes             = NetworkConstants.ip_server+NetworkConstants.get_recipes
     let get_order_recipes       = NetworkConstants.ip_server+NetworkConstants.order_recipe
 
     func setChallenge(){
@@ -74,9 +74,9 @@ class AlamofireManager: NSObject {
         }
     }
     
-    func downloadOrderedRecipes(completion: (recipes: JSON) -> Void) {
-       
-        let uriNews = get_recipes+token
+    func downloadOrderedRecipes(category:String, completion: (recipes: JSON) -> Void) {
+        let uriNews = get_recipes+token+NetworkConstants.filter_recipe+category
+      
         Alamofire.request(.GET,uriNews).responseJSON{
             response in
             

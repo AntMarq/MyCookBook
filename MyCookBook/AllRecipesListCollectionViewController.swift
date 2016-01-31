@@ -15,6 +15,7 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
     
     @IBOutlet weak var recipeCollectionView: UICollectionView!
     var titleViewController:String = String()
+    var categorieFilter:String = String()
     var listRecipes:Array<Recipe> = Array<Recipe>()
     var recipeDetail:Recipe = Recipe()
     
@@ -32,20 +33,28 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
         navigationItem.title = titleViewController
         
         AlamofireManager.SharedInstance.getToken { (success) -> Void in
-             AlamofireManager.SharedInstance.downloadOrderedRecipes({ (recipes) -> Void in                
+            AlamofireManager.SharedInstance.downloadOrderedRecipes(self.categorieFilter, completion: { (recipes) -> Void in
                 RealmManager.SharedInstance.writeRecipesInDB(recipes, needUpdate: false, completion: { (bool) -> Void in
-                    self.getRecipesfromDB({ (recipeArray) -> Void in
+                    self.getRecipesfromDB(self.categorieFilter, completion: { (recipeArray) -> Void in
                         self.recipeCollectionView.reloadData()
                     })
                 })
-             })
+            })
         }
     }
     
-    func getRecipesfromDB(completion: (recipeArray: Array<Recipe>) -> Void){
-        RealmManager.SharedInstance.getAllRecipeFromDB { (recipe) -> Void in
-            self.listRecipes = recipe
-            completion(recipeArray: self.listRecipes)
+    func getRecipesfromDB(category:String, completion: (recipeArray: Array<Recipe>) -> Void){
+        if(self.categorieFilter != "0"){
+            RealmManager.SharedInstance.getRecipesCategoryFromDB(self.categorieFilter, completion:{ (recipe) -> Void in
+                self.listRecipes = recipe
+                completion(recipeArray: self.listRecipes)
+            })
+        }
+        else{
+            RealmManager.SharedInstance.getAllRecipeFromDB { (recipe) -> Void in
+                self.listRecipes = recipe
+                completion(recipeArray: self.listRecipes)
+            }
         }
     }
 
@@ -58,23 +67,11 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
         navigationController?.popViewControllerAnimated(true)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
     // MARK: UICollectionViewDataSource
-
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items

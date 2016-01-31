@@ -17,6 +17,8 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var imgEntree: UIImageView!
     @IBOutlet weak var imgDessert: UIImageView!
+    @IBOutlet weak var imgPlat: UIImageView!
+    @IBOutlet weak var imgApero: UIImageView!
     
     override func viewWillAppear(animated: Bool)
     {
@@ -29,7 +31,8 @@ class MainViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         addGestureToImageView(imgEntree)
         addGestureToImageView(imgDessert)
-        
+        addGestureToImageView(imgApero)
+        addGestureToImageView(imgPlat)
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,6 +63,7 @@ class MainViewController: UIViewController {
         if segue.identifier == "HomeToRecipesList"
         {
             if let destinationVC = segue.destinationViewController as? AllRecipesListCollectionViewController{
+                destinationVC.categorieFilter = String(imgID)
                 if imgID == 1{
                     destinationVC.titleViewController = self.titleImgEntree
                 }

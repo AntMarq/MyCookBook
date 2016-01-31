@@ -81,7 +81,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         imageRecipe.image = info[UIImagePickerControllerOriginalImage] as? UIImage
     }
     
-    
+
    /* @IBAction func showRecipesList(sender: AnyObject) {
         
         self.performSegueWithIdentifier("showRecipesList", sender: self)
