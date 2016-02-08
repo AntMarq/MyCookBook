@@ -24,7 +24,7 @@ class RealmManager: NSObject {
                     self.writeData(recipeResult)
                 }
                 else if(recipe.count == 1){
-                    self.updateData(recipeResult)
+                    self.updateData(recipeResult, propertyNeedUpdate: "")
                 }
             })
         }
@@ -48,9 +48,12 @@ class RealmManager: NSObject {
         }
     }
     
-    func updateData(object:Object){
-        try! realm.write {
-            realm.add(object, update: true)
+    func updateData(object:Recipe, propertyNeedUpdate:String){
+        try! self.realm.write {
+            if(propertyNeedUpdate != ""){
+                object.image = propertyNeedUpdate
+                realm.add(object, update: true)
+            }
         }
     }
     

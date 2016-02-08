@@ -8,12 +8,14 @@
 
 import UIKit
 import IQKeyboardManagerSwift
+import RealmSwift
 
 class RecipeViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate {
     
     var titleViewController:String = String()    
     var recipeDetail:Recipe = Recipe()
     var imagePicker: UIImagePickerController!
+    var imageLocation:String = String()
 
     @IBOutlet weak var imageRecipe: UIImageView!
     @IBOutlet weak var ingredientsDetail: UITextView!
@@ -41,6 +43,8 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         preparationRecipeDetail.editable = false
         ingredientsDetail.text = modifiedIngredient
         preparationRecipeDetail.text = recipeDetail.preparation
+        
+        print(RealmManager.SharedInstance.getAllRecipes())
      
     }
 
@@ -79,8 +83,56 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
         imageRecipe.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        
+        PhotoManager.sharedInstance.saveImage(imageRecipe.image!) { (imageLocation) -> Void in
+            self.imageLocation = imageLocation
+            self.updatePhotoDB()
+        }
+        
+        //UIImageWriteToSavedPhotosAlbum(imageRecipe.image!, self, Selector("image:didFinishSavingWithError:contextInfo:"), nil)
+
+        // Define the specific path, image name
+        /*let myImageName = titleRecipeDetail.text
+        let imagePath = fileInDocumentsDirectory(myImageName!)
+        
+        if let image = imageRecipe.image {
+            saveImage(image, path: imagePath)
+        }
+        else {
+            print("some error message")
+        }*/
     }
     
+    /*func saveImage (image: UIImage, path: String ) -> Bool{
+        
+        let pngImageData = UIImagePNGRepresentation(image)
+        //let jpgImageData = UIImageJPEGRepresentation(image, 1.0)   // if you want to save as JPEG
+        let result = pngImageData!.writeToFile(path, atomically: true)
+        
+        return result
+        
+    }
+    
+    func image(image: UIImage, didFinishSavingWithError
+        error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
+            if error != nil {
+                // Report error to user
+            }
+    }
+
+    
+    func getDocumentsURL() -> NSURL {
+        let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+        return documentsURL
+    }
+    
+    func fileInDocumentsDirectory(filename: String) -> String {
+        
+        let fileURL = getDocumentsURL().URLByAppendingPathComponent(filename)
+        return fileURL.path!
+        
+    }
+    */
 
    /* @IBAction func showRecipesList(sender: AnyObject) {
         
@@ -95,4 +147,14 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         }
     }
 */
+    
+    
+    func updatePhotoDB(){
+        if(self.imageLocation != ""){
+                //RealmManager.SharedInstance.updateData(self.recipeDetail, propertyNeedUpdate: self.imageLocation)            
+            PhotoManager.sharedInstance.retrieveImageWithIdentifer(self.imageLocation, completion: { (image) -> Void in
+                self.imageRecipe.image = image
+            })
+        }
+    }
 }
