@@ -60,4 +60,27 @@ class Recipe: Object {
 
         return self
     }
+  
+    
+    func createJSONOBject() -> AnyObject  {
+        let para = self.toDic()
+        
+        do {
+            let jsonData = try NSJSONSerialization.dataWithJSONObject(para, options: NSJSONWritingOptions.PrettyPrinted)
+            // here "jsonData" is the dictionary encoded in JSON data
+            var string:String = String()
+            string = String(data: jsonData, encoding: NSUTF8StringEncoding)! as String
+
+            return string
+        } catch let error as NSError {
+            print(error)
+        }
+        return para
+    }
+    
+    
+    func toDic() -> Dictionary<String, AnyObject> {
+        return ["id":self.id, "preparation":self.preparation, "ingredients":self.ingredients, "tps_preparation":self.tps_preparation, "tps_cuisson":self.tps_cuisson, "categorie":self.categorie, "title":self.title, "nb_personne":self.nb_personne, "day":self.date]
+    }
+    
 }

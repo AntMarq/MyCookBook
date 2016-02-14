@@ -19,13 +19,14 @@
 		FC05DC211C46EEC1000E9534 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC05DC1F1C46EEC1000E9534 /* LaunchScreen.storyboard */; };
 		FC05DC2C1C46EEC1000E9534 /* MyCookBookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC05DC2B1C46EEC1000E9534 /* MyCookBookTests.swift */; };
 		FC05DC371C46EEC1000E9534 /* MyCookBookUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC05DC361C46EEC1000E9534 /* MyCookBookUITests.swift */; };
+		FC88D1E51C70AEBC00AE3952 /* KeyFieldConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC88D1E41C70AEBC00AE3952 /* KeyFieldConstants.swift */; };
 		FCD8A0361C49D64300529944 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0351C49D64300529944 /* Recipe.swift */; };
 		FCD8A0381C4BD57400529944 /* RecipesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */; };
 		FCD8A03C1C4BDC4100529944 /* RecipesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A03B1C4BDC4100529944 /* RecipesTableViewCell.swift */; };
 		FCD8A0401C52B0A100529944 /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A03F1C52B0A100529944 /* NetworkConstants.swift */; };
 		FCD8A0421C53C36D00529944 /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0411C53C36D00529944 /* AlamofireManager.swift */; };
 		FCD8A0441C53C44A00529944 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0431C53C44A00529944 /* RealmManager.swift */; };
-		FCD8A0461C67CC5600529944 /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0451C67CC5600529944 /* PhotoManager.swift */; settings = {ASSET_TAGS = (); }; };
+		FCD8A0461C67CC5600529944 /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0451C67CC5600529944 /* PhotoManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		FC05DC321C46EEC1000E9534 /* MyCookBookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyCookBookUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC05DC361C46EEC1000E9534 /* MyCookBookUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCookBookUITests.swift; sourceTree = "<group>"; };
 		FC05DC381C46EEC1000E9534 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC88D1E41C70AEBC00AE3952 /* KeyFieldConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyFieldConstants.swift; sourceTree = "<group>"; };
 		FCD8A0351C49D64300529944 /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Recipe.swift; path = ../Recipe.swift; sourceTree = "<group>"; };
 		FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = RecipesListViewController.swift; path = ../RecipesListViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FCD8A03B1C4BDC4100529944 /* RecipesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipesTableViewCell.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				FCD8A03F1C52B0A100529944 /* NetworkConstants.swift */,
+				FC88D1E41C70AEBC00AE3952 /* KeyFieldConstants.swift */,
 			);
 			name = Configuration;
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 				386B32EF1C4D137500F834C6 /* AllRecipesListCollectionViewController.swift in Sources */,
 				FC05DC191C46EEC1000E9534 /* MainViewController.swift in Sources */,
 				FCD8A0461C67CC5600529944 /* PhotoManager.swift in Sources */,
+				FC88D1E51C70AEBC00AE3952 /* KeyFieldConstants.swift in Sources */,
 				FC05DC171C46EEC1000E9534 /* AppDelegate.swift in Sources */,
 				386B32DE1C48172D00F834C6 /* RecipeViewController.swift in Sources */,
 				FCD8A0361C49D64300529944 /* Recipe.swift in Sources */,

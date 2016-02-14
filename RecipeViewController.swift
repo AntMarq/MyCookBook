@@ -10,7 +10,7 @@ import UIKit
 import IQKeyboardManagerSwift
 import RealmSwift
 
-class RecipeViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate {
+class RecipeViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate,UITextViewDelegate {
     
     var titleViewController:String = String()    
     var recipeDetail:Recipe = Recipe()
@@ -45,6 +45,9 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         preparationRecipeDetail.text = recipeDetail.preparation
         
         print(RealmManager.SharedInstance.getAllRecipes())
+        
+        self.preparationRecipeDetail.delegate = self
+        self.ingredientsDetail.delegate = self
      
     }
 
@@ -80,81 +83,43 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         presentViewController(imagePicker, animated: true, completion: nil)
     }
     
+    func textViewDidEndEditing(textView: UITextView) {
+        if(textView == self.ingredientsDetail){
+            self.updatePropertyInDB(KeyFieldConstants.ingredientsKey)
+        }
+        else if(textView == self.preparationRecipeDetail){
+            self.updatePropertyInDB(KeyFieldConstants.preparationKey)
+        }
+    }
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
         imageRecipe.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         
         PhotoManager.sharedInstance.saveImage(imageRecipe.image!) { (imageLocation) -> Void in
             self.imageLocation = imageLocation
-            self.updatePhotoDB()
-        }
-        
-        //UIImageWriteToSavedPhotosAlbum(imageRecipe.image!, self, Selector("image:didFinishSavingWithError:contextInfo:"), nil)
-
-        // Define the specific path, image name
-        /*let myImageName = titleRecipeDetail.text
-        let imagePath = fileInDocumentsDirectory(myImageName!)
-        
-        if let image = imageRecipe.image {
-            saveImage(image, path: imagePath)
-        }
-        else {
-            print("some error message")
-        }*/
-    }
-    
-    /*func saveImage (image: UIImage, path: String ) -> Bool{
-        
-        let pngImageData = UIImagePNGRepresentation(image)
-        //let jpgImageData = UIImageJPEGRepresentation(image, 1.0)   // if you want to save as JPEG
-        let result = pngImageData!.writeToFile(path, atomically: true)
-        
-        return result
-        
-    }
-    
-    func image(image: UIImage, didFinishSavingWithError
-        error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
-            if error != nil {
-                // Report error to user
-            }
-    }
-
-    
-    func getDocumentsURL() -> NSURL {
-        let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-        return documentsURL
-    }
-    
-    func fileInDocumentsDirectory(filename: String) -> String {
-        
-        let fileURL = getDocumentsURL().URLByAppendingPathComponent(filename)
-        return fileURL.path!
-        
-    }
-    */
-
-   /* @IBAction func showRecipesList(sender: AnyObject) {
-        
-        self.performSegueWithIdentifier("showRecipesList", sender: self)
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showRecipesList" {
-            let popoverViewController = segue.destinationViewController as! RecipeViewController
-            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
-            popoverViewController.popoverPresentationController!.delegate = self
+            self.updatePropertyInDB(KeyFieldConstants.imageKey)
         }
     }
-*/
     
-    
-    func updatePhotoDB(){
-        if(self.imageLocation != ""){
+    func updatePropertyInDB(keyField:String){
+        if(keyField == KeyFieldConstants.imageKey && self.imageLocation != ""){
                 //RealmManager.SharedInstance.updateData(self.recipeDetail, propertyNeedUpdate: self.imageLocation)            
             PhotoManager.sharedInstance.retrieveImageWithIdentifer(self.imageLocation, completion: { (image) -> Void in
                 self.imageRecipe.image = image
             })
+        }
+        else if(keyField == KeyFieldConstants.ingredientsKey){
+            RealmManager.SharedInstance.updateDataWhithKey(self.recipeDetail, propertyNeedUpdate: self.ingredientsDetail.text, keyField: keyField)
+        }
+        else if(keyField == KeyFieldConstants.preparationKey){
+            RealmManager.SharedInstance.updateDataWhithKey(self.recipeDetail, propertyNeedUpdate: self.preparationRecipeDetail.text, keyField:keyField)
+        }
+        
+        AlamofireManager.SharedInstance.putRecipe(self.recipeDetail) { (success) -> Void in
+            if(success){
+                print("Recette sauvegardée")
+            }
         }
     }
 }
