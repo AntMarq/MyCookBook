@@ -10,6 +10,7 @@ import UIKit
 import IQKeyboardManagerSwift
 
 private let reuseIdentifier = "Cell"
+private let segueID = "RecipesListToRecipeDetail"
 
 class AllRecipesListCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
@@ -31,6 +32,7 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
 
         self.recipeCollectionView?.registerNib(UINib (nibName: "RecipeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
         navigationItem.title = titleViewController
+        
         
         AlamofireManager.SharedInstance.getToken { (success) -> Void in
             AlamofireManager.SharedInstance.downloadOrderedRecipes(self.categorieFilter, completion: { (recipes) -> Void in
@@ -91,13 +93,13 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
-            performSegueWithIdentifier("RecipesListToRecipeDetail", sender: cell)
+            performSegueWithIdentifier(segueID, sender: cell)
         }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let indexPath = self.recipeCollectionView?.indexPathForCell(sender as! UICollectionViewCell) {
-            if segue.identifier == "RecipesListToRecipeDetail"
+            if segue.identifier == segueID
             {
                 if let destinationVC = segue.destinationViewController as? RecipeViewController{
                     let objectData:Recipe = listRecipes[indexPath.row]

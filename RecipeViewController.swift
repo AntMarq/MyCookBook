@@ -17,11 +17,15 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     var imagePicker: UIImagePickerController!
     var imageLocation:String = String()
 
+    @IBOutlet weak var cuissonTime: UITextField!
+    @IBOutlet weak var preparationTime: UITextField!
     @IBOutlet weak var imageRecipe: UIImageView!
     @IBOutlet weak var ingredientsDetail: UITextView!
-    @IBOutlet weak var titleRecipeDetail: UILabel!
+    @IBOutlet weak var titleRecipeDetail: UITextField!
     @IBOutlet weak var preparationRecipeDetail: UITextView!
+    @IBOutlet weak var nb_personne: UITextField!
     
+    @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var btnTakePhoto: UIButton!
     
@@ -35,6 +39,11 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         super.viewDidLoad()
         
         navigationItem.title = recipeDetail.title
+        
+        popupView.hidden = true
+        popupView.layer.cornerRadius = 5;
+        popupView.layer.masksToBounds = true
+        
         imageRecipe.image = UIImage(named: recipeDetail.image)
         titleRecipeDetail.text = recipeDetail.title
         
@@ -43,12 +52,17 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         preparationRecipeDetail.editable = false
         ingredientsDetail.text = modifiedIngredient
         preparationRecipeDetail.text = recipeDetail.preparation
+        self.nb_personne.text = recipeDetail.nb_personne
+        self.preparationTime.text = recipeDetail.tps_preparation
+        self.cuissonTime.text = recipeDetail.tps_cuisson
         
         self.preparationRecipeDetail.delegate = self
         self.ingredientsDetail.delegate = self
-        
-        self.ingredientsDetail.text = "a\n b\n c\n d\n e\n f\n g\n h\n i\n j\n k\n l\n m\n n\n o\n p\n"
-     
+        self.cuissonTime.delegate = self
+        self.preparationTime.delegate = self
+        self.titleRecipeDetail.delegate = self
+        self.nb_personne.delegate = self
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -118,8 +132,18 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         
         AlamofireManager.SharedInstance.putRecipe(self.recipeDetail) { (success) -> Void in
             if(success){
-                print("Recette sauvegardée")
+                self.popupView.hidden = false
+                self.popupView.alpha = 1.0
+                var timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("update"), userInfo: nil, repeats: false)
             }
         }
+    }
+    
+    func update() {
+        //  PopUpView.hidden = true
+        UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.popupView.alpha = 0.0
+            }, completion: nil)
+        
     }
 }

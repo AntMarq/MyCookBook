@@ -8,6 +8,8 @@
 
 import UIKit
 
+private let segueID = "HomeToRecipesList"
+
 class MainViewController: UIViewController {
     
     var imgID = 0
@@ -38,12 +40,10 @@ class MainViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-        
     }
     
     func imageTapped(sender: UITapGestureRecognizer)
     {
-      // self.imgID = img.tag
         if sender.view?.tag == 1{
             imgID = 1
         }
@@ -56,11 +56,11 @@ class MainViewController: UIViewController {
         else if sender.view?.tag == 4{
             imgID = 4
         }
-        self.performSegueWithIdentifier("HomeToRecipesList", sender: self)
+        self.performSegueWithIdentifier(segueID, sender: self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "HomeToRecipesList"
+        if segue.identifier == segueID
         {
             if let destinationVC = segue.destinationViewController as? AllRecipesListCollectionViewController{
                 destinationVC.categorieFilter = String(imgID)
@@ -85,7 +85,5 @@ class MainViewController: UIViewController {
     func backController(){
         navigationController?.popViewControllerAnimated(true)
     }
-   
-
 }
 
