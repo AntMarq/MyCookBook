@@ -44,10 +44,10 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         ingredientsDetail.text = modifiedIngredient
         preparationRecipeDetail.text = recipeDetail.preparation
         
-        print(RealmManager.SharedInstance.getAllRecipes())
-        
         self.preparationRecipeDetail.delegate = self
         self.ingredientsDetail.delegate = self
+        
+        self.ingredientsDetail.text = "a\n b\n c\n d\n e\n f\n g\n h\n i\n j\n k\n l\n m\n n\n o\n p\n"
      
     }
 
