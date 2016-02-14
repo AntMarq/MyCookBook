@@ -97,6 +97,21 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         presentViewController(imagePicker, animated: true, completion: nil)
     }
     
+    func textFieldDidEndEditing(textField: UITextField) {
+        if(textField == self.preparationTime){
+            self.updatePropertyInDB(KeyFieldConstants.tps_preparationKey)
+        }
+        else if(textField == self.cuissonTime){
+            self.updatePropertyInDB(KeyFieldConstants.tps_cuissonKey)
+        }
+        else if(textField == self.nb_personne){
+            self.updatePropertyInDB(KeyFieldConstants.nb_personneKey)
+        }
+        else if(textField == self.titleRecipeDetail){
+            self.updatePropertyInDB(KeyFieldConstants.titleKey)
+        }
+    }
+    
     func textViewDidEndEditing(textView: UITextView) {
         if(textView == self.ingredientsDetail){
             self.updatePropertyInDB(KeyFieldConstants.ingredientsKey)
@@ -104,44 +119,83 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         else if(textView == self.preparationRecipeDetail){
             self.updatePropertyInDB(KeyFieldConstants.preparationKey)
         }
+        
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
-        imageRecipe.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        let image: UIImage  = info[UIImagePickerControllerOriginalImage]as! UIImage
         
-        PhotoManager.sharedInstance.saveImage(imageRecipe.image!) { (imageLocation) -> Void in
+        
+        /*UIImageWriteToSavedPhotosAlbum(image, self,
+            "image:didFinishSavingWithError:contextInfo:", nil)*/
+        
+        imageRecipe.image = image
+        
+        PhotoManager.sharedInstance.saveImage(image) { (imageLocation) -> Void in
             self.imageLocation = imageLocation
             self.updatePropertyInDB(KeyFieldConstants.imageKey)
+        }
+        
+    }
+    
+    func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
+        
+        if error != nil {
+            let alert = UIAlertController(title: "Save Failed",
+                message: "Failed to save image",
+                preferredStyle: UIAlertControllerStyle.Alert)
+            
+            let cancelAction = UIAlertAction(title: "OK",
+                style: .Cancel, handler: nil)
+            
+            alert.addAction(cancelAction)
+            self.presentViewController(alert, animated: true,
+                completion: nil)
         }
     }
     
     func updatePropertyInDB(keyField:String){
         if(keyField == KeyFieldConstants.imageKey && self.imageLocation != ""){
-                //RealmManager.SharedInstance.updateData(self.recipeDetail, propertyNeedUpdate: self.imageLocation)            
+            /*dispatch_async(dispatch_queue_create("background", nil)) {
+                RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.imageLocation, keyField: keyField)
+            }*/
+            
             PhotoManager.sharedInstance.retrieveImageWithIdentifer(self.imageLocation, completion: { (image) -> Void in
                 self.imageRecipe.image = image
             })
         }
         else if(keyField == KeyFieldConstants.ingredientsKey){
-            RealmManager.SharedInstance.updateDataWhithKey(self.recipeDetail, propertyNeedUpdate: self.ingredientsDetail.text, keyField: keyField)
+            RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.ingredientsDetail.text, keyField: keyField)
         }
         else if(keyField == KeyFieldConstants.preparationKey){
-            RealmManager.SharedInstance.updateDataWhithKey(self.recipeDetail, propertyNeedUpdate: self.preparationRecipeDetail.text, keyField:keyField)
+            RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.preparationRecipeDetail.text, keyField:keyField)
+        }
+        else if(keyField == KeyFieldConstants.titleKey){
+            RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.titleRecipeDetail.text!, keyField:keyField)
+        }
+        else if(keyField == KeyFieldConstants.tps_cuissonKey){
+            RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.cuissonTime.text!, keyField:keyField)
+        }
+        else if(keyField == KeyFieldConstants.tps_preparationKey){
+            RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.preparationTime.text!, keyField:keyField)
+        }
+        else if(keyField == KeyFieldConstants.nb_personneKey){
+            RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.nb_personne.text!, keyField:keyField)
         }
         
         AlamofireManager.SharedInstance.putRecipe(self.recipeDetail) { (success) -> Void in
             if(success){
                 self.popupView.hidden = false
-                self.popupView.alpha = 1.0
-                var timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("update"), userInfo: nil, repeats: false)
+                self.popupView.alpha = 2.0
+                _ = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("update"), userInfo: nil, repeats: false)
             }
         }
     }
     
     func update() {
         //  PopUpView.hidden = true
-        UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+        UIView.animateWithDuration(2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
             self.popupView.alpha = 0.0
             }, completion: nil)
         

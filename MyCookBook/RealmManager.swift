@@ -24,7 +24,7 @@ class RealmManager: NSObject {
                     self.writeData(recipeResult)
                 }
                 else if(recipe.count == 1){
-                    self.updateDataWhithKey(recipeResult, propertyNeedUpdate: "", keyField:"")
+                    self.updateDataWithKey(recipeResult, propertyNeedUpdate: "", keyField:"")
                 }
             })
         }
@@ -48,7 +48,7 @@ class RealmManager: NSObject {
         }
     }
     
-    func updateDataWhithKey(object:Recipe, propertyNeedUpdate:String, keyField:String){
+    func updateDataWithKey(object:Recipe, propertyNeedUpdate:String, keyField:String){
         try! self.realm.write {
             if(keyField == KeyFieldConstants.preparationKey){
                 object.preparation = propertyNeedUpdate
@@ -62,7 +62,19 @@ class RealmManager: NSObject {
             else if(keyField == KeyFieldConstants.ingredientsKey){
                 object.ingredients = propertyNeedUpdate
             }
-            
+            else if(keyField == KeyFieldConstants.titleKey){
+                object.title = propertyNeedUpdate
+            }
+            else if(keyField == KeyFieldConstants.tps_cuissonKey){
+                object.tps_cuisson = propertyNeedUpdate
+            }
+            else if(keyField == KeyFieldConstants.tps_preparationKey){
+                object.tps_preparation = propertyNeedUpdate
+            }
+            else if(keyField == KeyFieldConstants.nb_personneKey){
+                object.nb_personne = propertyNeedUpdate
+            }
+                       
             realm.add(object, update: true)
         }
     }

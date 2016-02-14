@@ -62,7 +62,7 @@ class Recipe: Object {
     }
   
     
-    func createJSONOBject() -> AnyObject  {
+    /*func createJSONOBject() -> AnyObject  {
         let para = self.toDic()
         
         do {
@@ -76,7 +76,7 @@ class Recipe: Object {
             print(error)
         }
         return para
-    }
+    }*/
     
     
     func toDic() -> Dictionary<String, AnyObject> {
