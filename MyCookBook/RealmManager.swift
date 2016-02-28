@@ -55,9 +55,7 @@ class RealmManager: NSObject {
                     object.preparation = propertyNeedUpdate
                 }
                 else if(keyField == KeyFieldConstants.imageKey){
-                    /*if(propertyNeedUpdate != ""){
-                        parent!.image = propertyNeedUpdate
-                    }*/
+                     object.image = propertyNeedUpdate
                 }
                 else if(keyField == KeyFieldConstants.ingredientsKey){
                     object.ingredients = propertyNeedUpdate
@@ -74,7 +72,9 @@ class RealmManager: NSObject {
                 else if(keyField == KeyFieldConstants.nb_personneKey){
                     object.nb_personne = propertyNeedUpdate
                 }
-                
+                else if(keyField == KeyFieldConstants.categoryKey){
+                    object.categorie = propertyNeedUpdate
+                }
                 //  realm.add(object, update: true)
         }
     }

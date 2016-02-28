@@ -343,22 +343,35 @@
                                     <constraint firstAttribute="trailing" secondItem="DMs-Q6-Dq2" secondAttribute="trailing" constant="8" id="uVn-Tw-7HS"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Catégorie :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xq8-CV-aGX">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Catégorie :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xq8-CV-aGX">
                                 <rect key="frame" x="520" y="120" width="112" height="21"/>
                                 <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="18"/>
                                 <color key="textColor" red="1" green="0.98206378419999996" blue="0.94613245180000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Ma catégorie" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VQe-tQ-s1r">
-                                <rect key="frame" x="648" y="116" width="97" height="30"/>
-                                <color key="textColor" red="1" green="0.98206378419999996" blue="0.94613245180000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gxD-wK-zUI" customClass="AKPickerView" customModule="AKPickerView_Swift">
+                                <rect key="frame" x="634" y="117" width="364" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="interitemSpacing">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="viewDepth">
+                                        <real key="value" value="500"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                        <color key="value" red="1" green="0.98206378419999996" blue="0.94613245180000005" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="highlightedTextColor">
+                                        <color key="value" red="0.81543388090000002" green="0.92119808179999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="HZV-Nx-i81" firstAttribute="top" secondItem="Rfp-ND-ka0" secondAttribute="bottom" id="10G-tX-USS"/>
+                            <constraint firstItem="gxD-wK-zUI" firstAttribute="top" secondItem="Gp6-Y7-7an" secondAttribute="bottom" constant="19" id="2hD-PT-fn4"/>
                             <constraint firstItem="Fab-9w-2fA" firstAttribute="leading" secondItem="N1Y-Mw-jGA" secondAttribute="leading" id="4Cr-ra-SF2"/>
                             <constraint firstItem="Gp6-Y7-7an" firstAttribute="top" secondItem="F6z-Ya-cdX" secondAttribute="bottom" constant="8" id="6xf-6v-cmt"/>
                             <constraint firstItem="HZV-Nx-i81" firstAttribute="top" secondItem="Rfp-ND-ka0" secondAttribute="bottom" id="7kK-p0-TRp"/>
@@ -368,21 +381,29 @@
                             <constraint firstItem="HZV-Nx-i81" firstAttribute="top" secondItem="ueg-ED-QBO" secondAttribute="bottom" constant="26" id="AFw-7d-Yot"/>
                             <constraint firstItem="Fab-9w-2fA" firstAttribute="top" secondItem="bqc-7c-rLG" secondAttribute="bottom" constant="16" id="ARe-Zu-GYG"/>
                             <constraint firstItem="Fab-9w-2fA" firstAttribute="trailing" secondItem="N1Y-Mw-jGA" secondAttribute="trailing" id="BCu-Nc-1Wl"/>
+                            <constraint firstItem="xq8-CV-aGX" firstAttribute="top" secondItem="Gp6-Y7-7an" secondAttribute="bottom" constant="22" id="BI2-ZM-8Q4"/>
+                            <constraint firstItem="xq8-CV-aGX" firstAttribute="trailing" secondItem="dkB-KJ-iLc" secondAttribute="trailing" id="C4y-Sg-wye"/>
                             <constraint firstItem="IgP-1Q-eTo" firstAttribute="leading" secondItem="ZOs-ce-LVQ" secondAttribute="leading" constant="392" id="HyU-ec-MQo"/>
                             <constraint firstItem="Rfp-ND-ka0" firstAttribute="leading" secondItem="ZOs-ce-LVQ" secondAttribute="leading" id="IUT-O1-fjH"/>
                             <constraint firstAttribute="trailing" secondItem="dkB-KJ-iLc" secondAttribute="trailing" constant="392" id="M68-YO-tHw"/>
                             <constraint firstItem="Gp6-Y7-7an" firstAttribute="leading" secondItem="ZOs-ce-LVQ" secondAttribute="leading" constant="539" id="MtD-iu-8fp"/>
+                            <constraint firstItem="gxD-wK-zUI" firstAttribute="leading" secondItem="xq8-CV-aGX" secondAttribute="trailing" constant="2" id="Ouy-Qe-z4S"/>
                             <constraint firstItem="ueg-ED-QBO" firstAttribute="top" secondItem="dkB-KJ-iLc" secondAttribute="bottom" constant="-1" id="Oxs-PE-jwC"/>
                             <constraint firstItem="YJ2-U1-ZLu" firstAttribute="leading" secondItem="ZOs-ce-LVQ" secondAttribute="leading" constant="36" id="QK4-tU-YnA"/>
                             <constraint firstItem="DMs-Q6-Dq2" firstAttribute="top" secondItem="Rfp-ND-ka0" secondAttribute="bottom" constant="-56" id="Qwd-jY-f4h"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gxD-wK-zUI" secondAttribute="trailing" constant="6" id="R2K-Ln-cG3"/>
                             <constraint firstItem="bqc-7c-rLG" firstAttribute="leading" secondItem="ZOs-ce-LVQ" secondAttribute="leading" constant="43" id="SeD-dC-F7O"/>
                             <constraint firstItem="dkB-KJ-iLc" firstAttribute="top" secondItem="Gp6-Y7-7an" secondAttribute="bottom" constant="51" id="UCG-Vl-hqS"/>
                             <constraint firstItem="N1Y-Mw-jGA" firstAttribute="top" secondItem="YJ2-U1-ZLu" secondAttribute="bottom" constant="17" id="UNe-w4-ylp"/>
+                            <constraint firstItem="dkB-KJ-iLc" firstAttribute="top" secondItem="xq8-CV-aGX" secondAttribute="bottom" constant="8" symbolic="YES" id="Wu9-dJ-jx3"/>
+                            <constraint firstItem="ueg-ED-QBO" firstAttribute="top" secondItem="gxD-wK-zUI" secondAttribute="bottom" constant="45" id="Yyl-ti-yOg"/>
+                            <constraint firstItem="xq8-CV-aGX" firstAttribute="leading" secondItem="dkB-KJ-iLc" secondAttribute="leading" id="Z2F-ll-DwF"/>
                             <constraint firstItem="Pch-o1-eBE" firstAttribute="top" secondItem="YJ2-U1-ZLu" secondAttribute="bottom" constant="-300" id="ZDo-nZ-FoD"/>
                             <constraint firstAttribute="trailing" secondItem="Gp6-Y7-7an" secondAttribute="trailing" constant="56" id="Zjp-NO-ndW"/>
                             <constraint firstAttribute="trailing" secondItem="IgP-1Q-eTo" secondAttribute="trailing" constant="392" id="aUv-kX-jkE"/>
                             <constraint firstItem="N1Y-Mw-jGA" firstAttribute="leading" secondItem="ZOs-ce-LVQ" secondAttribute="leading" constant="36" id="bS6-BR-USP"/>
                             <constraint firstItem="Fab-9w-2fA" firstAttribute="bottom" secondItem="ueg-ED-QBO" secondAttribute="bottom" constant="6" id="gSd-0v-5RB"/>
+                            <constraint firstItem="xq8-CV-aGX" firstAttribute="leading" secondItem="ueg-ED-QBO" secondAttribute="leading" id="go7-b7-zdK"/>
                             <constraint firstAttribute="trailing" secondItem="ueg-ED-QBO" secondAttribute="trailing" constant="20" id="uIv-B1-2Si"/>
                             <constraint firstItem="bqc-7c-rLG" firstAttribute="top" secondItem="N1Y-Mw-jGA" secondAttribute="bottom" constant="14" id="zbx-Ll-aXk"/>
                         </constraints>
@@ -413,12 +434,12 @@
                     <connections>
                         <outlet property="IQLayoutGuideConstraint" destination="AFw-7d-Yot" id="O2N-RV-tfA"/>
                         <outlet property="btnTakePhoto" destination="Pch-o1-eBE" id="oCp-Xx-Ab3"/>
-                        <outlet property="category" destination="VQe-tQ-s1r" id="iEV-Gi-ZKE"/>
                         <outlet property="cuissonTime" destination="Lcu-Wh-2Qh" id="6GR-AI-odo"/>
                         <outlet property="editBtn" destination="OlE-u9-JZV" id="6Ab-uA-juO"/>
                         <outlet property="imageRecipe" destination="YJ2-U1-ZLu" id="Jla-Dx-ZgW"/>
                         <outlet property="ingredientsDetail" destination="Fab-9w-2fA" id="6xW-ls-zo4"/>
                         <outlet property="nb_personne" destination="Ihp-jK-X4O" id="hEI-jH-21O"/>
+                        <outlet property="pickerView" destination="gxD-wK-zUI" id="VQR-cD-pxJ"/>
                         <outlet property="popupView" destination="IgP-1Q-eTo" id="ocu-bV-S5G"/>
                         <outlet property="preparationRecipeDetail" destination="ueg-ED-QBO" id="UjX-8I-Csl"/>
                         <outlet property="preparationTime" destination="FuP-H3-AmG" id="6xx-FE-8Xh"/>

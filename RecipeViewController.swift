@@ -9,8 +9,9 @@
 import UIKit
 import IQKeyboardManagerSwift
 import RealmSwift
+import AKPickerView_Swift
 
-class RecipeViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate,UITextViewDelegate {
+class RecipeViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate,UITextViewDelegate, AKPickerViewDataSource, AKPickerViewDelegate {
     
     var titleViewController:String = String()    
     var recipeDetail:Recipe = Recipe()
@@ -18,7 +19,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     var imageLocation:String = String()
     var newRecipe:Bool = false
 
-    @IBOutlet weak var category: UITextField!
+    @IBOutlet var pickerView: AKPickerView!
     @IBOutlet weak var cuissonTime: UITextField!
     @IBOutlet weak var preparationTime: UITextField!
     @IBOutlet weak var imageRecipe: UIImageView!
@@ -30,6 +31,8 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var btnTakePhoto: UIButton!
+    
+    let titles = ["Mes entrées", "Mes plats", "Mes desserts", "Mes apéros"]
     
     override func viewWillAppear(animated: Bool)
     {
@@ -59,9 +62,15 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         self.preparationTime.delegate = self
         self.titleRecipeDetail.delegate = self
         self.nb_personne.delegate = self
-        self.category.delegate = self
         
-        /*NSNotificationCenter.defaultCenter().addObserver(self, selector: "methodOfReceivedNotification:", name:"go", object: nil)*/
+        self.pickerView.delegate = self
+        self.pickerView.dataSource = self
+        self.pickerView.font = UIFont(name: "HelveticaNeue-Light", size: 20)!
+        self.pickerView.highlightedFont = UIFont(name: "HelveticaNeue", size: 20)!
+        self.pickerView.pickerViewStyle = .Wheel
+        self.pickerView.maskDisabled = false
+        self.pickerView.reloadData()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -121,14 +130,6 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
                 self.updatePropertyInDB(KeyFieldConstants.titleKey)
             }
         }
-        else if(textField == self.category){
-            if(newRecipe){
-                recipeDetail.categorie = self.category.text!
-            }
-            else{
-                self.updatePropertyInDB(KeyFieldConstants.categoryKey)
-            }
-        }
     }
     
 // MARK: -  TextView Delegate
@@ -169,9 +170,9 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
             ingredientsDetail.editable = false
             preparationRecipeDetail.editable = false
             btnTakePhoto.hidden = true
-            //NSNotificationCenter.defaultCenter().postNotificationName("go", object: nil)
             if(!newRecipe){
-                self.updateImageDB()
+                self.updatePropertyInDB(KeyFieldConstants.imageKey)
+                self.updateRecipe()
             }
             else{
                 self.postRecipe()
@@ -206,12 +207,6 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
             self.popupView.alpha = 0.0
             }, completion: nil)
     }
-    
-// MARK: - Notification
-
-    func methodOfReceivedNotification(notification: NSNotification){
-        self.updateImageDB()
-    }
 
 // MARK: - DB Update & WS
     
@@ -234,19 +229,22 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         else if(keyField == KeyFieldConstants.nb_personneKey){
             RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.nb_personne.text!, keyField:keyField)
         }
-        else if(keyField == KeyFieldConstants.categoryKey){
+        /*else if(keyField == KeyFieldConstants.categoryKey){
             RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.category.text!, keyField:keyField)
+        }*/
+        else if(keyField == KeyFieldConstants.imageKey){
+            RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.imageLocation, keyField:keyField)
         }
-        self.updateRecipe()
+        //self.updateRecipe()
     }
     
-    func updateImageDB(){
+   /* func updateImageDB(){
         let realm = try! Realm()
         try! realm.write {
             self.recipeDetail.image = self.imageLocation
         }
         self.updateRecipe()
-    }
+    }*/
     
     func updateRecipe(){
         AlamofireManager.SharedInstance.putRecipe(self.recipeDetail) { (success) -> Void in
@@ -268,12 +266,29 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         }
         AlamofireManager.SharedInstance.postRecipe(self.recipeDetail) { (success) -> Void in
             if(success){
-              //  RealmManager.SharedInstance.writeData(recipeDetail)
+                self.newRecipe = true
                 self.popupView.hidden = false
                 self.popupView.alpha = 2.0
                 _ = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("showSavePopup"), userInfo: nil, repeats: false)
             }
         }
+    }
+ 
+    func numberOfItemsInPickerView(pickerView: AKPickerView) -> Int {
+        return self.titles.count
+    }
+    
+    func pickerView(pickerView: AKPickerView, didSelectItem item: Int) {
+        RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate:String(item+1), keyField:KeyFieldConstants.categoryKey)
+        print("Your favorite city is \(self.titles[item])")
+    }
+    
+    func pickerView(pickerView: AKPickerView, titleForItem item: Int) -> String {
+        return self.titles[item] 
+    }
+    
+    func pickerView(pickerView: AKPickerView, imageForItem item: Int) -> UIImage {
+        return UIImage(named: self.titles[item] )!
     }
 
     
