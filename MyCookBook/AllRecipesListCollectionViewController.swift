@@ -84,7 +84,7 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
         let cell:RecipeCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! RecipeCollectionViewCell
         cell.titleRecipe.text = listRecipes[indexPath.row].title
         //cell.imageRecipe.image = UIImage(named: listRecipes[indexPath.row].image)
-        PhotoManager.sharedInstance.retrieveImageWithIdentifer(recipeDetail.image) { (image) -> Void in
+        PhotoManager.sharedInstance.retrieveImageWithIdentifer(listRecipes[indexPath.row].image) { (image) -> Void in
             cell.imageRecipe.image = image
         }
 
@@ -104,6 +104,7 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
                 if let destinationVC = segue.destinationViewController as? RecipeViewController{
                     let objectData:Recipe = listRecipes[indexPath.row]
                     destinationVC.recipeDetail = objectData
+                    destinationVC.newRecipe = false
                 }
             }
         }

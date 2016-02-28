@@ -114,4 +114,25 @@ class AlamofireManager: NSObject {
                 }
             }
         }
+    
+    func postRecipe(recipe:Recipe,completion:(success:Bool)->Void){
+        let params = recipe.toDicPOST()
+        Alamofire.request(.POST, updateRecipe+token, parameters:params, encoding: .JSON) .responseJSON{
+            response in
+            switch response.result {
+            case .Success:
+                if response.response!.statusCode == 200 {
+                    completion(success: true)
+                } else {
+                    print("Request failed with error: \(response.response!.statusCode)")
+                    print("Request failed with error: \(response.debugDescription)")
+
+                    completion(success: false)
+                }
+            case .Failure(let error):
+                print("Request failed with error: \(error)")
+                completion(success: false)
+            }
+        }
+    }
 }

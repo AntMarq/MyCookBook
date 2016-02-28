@@ -16,7 +16,9 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     var recipeDetail:Recipe = Recipe()
     var imagePicker: UIImagePickerController!
     var imageLocation:String = String()
+    var newRecipe:Bool = false
 
+    @IBOutlet weak var category: UITextField!
     @IBOutlet weak var cuissonTime: UITextField!
     @IBOutlet weak var preparationTime: UITextField!
     @IBOutlet weak var imageRecipe: UIImageView!
@@ -40,21 +42,16 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         
         navigationItem.title = recipeDetail.title
         
+        if(newRecipe == false){
+            loadInfo()
+        }
+        
+        ingredientsDetail.editable = false
+        preparationRecipeDetail.editable = false
+        
         popupView.hidden = true
         popupView.layer.cornerRadius = 5;
         popupView.layer.masksToBounds = true
-        
-        imageRecipe.image = UIImage(named: recipeDetail.image)
-        titleRecipeDetail.text = recipeDetail.title
-        
-        let modifiedIngredient = recipeDetail.ingredients.stringByReplacingOccurrencesOfString(", ", withString: "\n", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        ingredientsDetail.editable = false
-        preparationRecipeDetail.editable = false
-        ingredientsDetail.text = modifiedIngredient
-        preparationRecipeDetail.text = recipeDetail.preparation
-        self.nb_personne.text = recipeDetail.nb_personne
-        self.preparationTime.text = recipeDetail.tps_preparation
-        self.cuissonTime.text = recipeDetail.tps_cuisson
         
         self.preparationRecipeDetail.delegate = self
         self.ingredientsDetail.delegate = self
@@ -62,13 +59,99 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         self.preparationTime.delegate = self
         self.titleRecipeDetail.delegate = self
         self.nb_personne.delegate = self
-
+        self.category.delegate = self
+        
+        /*NSNotificationCenter.defaultCenter().addObserver(self, selector: "methodOfReceivedNotification:", name:"go", object: nil)*/
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    
+// MARK: - loadInfo
+    
+    func loadInfo(){
+        PhotoManager.sharedInstance.retrieveImageWithIdentifer(recipeDetail.image, completion: { (image) -> Void in
+            self.imageRecipe.image = image
+        })
+        titleRecipeDetail.text = recipeDetail.title
+        
+        let modifiedIngredient = recipeDetail.ingredients.stringByReplacingOccurrencesOfString(", ", withString: "\n", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        ingredientsDetail.text = modifiedIngredient
+        preparationRecipeDetail.text = recipeDetail.preparation
+        self.nb_personne.text = recipeDetail.nb_personne
+        self.preparationTime.text = recipeDetail.tps_preparation
+        self.cuissonTime.text = recipeDetail.tps_cuisson
+    }
+
+// MARK: - TextField Delegate
+
+    func textFieldDidEndEditing(textField: UITextField) {
+        if(textField == self.preparationTime){
+            if(newRecipe){
+                recipeDetail.tps_preparation = self.preparationTime.text!
+            }
+            else{
+                self.updatePropertyInDB(KeyFieldConstants.tps_preparationKey)
+            }
+        }
+        else if(textField == self.cuissonTime){
+            if(newRecipe){
+                 recipeDetail.tps_cuisson = self.cuissonTime.text!
+            }
+            else{
+                self.updatePropertyInDB(KeyFieldConstants.tps_cuissonKey)
+            }
+        }
+        else if(textField == self.nb_personne){
+            if(newRecipe){
+                recipeDetail.nb_personne = self.nb_personne.text!
+            }
+            else{
+                self.updatePropertyInDB(KeyFieldConstants.nb_personneKey)
+            }
+        }
+        else if(textField == self.titleRecipeDetail){
+            if(newRecipe){
+                recipeDetail.title = self.titleRecipeDetail.text!
+            }
+            else{
+                self.updatePropertyInDB(KeyFieldConstants.titleKey)
+            }
+        }
+        else if(textField == self.category){
+            if(newRecipe){
+                recipeDetail.categorie = self.category.text!
+            }
+            else{
+                self.updatePropertyInDB(KeyFieldConstants.categoryKey)
+            }
+        }
+    }
+    
+// MARK: -  TextView Delegate
+    func textViewDidEndEditing(textView: UITextView) {
+        if(textView == self.ingredientsDetail){
+            if(newRecipe){
+               recipeDetail.ingredients = self.ingredientsDetail.text
+            }
+            else{
+                self.updatePropertyInDB(KeyFieldConstants.ingredientsKey)
+            }
+        }
+        else if(textView == self.preparationRecipeDetail){
+            if(newRecipe){
+                recipeDetail.preparation = self.preparationRecipeDetail.text
+            }
+            else{
+                self.updatePropertyInDB(KeyFieldConstants.preparationKey)
+            }
+        }
+    }
+    
+// MARK: - IBAction
     
     @IBAction func backController(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)
@@ -86,6 +169,13 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
             ingredientsDetail.editable = false
             preparationRecipeDetail.editable = false
             btnTakePhoto.hidden = true
+            //NSNotificationCenter.defaultCenter().postNotificationName("go", object: nil)
+            if(!newRecipe){
+                self.updateImageDB()
+            }
+            else{
+                self.postRecipe()
+            }
         }
     }
     
@@ -97,75 +187,36 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         presentViewController(imagePicker, animated: true, completion: nil)
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        if(textField == self.preparationTime){
-            self.updatePropertyInDB(KeyFieldConstants.tps_preparationKey)
-        }
-        else if(textField == self.cuissonTime){
-            self.updatePropertyInDB(KeyFieldConstants.tps_cuissonKey)
-        }
-        else if(textField == self.nb_personne){
-            self.updatePropertyInDB(KeyFieldConstants.nb_personneKey)
-        }
-        else if(textField == self.titleRecipeDetail){
-            self.updatePropertyInDB(KeyFieldConstants.titleKey)
-        }
-    }
-    
-    func textViewDidEndEditing(textView: UITextView) {
-        if(textView == self.ingredientsDetail){
-            self.updatePropertyInDB(KeyFieldConstants.ingredientsKey)
-        }
-        else if(textView == self.preparationRecipeDetail){
-            self.updatePropertyInDB(KeyFieldConstants.preparationKey)
-        }
-        
-    }
+// MARK: - Take Photo methods
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
         let image: UIImage  = info[UIImagePickerControllerOriginalImage]as! UIImage
-        
-        
-        /*UIImageWriteToSavedPhotosAlbum(image, self,
-            "image:didFinishSavingWithError:contextInfo:", nil)*/
-        
         imageRecipe.image = image
-        
         PhotoManager.sharedInstance.saveImage(image) { (imageLocation) -> Void in
             self.imageLocation = imageLocation
-            self.updatePropertyInDB(KeyFieldConstants.imageKey)
         }
-        
+    }
+
+// MARK: - Popup
+    
+    func showSavePopup() {
+        //  PopUpView.hidden = true
+        UIView.animateWithDuration(2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.popupView.alpha = 0.0
+            }, completion: nil)
     }
     
-    func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
-        
-        if error != nil {
-            let alert = UIAlertController(title: "Save Failed",
-                message: "Failed to save image",
-                preferredStyle: UIAlertControllerStyle.Alert)
-            
-            let cancelAction = UIAlertAction(title: "OK",
-                style: .Cancel, handler: nil)
-            
-            alert.addAction(cancelAction)
-            self.presentViewController(alert, animated: true,
-                completion: nil)
-        }
+// MARK: - Notification
+
+    func methodOfReceivedNotification(notification: NSNotification){
+        self.updateImageDB()
     }
+
+// MARK: - DB Update & WS
     
     func updatePropertyInDB(keyField:String){
-        if(keyField == KeyFieldConstants.imageKey && self.imageLocation != ""){
-            /*dispatch_async(dispatch_queue_create("background", nil)) {
-                RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.imageLocation, keyField: keyField)
-            }*/
-            
-            PhotoManager.sharedInstance.retrieveImageWithIdentifer(self.imageLocation, completion: { (image) -> Void in
-                self.imageRecipe.image = image
-            })
-        }
-        else if(keyField == KeyFieldConstants.ingredientsKey){
+        if(keyField == KeyFieldConstants.ingredientsKey){
             RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.ingredientsDetail.text, keyField: keyField)
         }
         else if(keyField == KeyFieldConstants.preparationKey){
@@ -183,21 +234,47 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         else if(keyField == KeyFieldConstants.nb_personneKey){
             RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.nb_personne.text!, keyField:keyField)
         }
-        
+        else if(keyField == KeyFieldConstants.categoryKey){
+            RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.category.text!, keyField:keyField)
+        }
+        self.updateRecipe()
+    }
+    
+    func updateImageDB(){
+        let realm = try! Realm()
+        try! realm.write {
+            self.recipeDetail.image = self.imageLocation
+        }
+        self.updateRecipe()
+    }
+    
+    func updateRecipe(){
         AlamofireManager.SharedInstance.putRecipe(self.recipeDetail) { (success) -> Void in
             if(success){
                 self.popupView.hidden = false
                 self.popupView.alpha = 2.0
-                _ = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("update"), userInfo: nil, repeats: false)
+                _ = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("showSavePopup"), userInfo: nil, repeats: false)
             }
         }
     }
     
-    func update() {
-        //  PopUpView.hidden = true
-        UIView.animateWithDuration(2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-            self.popupView.alpha = 0.0
-            }, completion: nil)
-        
+    func postRecipe(){
+        if(self.recipeDetail.date == ""){
+            let todaysDate:NSDate = NSDate()
+            let dateFormatter:NSDateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let dateInFormat:String = dateFormatter.stringFromDate(todaysDate)
+            self.recipeDetail.date = dateInFormat
+        }
+        AlamofireManager.SharedInstance.postRecipe(self.recipeDetail) { (success) -> Void in
+            if(success){
+              //  RealmManager.SharedInstance.writeData(recipeDetail)
+                self.popupView.hidden = false
+                self.popupView.alpha = 2.0
+                _ = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("showSavePopup"), userInfo: nil, repeats: false)
+            }
+        }
     }
+
+    
 }

@@ -22,6 +22,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var imgPlat: UIImageView!
     @IBOutlet weak var imgApero: UIImageView!
     
+   
     override func viewWillAppear(animated: Bool)
     {
         super.viewWillDisappear(animated)
@@ -75,7 +76,14 @@ class MainViewController: UIViewController {
                 }
             }
         }
+        else if(segue.identifier == "newRecipe"){
+            if let destinationVC = segue.destinationViewController as? RecipeViewController{
+                destinationVC.recipeDetail = Recipe()
+                destinationVC.newRecipe = true
+            }
+        }
     }
+    
     
     func addGestureToImageView(img:UIImageView){
         let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))

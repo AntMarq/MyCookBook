@@ -27,6 +27,7 @@ class Recipe: Object {
     dynamic var tps_cuisson = ""
     dynamic var categorie = ""
     dynamic var nb_personne = ""
+    dynamic var lastUpdated = ""
     
     override class func primaryKey() -> String {
         return "id"
@@ -57,6 +58,7 @@ class Recipe: Object {
         tps_preparation    = dictionary["tps_preparation"].stringValue
         tps_cuisson        = dictionary["tps_cuisson"].stringValue
         nb_personne        = dictionary["nb_personne"].stringValue
+        lastUpdated        = dictionary["lastUpdated"].stringValue
 
         return self
     }
@@ -80,7 +82,11 @@ class Recipe: Object {
     
     
     func toDic() -> Dictionary<String, AnyObject> {
-        return ["id":self.id, "preparation":self.preparation, "ingredients":self.ingredients, "tps_preparation":self.tps_preparation, "tps_cuisson":self.tps_cuisson, "categorie":self.categorie, "title":self.title, "nb_personne":self.nb_personne, "day":self.date]
+        return ["id":self.id, "preparation":self.preparation, "ingredients":self.ingredients, "tps_preparation":self.tps_preparation, "tps_cuisson":self.tps_cuisson, "categorie":self.categorie, "title":self.title, "nb_personne":self.nb_personne, "day":self.date, "image":self.image]
+    }
+    
+    func toDicPOST() -> Dictionary<String, AnyObject> {
+        return ["preparation":self.preparation, "ingredients":self.ingredients, "tps_preparation":self.tps_preparation, "tps_cuisson":self.tps_cuisson, "categorie":self.categorie, "title":self.title, "nb_personne":self.nb_personne, "day":self.date, "image":self.image]
     }
     
 }

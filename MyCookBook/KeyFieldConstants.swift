@@ -19,5 +19,7 @@ struct KeyFieldConstants{
     static let tps_preparationKey  = "tps_preparation"
     static let dateKey             = "day"
     static let imageKey            = "image"
+    static let categoryKey            = "category"
+
     
 }
