@@ -264,6 +264,9 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
             let dateInFormat:String = dateFormatter.stringFromDate(todaysDate)
             self.recipeDetail.date = dateInFormat
         }
+        
+        self.recipeDetail.image = self.imageLocation
+        
         AlamofireManager.SharedInstance.postRecipe(self.recipeDetail) { (success) -> Void in
             if(success){
                 self.newRecipe = true
@@ -273,6 +276,8 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
             }
         }
     }
+    
+// MARK: - PickerView delegate
  
     func numberOfItemsInPickerView(pickerView: AKPickerView) -> Int {
         return self.titles.count
