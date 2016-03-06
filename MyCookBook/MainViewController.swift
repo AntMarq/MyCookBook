@@ -36,6 +36,10 @@ class MainViewController: UIViewController {
         addGestureToImageView(imgDessert)
         addGestureToImageView(imgApero)
         addGestureToImageView(imgPlat)
+        
+        AlamofireManager.SharedInstance.getToken { (success) -> Void in
+            
+        }
     }
 
     override func didReceiveMemoryWarning() {

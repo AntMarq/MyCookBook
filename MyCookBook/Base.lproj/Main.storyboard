@@ -147,17 +147,14 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background_1" translatesAutoresizingMaskIntoConstraints="NO" id="8x5-05-JaQ" userLabel="background">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                             </imageView>
-                            <imageView tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="apero" translatesAutoresizingMaskIntoConstraints="NO" id="Ycg-Os-U8Z">
-                                <rect key="frame" x="367" y="15" width="240" height="261"/>
+                            <imageView tag="4" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="apero2" translatesAutoresizingMaskIntoConstraints="NO" id="ygj-ZZ-yXp">
+                                <rect key="frame" x="66" y="228" width="240" height="261"/>
                             </imageView>
-                            <imageView tag="4" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="ygj-ZZ-yXp">
-                                <rect key="frame" x="718" y="317" width="240" height="261"/>
+                            <imageView tag="2" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="plat" translatesAutoresizingMaskIntoConstraints="NO" id="2nE-a7-w8T">
+                                <rect key="frame" x="392" y="384" width="240" height="261"/>
                             </imageView>
-                            <imageView tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="2nE-a7-w8T">
-                                <rect key="frame" x="367" y="322" width="240" height="261"/>
-                            </imageView>
-                            <imageView tag="3" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dessert" translatesAutoresizingMaskIntoConstraints="NO" id="Fyc-ez-R4I">
-                                <rect key="frame" x="718" y="8" width="240" height="261"/>
+                            <imageView tag="3" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dessert2" translatesAutoresizingMaskIntoConstraints="NO" id="Fyc-ez-R4I">
+                                <rect key="frame" x="720" y="228" width="240" height="261"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jrF-ax-rjf">
                                 <rect key="frame" x="804" y="715" width="190" height="33"/>
@@ -169,6 +166,9 @@
                                     <segue destination="Qoj-Hj-fQk" kind="show" identifier="newRecipe" id="vVa-cM-dDd"/>
                                 </connections>
                             </button>
+                            <imageView tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="entree" translatesAutoresizingMaskIntoConstraints="NO" id="Ycg-Os-U8Z">
+                                <rect key="frame" x="392" y="64" width="240" height="261"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -360,10 +360,10 @@
                                         <real key="value" value="500"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="textColor">
-                                        <color key="value" red="1" green="0.98206378419999996" blue="0.94613245180000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="value" red="0.0039215688589999999" green="0.20000001789999999" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="highlightedTextColor">
-                                        <color key="value" red="0.81543388090000002" green="0.92119808179999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
@@ -470,16 +470,17 @@
         </scene>
     </scenes>
     <resources>
-        <image name="apero" width="290" height="300"/>
+        <image name="apero2" width="302" height="202"/>
         <image name="ardoise" width="960" height="540"/>
         <image name="background_1" width="1024" height="768"/>
         <image name="background_imgRecipesList" width="750" height="625"/>
         <image name="chevron" width="9" height="15"/>
         <image name="cooking time" width="64" height="64"/>
-        <image name="dessert" width="372" height="384"/>
+        <image name="dessert2" width="1181" height="801"/>
         <image name="edit-unvalidated" width="64" height="64"/>
+        <image name="entree" width="350" height="233"/>
         <image name="nb_personne" width="64" height="64"/>
-        <image name="placeholder" width="1267" height="1309"/>
+        <image name="plat" width="1280" height="800"/>
         <image name="preparation_time" width="64" height="64"/>
     </resources>
     <inferredMetricsTieBreakers>

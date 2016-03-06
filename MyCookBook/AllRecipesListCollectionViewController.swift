@@ -25,14 +25,6 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBarHidden = false
         IQKeyboardManager.sharedManager().canAdjustTextView = true
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.recipeCollectionView?.registerNib(UINib (nibName: "RecipeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
-        navigationItem.title = titleViewController
-        
         
         AlamofireManager.SharedInstance.getToken { (success) -> Void in
             AlamofireManager.SharedInstance.downloadOrderedRecipes(self.categorieFilter, completion: { (recipes) -> Void in
@@ -43,6 +35,14 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
                 })
             })
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.recipeCollectionView?.registerNib(UINib (nibName: "RecipeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+        navigationItem.title = titleViewController
+        
     }
     
     func getRecipesfromDB(category:String, completion: (recipeArray: Array<Recipe>) -> Void){

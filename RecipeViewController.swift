@@ -18,6 +18,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     var imagePicker: UIImagePickerController!
     var imageLocation:String = String()
     var newRecipe:Bool = false
+    var checkPicker:Bool = false
 
     @IBOutlet var pickerView: AKPickerView!
     @IBOutlet weak var cuissonTime: UITextField!
@@ -27,12 +28,11 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet weak var titleRecipeDetail: UITextField!
     @IBOutlet weak var preparationRecipeDetail: UITextView!
     @IBOutlet weak var nb_personne: UITextField!
-    
     @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var btnTakePhoto: UIButton!
     
-    let titles = ["Mes entrées", "Mes plats", "Mes desserts", "Mes apéros"]
+    let titles = [" ", "Mes entrées", "Mes plats", "Mes desserts", "Mes apéros"]
     
     override func viewWillAppear(animated: Bool)
     {
@@ -71,6 +71,8 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         self.pickerView.maskDisabled = false
         self.pickerView.reloadData()
         
+        //Disable user interaction
+        self.editionOff()
     }
     
     override func didReceiveMemoryWarning() {
@@ -93,6 +95,9 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         self.nb_personne.text = recipeDetail.nb_personne
         self.preparationTime.text = recipeDetail.tps_preparation
         self.cuissonTime.text = recipeDetail.tps_cuisson
+        self.checkPicker = true
+        self.pickerView.selectItem(Int(recipeDetail.categorie)!)
+        self.imageLocation = recipeDetail.image
     }
 
 // MARK: - TextField Delegate
@@ -161,21 +166,33 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBAction func pressEdit(sender: AnyObject) {
         if(!ingredientsDetail.editable){
             editBtn.setImage(UIImage(named: "edit-validated"), forState: UIControlState.Normal)
-            ingredientsDetail.editable = true
-            preparationRecipeDetail.editable = true
-            btnTakePhoto.hidden = false
+            self.editionOn()
         }
         else{
             editBtn.setImage(UIImage(named: "edit-unvalidated"), forState: UIControlState.Normal)
-            ingredientsDetail.editable = false
-            preparationRecipeDetail.editable = false
-            btnTakePhoto.hidden = true
-            if(!newRecipe){
-                self.updatePropertyInDB(KeyFieldConstants.imageKey)
-                self.updateRecipe()
+            self.updatePropertyInDB(KeyFieldConstants.imageKey)
+            self.editionOff()
+            if(checkDataBeforeSave() && self.checkPicker){
+                if(!newRecipe){
+                    self.updateRecipe()
+                }
+                else{
+                    self.postRecipe()
+                }
             }
             else{
-                self.postRecipe()
+                if(!self.checkPicker){
+                    self.displayAlert("La catégorie n'est pas renseignée")
+                }
+                else if(self.preparationRecipeDetail.text == ""){
+                    self.displayAlert("Le champ préparation n'est pas renseigné")
+                }
+                else if(self.ingredientsDetail.text == ""){
+                    self.displayAlert("Le champ ingrédients n'est pas renseigné")
+                }
+                else if(self.titleRecipeDetail.text == ""){
+                    self.displayAlert("Le champ titre n'est pas renseigné")
+                }
             }
         }
     }
@@ -279,7 +296,12 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     func pickerView(pickerView: AKPickerView, didSelectItem item: Int) {
-        RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate:String(item+1), keyField:KeyFieldConstants.categoryKey)
+        self.checkPicker = false
+        if(item != 0){
+            RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate:String(item), keyField:KeyFieldConstants.categoryKey)
+            self.checkPicker = true
+        }
+        
         print("Your favorite city is \(self.titles[item])")
     }
     
@@ -290,6 +312,40 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     func pickerView(pickerView: AKPickerView, imageForItem item: Int) -> UIImage {
         return UIImage(named: self.titles[item] )!
     }
-
     
+    func checkDataBeforeSave()->Bool{
+        var checkData:Bool = false
+        if(self.preparationRecipeDetail.text != "" || self.ingredientsDetail.text != "" || self.titleRecipeDetail.text != ""){
+            checkData = true
+        }
+        return checkData
+    }
+    
+    func displayAlert(message:String){
+        let alert = UIAlertController(title: "Information", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func editionOff(){
+        ingredientsDetail.editable = false
+        preparationRecipeDetail.editable = false
+        btnTakePhoto.hidden = true
+        titleRecipeDetail.userInteractionEnabled = false
+        nb_personne.userInteractionEnabled = false
+        preparationTime.userInteractionEnabled = false
+        cuissonTime.userInteractionEnabled = false
+        self.pickerView.userInteractionEnabled = false
+    }
+    
+    func editionOn(){
+        ingredientsDetail.editable = true
+        preparationRecipeDetail.editable = true
+        btnTakePhoto.hidden = false
+        titleRecipeDetail.userInteractionEnabled = true
+        nb_personne.userInteractionEnabled = true
+        preparationTime.userInteractionEnabled = true
+        cuissonTime.userInteractionEnabled = true
+        self.pickerView.userInteractionEnabled = true
+    }
 }
