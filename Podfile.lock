@@ -1,4 +1,5 @@
 PODS:
+  - AKPickerView-Swift (1.0.1)
   - Alamofire (3.1.5)
   - IQKeyboardManagerSwift (3.3.6)
   - Realm (0.97.0):
@@ -9,12 +10,14 @@ PODS:
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
+  - AKPickerView-Swift
   - Alamofire (~> 3.1)
   - IQKeyboardManagerSwift
   - RealmSwift (~> 0.96)
   - SwiftyJSON (~> 2.3)
 
 SPEC CHECKSUMS:
+  AKPickerView-Swift: 8509d472bb257649383c276506334a7373d3cb33
   Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
   IQKeyboardManagerSwift: 111f01f029d9cda0647a2156d3b6efc24ad1e7f1
   Realm: b498a6fb9d288b171ff98d0e2d4384c295be8990

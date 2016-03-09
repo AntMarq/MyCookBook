@@ -6,6 +6,7 @@ pod 'RealmSwift', '~> 0.96'
 pod 'SwiftyJSON', '~> 2.3'
 pod 'Alamofire', '~> 3.1'
 pod 'IQKeyboardManagerSwift'
+pod 'AKPickerView-Swift'
 end
 
 target 'MyCookBookTests' do

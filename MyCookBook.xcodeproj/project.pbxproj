@@ -19,12 +19,15 @@
 		FC05DC211C46EEC1000E9534 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC05DC1F1C46EEC1000E9534 /* LaunchScreen.storyboard */; };
 		FC05DC2C1C46EEC1000E9534 /* MyCookBookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC05DC2B1C46EEC1000E9534 /* MyCookBookTests.swift */; };
 		FC05DC371C46EEC1000E9534 /* MyCookBookUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC05DC361C46EEC1000E9534 /* MyCookBookUITests.swift */; };
+		FC6B8D6D1C8C77CC0077E999 /* UIImagePickerController+SupportedOrientations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6B8D6C1C8C77CC0077E999 /* UIImagePickerController+SupportedOrientations.swift */; };
+		FC88D1E51C70AEBC00AE3952 /* KeyFieldConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC88D1E41C70AEBC00AE3952 /* KeyFieldConstants.swift */; };
 		FCD8A0361C49D64300529944 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0351C49D64300529944 /* Recipe.swift */; };
 		FCD8A0381C4BD57400529944 /* RecipesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */; };
 		FCD8A03C1C4BDC4100529944 /* RecipesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A03B1C4BDC4100529944 /* RecipesTableViewCell.swift */; };
-		FCD8A0401C52B0A100529944 /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A03F1C52B0A100529944 /* NetworkConstants.swift */; settings = {ASSET_TAGS = (); }; };
-		FCD8A0421C53C36D00529944 /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0411C53C36D00529944 /* AlamofireManager.swift */; settings = {ASSET_TAGS = (); }; };
-		FCD8A0441C53C44A00529944 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0431C53C44A00529944 /* RealmManager.swift */; settings = {ASSET_TAGS = (); }; };
+		FCD8A0401C52B0A100529944 /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A03F1C52B0A100529944 /* NetworkConstants.swift */; };
+		FCD8A0421C53C36D00529944 /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0411C53C36D00529944 /* AlamofireManager.swift */; };
+		FCD8A0441C53C44A00529944 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0431C53C44A00529944 /* RealmManager.swift */; };
+		FCD8A0461C67CC5600529944 /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0451C67CC5600529944 /* PhotoManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,12 +68,15 @@
 		FC05DC321C46EEC1000E9534 /* MyCookBookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyCookBookUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC05DC361C46EEC1000E9534 /* MyCookBookUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCookBookUITests.swift; sourceTree = "<group>"; };
 		FC05DC381C46EEC1000E9534 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC6B8D6C1C8C77CC0077E999 /* UIImagePickerController+SupportedOrientations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+SupportedOrientations.swift"; sourceTree = "<group>"; };
+		FC88D1E41C70AEBC00AE3952 /* KeyFieldConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyFieldConstants.swift; sourceTree = "<group>"; };
 		FCD8A0351C49D64300529944 /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Recipe.swift; path = ../Recipe.swift; sourceTree = "<group>"; };
 		FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = RecipesListViewController.swift; path = ../RecipesListViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FCD8A03B1C4BDC4100529944 /* RecipesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipesTableViewCell.swift; sourceTree = "<group>"; };
 		FCD8A03F1C52B0A100529944 /* NetworkConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
 		FCD8A0411C53C36D00529944 /* AlamofireManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireManager.swift; sourceTree = "<group>"; };
 		FCD8A0431C53C44A00529944 /* RealmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		FCD8A0451C67CC5600529944 /* PhotoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				FCD8A03F1C52B0A100529944 /* NetworkConstants.swift */,
+				FC88D1E41C70AEBC00AE3952 /* KeyFieldConstants.swift */,
 			);
 			name = Configuration;
 			sourceTree = "<group>";
@@ -113,6 +120,14 @@
 				386B32F11C4D16DD00F834C6 /* RecipeCollectionViewCell.swift */,
 			);
 			name = ECCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		38AE4A381C5B9854004EBAF0 /* In progress */ = {
+			isa = PBXGroup;
+			children = (
+				FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */,
+			);
+			name = "In progress";
 			sourceTree = "<group>";
 		};
 		48A4F2C2F357102BD969C100 /* Frameworks */ = {
@@ -188,12 +203,21 @@
 			path = MyCookBookUITests;
 			sourceTree = "<group>";
 		};
+		FC6B8D6E1C90C4870077E999 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				FC6B8D6C1C8C77CC0077E999 /* UIImagePickerController+SupportedOrientations.swift */,
+			);
+			name = Extension;
+			sourceTree = "<group>";
+		};
 		FCD8A0311C49D5C400529944 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				FC6B8D6E1C90C4870077E999 /* Extension */,
+				38AE4A381C5B9854004EBAF0 /* In progress */,
 				386B32EE1C4D137500F834C6 /* AllRecipesListCollectionViewController.swift */,
 				FC05DC181C46EEC1000E9534 /* MainViewController.swift */,
-				FCD8A0371C4BD57400529944 /* RecipesListViewController.swift */,
 				386B32DD1C48172D00F834C6 /* RecipeViewController.swift */,
 			);
 			name = Controller;
@@ -212,6 +236,7 @@
 			children = (
 				FCD8A0431C53C44A00529944 /* RealmManager.swift */,
 				FCD8A0411C53C36D00529944 /* AlamofireManager.swift */,
+				FCD8A0451C67CC5600529944 /* PhotoManager.swift */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -428,9 +453,12 @@
 				FCD8A0401C52B0A100529944 /* NetworkConstants.swift in Sources */,
 				386B32F21C4D16DD00F834C6 /* RecipeCollectionViewCell.swift in Sources */,
 				FCD8A0441C53C44A00529944 /* RealmManager.swift in Sources */,
+				FC6B8D6D1C8C77CC0077E999 /* UIImagePickerController+SupportedOrientations.swift in Sources */,
 				FCD8A0381C4BD57400529944 /* RecipesListViewController.swift in Sources */,
 				386B32EF1C4D137500F834C6 /* AllRecipesListCollectionViewController.swift in Sources */,
 				FC05DC191C46EEC1000E9534 /* MainViewController.swift in Sources */,
+				FCD8A0461C67CC5600529944 /* PhotoManager.swift in Sources */,
+				FC88D1E51C70AEBC00AE3952 /* KeyFieldConstants.swift in Sources */,
 				FC05DC171C46EEC1000E9534 /* AppDelegate.swift in Sources */,
 				386B32DE1C48172D00F834C6 /* RecipeViewController.swift in Sources */,
 				FCD8A0361C49D64300529944 /* Recipe.swift in Sources */,
@@ -579,7 +607,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MyCookBook/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = amarquet.MyCookBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -592,7 +620,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MyCookBook/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = amarquet.MyCookBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
