@@ -228,21 +228,21 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ihp-jK-X4O">
                                         <rect key="frame" x="347" y="8" width="30" height="32"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="00" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lcu-Wh-2Qh">
                                         <rect key="frame" x="195" y="8" width="30" height="32"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Kk-vc-adP">
                                         <rect key="frame" x="76" y="13" width="27" height="21"/>
@@ -271,7 +271,7 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="Ma nouvelle préparation...." textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="ueg-ED-QBO">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="Ma nouvelle préparation..." textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="ueg-ED-QBO">
                                 <rect key="frame" x="520" y="192" width="484" height="550"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="484" identifier="$widthPreparationView" id="mbc-a6-p3J"/>
@@ -295,20 +295,6 @@
                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button hidden="YES" opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pch-o1-eBE">
-                                <rect key="frame" x="36" y="72" width="422" height="300"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="A2R-dD-njW"/>
-                                    <constraint firstAttribute="width" constant="422" id="UvZ-4t-Dus"/>
-                                </constraints>
-                                <state key="normal">
-                                    <color key="titleColor" red="1" green="0.98206378419999996" blue="0.94613245180000005" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="takePhoto:" destination="Qoj-Hj-fQk" eventType="touchUpInside" id="qgT-U6-OfM"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="MON TITRE" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gp6-Y7-7an">
                                 <rect key="frame" x="539" y="72" width="429" height="26"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -367,6 +353,28 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pch-o1-eBE">
+                                <rect key="frame" x="36" y="73" width="422" height="141"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="141" id="A2R-dD-njW"/>
+                                    <constraint firstAttribute="width" constant="422" id="UvZ-4t-Dus"/>
+                                </constraints>
+                                <state key="normal" title="Prendre une photo">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="takePhoto:" destination="Qoj-Hj-fQk" eventType="touchUpInside" id="qgT-U6-OfM"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N9n-1g-wEh">
+                                <rect key="frame" x="36" y="213" width="422" height="159"/>
+                                <state key="normal" title="Choisir une photo">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loadImageButtonTapped:" destination="Qoj-Hj-fQk" eventType="touchUpInside" id="QSr-EJ-p8J"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -398,7 +406,7 @@
                             <constraint firstItem="dkB-KJ-iLc" firstAttribute="top" secondItem="xq8-CV-aGX" secondAttribute="bottom" constant="8" symbolic="YES" id="Wu9-dJ-jx3"/>
                             <constraint firstItem="ueg-ED-QBO" firstAttribute="top" secondItem="gxD-wK-zUI" secondAttribute="bottom" constant="45" id="Yyl-ti-yOg"/>
                             <constraint firstItem="xq8-CV-aGX" firstAttribute="leading" secondItem="dkB-KJ-iLc" secondAttribute="leading" id="Z2F-ll-DwF"/>
-                            <constraint firstItem="Pch-o1-eBE" firstAttribute="top" secondItem="YJ2-U1-ZLu" secondAttribute="bottom" constant="-300" id="ZDo-nZ-FoD"/>
+                            <constraint firstItem="Pch-o1-eBE" firstAttribute="top" secondItem="YJ2-U1-ZLu" secondAttribute="bottom" constant="-299" id="ZDo-nZ-FoD"/>
                             <constraint firstAttribute="trailing" secondItem="Gp6-Y7-7an" secondAttribute="trailing" constant="56" id="Zjp-NO-ndW"/>
                             <constraint firstAttribute="trailing" secondItem="IgP-1Q-eTo" secondAttribute="trailing" constant="392" id="aUv-kX-jkE"/>
                             <constraint firstItem="N1Y-Mw-jGA" firstAttribute="leading" secondItem="ZOs-ce-LVQ" secondAttribute="leading" constant="36" id="bS6-BR-USP"/>
@@ -433,6 +441,7 @@
                     <size key="freeformSize" width="1024" height="768"/>
                     <connections>
                         <outlet property="IQLayoutGuideConstraint" destination="AFw-7d-Yot" id="O2N-RV-tfA"/>
+                        <outlet property="btnChoosePhotoInAlbum" destination="N9n-1g-wEh" id="0Nm-iM-d3N"/>
                         <outlet property="btnTakePhoto" destination="Pch-o1-eBE" id="oCp-Xx-Ab3"/>
                         <outlet property="cuissonTime" destination="Lcu-Wh-2Qh" id="6GR-AI-odo"/>
                         <outlet property="editBtn" destination="OlE-u9-JZV" id="6Ab-uA-juO"/>

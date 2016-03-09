@@ -31,8 +31,12 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var btnTakePhoto: UIButton!
+    @IBOutlet weak var btnChoosePhotoInAlbum: UIButton!
     
     let titles = [" ", "Mes entrées", "Mes plats", "Mes desserts", "Mes apéros"]
+    let placeholderPreparation = "Ma nouvelle préparation..."
+    let placeholderIngrédients = "Mes ingrédients..."
+    let placeholderTitle = "MON TITRE"
     
     override func viewWillAppear(animated: Bool)
     {
@@ -43,19 +47,28 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = recipeDetail.title
-        
         if(newRecipe == false){
             loadInfo()
         }
-        
-        ingredientsDetail.editable = false
-        preparationRecipeDetail.editable = false
-        
+        else{
+            navigationItem.title = "Nouvelle Recette"
+        }
+        self.setViewsParameters()
+        //Disable user interaction
+        self.editionOff()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+// MARK: - Views Parameters
+    func setViewsParameters(){
         popupView.hidden = true
         popupView.layer.cornerRadius = 5;
         popupView.layer.masksToBounds = true
-        
+
         self.preparationRecipeDetail.delegate = self
         self.ingredientsDetail.delegate = self
         self.cuissonTime.delegate = self
@@ -70,25 +83,17 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         self.pickerView.pickerViewStyle = .Wheel
         self.pickerView.maskDisabled = false
         self.pickerView.reloadData()
-        
-        //Disable user interaction
-        self.editionOff()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     
 // MARK: - loadInfo
     
     func loadInfo(){
+        navigationItem.title = recipeDetail.title
         PhotoManager.sharedInstance.retrieveImageWithIdentifer(recipeDetail.image, completion: { (image) -> Void in
             self.imageRecipe.image = image
         })
         titleRecipeDetail.text = recipeDetail.title
-        
         let modifiedIngredient = recipeDetail.ingredients.stringByReplacingOccurrencesOfString(", ", withString: "\n", options: NSStringCompareOptions.LiteralSearch, range: nil)
         ingredientsDetail.text = modifiedIngredient
         preparationRecipeDetail.text = recipeDetail.preparation
@@ -130,6 +135,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         else if(textField == self.titleRecipeDetail){
             if(newRecipe){
                 recipeDetail.title = self.titleRecipeDetail.text!
+                navigationItem.title = recipeDetail.title
             }
             else{
                 self.updatePropertyInDB(KeyFieldConstants.titleKey)
@@ -138,6 +144,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
 // MARK: -  TextView Delegate
+    
     func textViewDidEndEditing(textView: UITextView) {
         if(textView == self.ingredientsDetail){
             if(newRecipe){
@@ -172,7 +179,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
             editBtn.setImage(UIImage(named: "edit-unvalidated"), forState: UIControlState.Normal)
             self.updatePropertyInDB(KeyFieldConstants.imageKey)
             self.editionOff()
-            if(checkDataBeforeSave() && self.checkPicker){
+            if(displayMessageForAlertView() == "" && self.checkPicker){
                 if(!newRecipe){
                     self.updateRecipe()
                 }
@@ -181,18 +188,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
                 }
             }
             else{
-                if(!self.checkPicker){
-                    self.displayAlert("La catégorie n'est pas renseignée")
-                }
-                else if(self.preparationRecipeDetail.text == ""){
-                    self.displayAlert("Le champ préparation n'est pas renseigné")
-                }
-                else if(self.ingredientsDetail.text == ""){
-                    self.displayAlert("Le champ ingrédients n'est pas renseigné")
-                }
-                else if(self.titleRecipeDetail.text == ""){
-                    self.displayAlert("Le champ titre n'est pas renseigné")
-                }
+                self.displayAlert(self.displayMessageForAlertView())
             }
         }
     }
@@ -201,7 +197,14 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         imagePicker =  UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .Camera
-        
+        presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    
+    @IBAction func loadImageButtonTapped(sender: UIButton) {
+        imagePicker =  UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .PhotoLibrary
         presentViewController(imagePicker, animated: true, completion: nil)
     }
     
@@ -214,15 +217,6 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         PhotoManager.sharedInstance.saveImage(image) { (imageLocation) -> Void in
             self.imageLocation = imageLocation
         }
-    }
-
-// MARK: - Popup
-    
-    func showSavePopup() {
-        //  PopUpView.hidden = true
-        UIView.animateWithDuration(2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-            self.popupView.alpha = 0.0
-            }, completion: nil)
     }
 
 // MARK: - DB Update & WS
@@ -246,22 +240,10 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         else if(keyField == KeyFieldConstants.nb_personneKey){
             RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.nb_personne.text!, keyField:keyField)
         }
-        /*else if(keyField == KeyFieldConstants.categoryKey){
-            RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.category.text!, keyField:keyField)
-        }*/
         else if(keyField == KeyFieldConstants.imageKey){
             RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.imageLocation, keyField:keyField)
         }
-        //self.updateRecipe()
     }
-    
-   /* func updateImageDB(){
-        let realm = try! Realm()
-        try! realm.write {
-            self.recipeDetail.image = self.imageLocation
-        }
-        self.updateRecipe()
-    }*/
     
     func updateRecipe(){
         AlamofireManager.SharedInstance.putRecipe(self.recipeDetail) { (success) -> Void in
@@ -306,8 +288,6 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
             RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate:String(item), keyField:KeyFieldConstants.categoryKey)
             self.checkPicker = true
         }
-        
-        print("Your favorite city is \(self.titles[item])")
     }
     
     func pickerView(pickerView: AKPickerView, titleForItem item: Int) -> String {
@@ -317,14 +297,8 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     func pickerView(pickerView: AKPickerView, imageForItem item: Int) -> UIImage {
         return UIImage(named: self.titles[item] )!
     }
-    
-    func checkDataBeforeSave()->Bool{
-        var checkData:Bool = false
-        if(self.preparationRecipeDetail.text != "" || self.ingredientsDetail.text != "" || self.titleRecipeDetail.text != ""){
-            checkData = true
-        }
-        return checkData
-    }
+
+// MARK: - AlertView
     
     func displayAlert(message:String){
         let alert = UIAlertController(title: "Information", message: message, preferredStyle: UIAlertControllerStyle.Alert)
@@ -332,10 +306,22 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+// MARK: - Toast Android is the best ;)
+    
+    func showSavePopup() {
+        //  PopUpView.hidden = true
+        UIView.animateWithDuration(2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.popupView.alpha = 0.0
+            }, completion: nil)
+    }
+    
+// MARK: - UserInteraction
+    
     func editionOff(){
         ingredientsDetail.editable = false
         preparationRecipeDetail.editable = false
         btnTakePhoto.hidden = true
+        btnChoosePhotoInAlbum.hidden = true
         titleRecipeDetail.userInteractionEnabled = false
         nb_personne.userInteractionEnabled = false
         preparationTime.userInteractionEnabled = false
@@ -347,10 +333,36 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         ingredientsDetail.editable = true
         preparationRecipeDetail.editable = true
         btnTakePhoto.hidden = false
+        btnChoosePhotoInAlbum.hidden = false
         titleRecipeDetail.userInteractionEnabled = true
         nb_personne.userInteractionEnabled = true
         preparationTime.userInteractionEnabled = true
         cuissonTime.userInteractionEnabled = true
         self.pickerView.userInteractionEnabled = true
     }
+    
+// MARK: - Utility
+    
+    func displayMessageForAlertView()->String{
+        var errorMessage:String = ""
+        if(!self.checkPicker){
+            errorMessage = "\n La catégorie n'est pas renseignée.\n "
+        }
+        if(self.preparationRecipeDetail.text == "" || self.preparationRecipeDetail.text == placeholderPreparation){
+            errorMessage += "Le champ préparation n'est pas renseigné.\n"
+        }
+        if(self.ingredientsDetail.text == "" || self.ingredientsDetail.text == placeholderIngrédients){
+            errorMessage += "Le champ ingrédients n'est pas renseigné.\n"
+        }
+        if(self.titleRecipeDetail.text == "" || self.titleRecipeDetail.text == placeholderTitle){
+            errorMessage += "Le champ titre n'est pas renseigné.\n"
+        }
+        return errorMessage
+    }
+    
+    override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
+    
 }
