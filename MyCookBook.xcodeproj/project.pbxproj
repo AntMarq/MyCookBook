@@ -181,7 +181,6 @@
 				FCD8A0341C49D5F300529944 /* IHM */,
 				FC05DC1D1C46EEC1000E9534 /* Assets.xcassets */,
 				FC05DC221C46EEC1000E9534 /* Info.plist */,
-				FC6B8D6C1C8C77CC0077E999 /* UIImagePickerController+SupportedOrientations.swift */,
 			);
 			path = MyCookBook;
 			sourceTree = "<group>";
@@ -204,9 +203,18 @@
 			path = MyCookBookUITests;
 			sourceTree = "<group>";
 		};
+		FC6B8D6E1C90C4870077E999 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				FC6B8D6C1C8C77CC0077E999 /* UIImagePickerController+SupportedOrientations.swift */,
+			);
+			name = Extension;
+			sourceTree = "<group>";
+		};
 		FCD8A0311C49D5C400529944 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				FC6B8D6E1C90C4870077E999 /* Extension */,
 				38AE4A381C5B9854004EBAF0 /* In progress */,
 				386B32EE1C4D137500F834C6 /* AllRecipesListCollectionViewController.swift */,
 				FC05DC181C46EEC1000E9534 /* MainViewController.swift */,

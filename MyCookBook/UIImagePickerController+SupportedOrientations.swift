@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+//Support orientation landscape mode
 extension UIImagePickerController
 {
     public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
