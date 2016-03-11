@@ -366,8 +366,12 @@
                                     <action selector="takePhoto:" destination="Qoj-Hj-fQk" eventType="touchUpInside" id="qgT-U6-OfM"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N9n-1g-wEh">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N9n-1g-wEh">
                                 <rect key="frame" x="36" y="213" width="422" height="159"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="422" id="AC3-Yk-Wps"/>
+                                    <constraint firstAttribute="height" constant="159" id="Ar6-8B-0Ox"/>
+                                </constraints>
                                 <state key="normal" title="Choisir une photo">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -412,7 +416,9 @@
                             <constraint firstItem="N1Y-Mw-jGA" firstAttribute="leading" secondItem="ZOs-ce-LVQ" secondAttribute="leading" constant="36" id="bS6-BR-USP"/>
                             <constraint firstItem="Fab-9w-2fA" firstAttribute="bottom" secondItem="ueg-ED-QBO" secondAttribute="bottom" constant="6" id="gSd-0v-5RB"/>
                             <constraint firstItem="xq8-CV-aGX" firstAttribute="leading" secondItem="ueg-ED-QBO" secondAttribute="leading" id="go7-b7-zdK"/>
+                            <constraint firstItem="N9n-1g-wEh" firstAttribute="bottom" secondItem="YJ2-U1-ZLu" secondAttribute="bottom" id="pY4-Wo-3Il"/>
                             <constraint firstAttribute="trailing" secondItem="ueg-ED-QBO" secondAttribute="trailing" constant="20" id="uIv-B1-2Si"/>
+                            <constraint firstItem="N9n-1g-wEh" firstAttribute="leading" secondItem="N1Y-Mw-jGA" secondAttribute="leading" id="wpt-h3-WFF"/>
                             <constraint firstItem="bqc-7c-rLG" firstAttribute="top" secondItem="N1Y-Mw-jGA" secondAttribute="bottom" constant="14" id="zbx-Ll-aXk"/>
                         </constraints>
                     </view>
