@@ -38,7 +38,9 @@ class MainViewController: UIViewController {
         addGestureToImageView(imgPlat)
         
         AlamofireManager.SharedInstance.getToken { (success) -> Void in
-            
+            if(!success){
+                print("No token")
+            }
         }
     }
 

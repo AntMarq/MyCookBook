@@ -180,7 +180,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
             self.updatePropertyInDB(KeyFieldConstants.imageKey)
             self.editionOff()
             if(displayMessageForAlertView() == "" && self.checkPicker){
-                if(!newRecipe){
+                if(!self.newRecipe){
                     self.updateRecipe()
                 }
                 else{

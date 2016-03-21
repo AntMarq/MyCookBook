@@ -27,13 +27,20 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
         IQKeyboardManager.sharedManager().canAdjustTextView = true
         
         AlamofireManager.SharedInstance.getToken { (success) -> Void in
-            AlamofireManager.SharedInstance.downloadOrderedRecipes(self.categorieFilter, completion: { (recipes) -> Void in
-                RealmManager.SharedInstance.writeRecipesInDB(recipes, needUpdate: false, completion: { (bool) -> Void in
-                    self.getRecipesfromDB(self.categorieFilter, completion: { (recipeArray) -> Void in
-                        self.recipeCollectionView.reloadData()
+            if(success){
+                AlamofireManager.SharedInstance.downloadOrderedRecipes(self.categorieFilter, completion: { (recipes) -> Void in
+                    RealmManager.SharedInstance.writeRecipesInDB(recipes, needUpdate: false, completion: { (bool) -> Void in
+                        self.getRecipesfromDB(self.categorieFilter, completion: { (recipeArray) -> Void in
+                            self.recipeCollectionView.reloadData()
+                        })
                     })
                 })
-            })
+            }
+            else{
+                self.getRecipesfromDB(self.categorieFilter, completion: { (recipeArray) -> Void in
+                    self.recipeCollectionView.reloadData()
+                })
+            }
         }
     }
     
