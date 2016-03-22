@@ -11,6 +11,18 @@ import IQKeyboardManagerSwift
 import RealmSwift
 import AKPickerView_Swift
 
+func getDocumentsURL() -> NSURL {
+    let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+    return documentsURL
+}
+
+func fileInDocumentsDirectory(filename: String) -> String {
+    
+    let fileURL = getDocumentsURL().URLByAppendingPathComponent(filename)
+    return fileURL.path!
+    
+}
+
 class RecipeViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate,UITextViewDelegate, AKPickerViewDataSource, AKPickerViewDelegate {
     
     var titleViewController:String = String()    
@@ -56,6 +68,9 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         self.setViewsParameters()
         //Disable user interaction
         self.editionOff()
+        
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -90,9 +105,15 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     
     func loadInfo(){
         navigationItem.title = recipeDetail.title
-        PhotoManager.sharedInstance.retrieveImageWithIdentifer(recipeDetail.image, completion: { (image) -> Void in
+        /*PhotoManager.sharedInstance.retrieveImageWithIdentifer(recipeDetail.image, completion: { (image) -> Void in
             self.imageRecipe.image = image
-        })
+        })*/
+        
+        // Load image name
+        let myImageName = self.recipeDetail.title + ".png"
+        let imagePath = fileInDocumentsDirectory(myImageName)
+        self.imageRecipe.image = loadImageFromPath(imagePath)
+        
         titleRecipeDetail.text = recipeDetail.title
         let modifiedIngredient = recipeDetail.ingredients.stringByReplacingOccurrencesOfString(", ", withString: "\n", options: NSStringCompareOptions.LiteralSearch, range: nil)
         ingredientsDetail.text = modifiedIngredient
@@ -214,9 +235,9 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
         let image: UIImage  = info[UIImagePickerControllerOriginalImage]as! UIImage
         imageRecipe.image = image
-        PhotoManager.sharedInstance.saveImage(image) { (imageLocation) -> Void in
+        /*PhotoManager.sharedInstance.saveImage(image) { (imageLocation) -> Void in
             self.imageLocation = imageLocation
-        }
+        }*/
     }
 
 // MARK: - DB Update & WS
@@ -265,6 +286,9 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         }
         
         self.recipeDetail.image = self.imageLocation
+        let myImageName = self.recipeDetail.title + ".png"
+        let imagePath = fileInDocumentsDirectory(myImageName)
+        self.saveImage(self.imageRecipe.image!, path: imagePath)
         
         AlamofireManager.SharedInstance.postRecipe(self.recipeDetail) { (success) -> Void in
             if(success){
@@ -364,5 +388,35 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         return false
     }
     
+//MARK: - 2eme method de gestion d'une bibliotheque d'images
+    
+    func saveImage (image: UIImage, path: String ) -> Bool{
+        
+        let pngImageData = UIImagePNGRepresentation(image)
+        //let jpgImageData = UIImageJPEGRepresentation(image, 1.0)   // if you want to save as JPEG
+        let result = pngImageData!.writeToFile(path, atomically: true)
+        
+        return result
+        
+    }
+    
+    func loadImageFromPath(path: String) -> UIImage? {
+        
+        let image = UIImage(contentsOfFile: path)
+        
+        if image == nil {
+            
+            print("missing image at: \(path)")
+        }
+        print("Loading image from path: \(path)") // this is just for you to see the path in case you want to go to the directory, using Finder.
+        return image
+        
+    }
+    
+    func getResourcesPath(){
+        let documentDirectoryURL =  try! NSFileManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        let fm = NSFileManager.defaultManager()
+        let items = try! fm.contentsOfDirectoryAtPath(documentDirectoryURL.path!)
+    }
     
 }
