@@ -30,6 +30,10 @@
                         <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="9B6-eV-ZrM">
+                        <rect key="frame" x="154" y="56" width="37" height="37"/>
+                        <color key="color" red="0.81543388090000002" green="0.92119808179999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </activityIndicatorView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -46,6 +50,7 @@
             <size key="customSize" width="598" height="377"/>
             <connections>
                 <outlet property="imageRecipe" destination="uuc-4O-OaX" id="OGt-Fw-c6K"/>
+                <outlet property="loadingIndicator" destination="9B6-eV-ZrM" id="V56-7b-2mN"/>
                 <outlet property="titleRecipe" destination="mnM-JA-gj7" id="O4V-pZ-1dH"/>
             </connections>
             <point key="canvasLocation" x="680.5" y="259"/>

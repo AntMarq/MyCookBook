@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import AlamofireImage
 import SwiftyJSON
 
 class AlamofireManager: NSObject {
@@ -20,6 +21,10 @@ class AlamofireManager: NSObject {
     var get_recipes             = NetworkConstants.ip_server+NetworkConstants.get_recipes
     let get_order_recipes       = NetworkConstants.ip_server+NetworkConstants.order_recipe
     let updateRecipe            = NetworkConstants.ip_server+NetworkConstants.updateRecipe
+    let uploadRecipe            = NetworkConstants.ip_server+NetworkConstants.uploadRecipe
+    let downladImageRecipe      = NetworkConstants.ip_server+NetworkConstants.downloadImage
+
+
 
     func setChallenge(){
     
@@ -132,6 +137,75 @@ class AlamofireManager: NSObject {
             case .Failure(let error):
                 print("Request failed with error: \(error)")
                 completion(success: false)
+            }
+        }
+    }
+    
+    func uploadImageRecipeNetwork(title:String, image:UIImage, completion:(success:Bool)->Void){
+      let imageData = UIImageJPEGRepresentation(image, 0.5)!
+        
+       Alamofire.upload(.POST,
+            uploadRecipe + token,
+            multipartFormData: { multipartFormData in
+                multipartFormData.appendBodyPart(data: imageData, name: "file", fileName: title+".jpg", mimeType: "image/jpeg")
+            },
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .Success(let upload, _, _):
+                    upload.progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
+                        print("Uploading Avatar \(totalBytesWritten) / \(totalBytesExpectedToWrite)")
+                        dispatch_async(dispatch_get_main_queue(),{
+                            /**
+                            *  Update UI Thread about the progress
+                            */
+                        })
+                    }
+                    upload.responseJSON { (JSON) in
+                        dispatch_async(dispatch_get_main_queue(),{
+                            //Show Alert in UI
+                            print("Avatar uploaded");
+                            completion(success: true)
+                        })
+                    }
+                    
+                case .Failure(let encodingError):
+                    //Show Alert in UI
+                    print("Avatar uploaded");
+                    completion(success: false)
+
+                }
+            }
+        );
+    }
+    
+    /* func getNetworkImage(urlString: String, completion: (UIImage? -> Void)) -> (Request) {
+        let imagePath = downladImageRecipe+urlString+"?access_token=" + token
+        return Alamofire.request(.GET, imagePath).responseImage { (response) -> Void in
+            guard let image = response.result.value
+            else {
+                return
+            }
+            completion(image)
+        }
+    }*/
+    
+    func getNetworkImage(urlString: String, completion:(image:UIImage)->Void){
+        let urlStringWithoutSpace = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        
+        let imagePath = downladImageRecipe+urlStringWithoutSpace!+"?access_token=" + token
+        Alamofire.request(.GET, imagePath).responseImage { response in
+            switch response.result{
+            case .Success :
+                if response.response!.statusCode == 200 {
+                    if let image = response.result.value {
+                        completion(image:image)
+                    }
+                }
+            case .Failure(let error):
+                print(error)
+                print(response.request)
+                print(response.response)
+                debugPrint(response.result)
             }
         }
     }

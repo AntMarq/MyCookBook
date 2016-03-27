@@ -19,7 +19,7 @@ class Recipe: Object {
 //  }
     dynamic var id = ""
     dynamic var title = ""
-    dynamic var image = ""
+    dynamic var imagePath = ""
     dynamic var date = ""
     dynamic var preparation = ""
     dynamic var ingredients = ""
@@ -42,14 +42,14 @@ class Recipe: Object {
         //Gestion  image : Si image non présente dans l'appel WS, on entre en base l'image par de la catégorie corespodnante
         if(dictionary["image"].stringValue == ""){
             if(categorie == "1"){
-                image          = "placeholder_categorie1"
+                imagePath          = "placeholder_categorie1"
             }
             else{
-                image          = "placeholder_categorie2"
+                imagePath          = "placeholder_categorie2"
             }
         }
         else{
-            image          = dictionary["image"].stringValue
+            imagePath          = dictionary["image"].stringValue
         }
         //Fin gestion image
         date               = dictionary["day"].stringValue
@@ -82,11 +82,11 @@ class Recipe: Object {
     
     
     func toDic() -> Dictionary<String, AnyObject> {
-        return ["id":self.id, "preparation":self.preparation, "ingredients":self.ingredients, "tps_preparation":self.tps_preparation, "tps_cuisson":self.tps_cuisson, "categorie":self.categorie, "title":self.title, "nb_personne":self.nb_personne, "day":self.date, "image":self.image]
+        return ["id":self.id, "preparation":self.preparation, "ingredients":self.ingredients, "tps_preparation":self.tps_preparation, "tps_cuisson":self.tps_cuisson, "categorie":self.categorie, "title":self.title, "nb_personne":self.nb_personne, "day":self.date, "image":self.imagePath]
     }
     
     func toDicPOST() -> Dictionary<String, AnyObject> {
-        return ["preparation":self.preparation, "ingredients":self.ingredients, "tps_preparation":self.tps_preparation, "tps_cuisson":self.tps_cuisson, "categorie":self.categorie, "title":self.title, "nb_personne":self.nb_personne, "day":self.date, "image":self.image]
+        return ["preparation":self.preparation, "ingredients":self.ingredients, "tps_preparation":self.tps_preparation, "tps_cuisson":self.tps_cuisson, "categorie":self.categorie, "title":self.title, "nb_personne":self.nb_personne, "day":self.date, "image":self.imagePath]
     }
     
 }

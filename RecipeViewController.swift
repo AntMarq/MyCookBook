@@ -90,9 +90,9 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     
     func loadInfo(){
         navigationItem.title = recipeDetail.title
-        PhotoManager.sharedInstance.retrieveImageWithIdentifer(recipeDetail.image, completion: { (image) -> Void in
+        /*PhotoManager.sharedInstance.retrieveImageWithIdentifer(recipeDetail.imagePath, completion: { (image) -> Void in
             self.imageRecipe.image = image
-        })
+        })*/
         titleRecipeDetail.text = recipeDetail.title
         let modifiedIngredient = recipeDetail.ingredients.stringByReplacingOccurrencesOfString(", ", withString: "\n", options: NSStringCompareOptions.LiteralSearch, range: nil)
         ingredientsDetail.text = modifiedIngredient
@@ -102,7 +102,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         self.cuissonTime.text = recipeDetail.tps_cuisson
         self.checkPicker = true
         self.pickerView.selectItem(Int(recipeDetail.categorie)!)
-        self.imageLocation = recipeDetail.image
+        self.imageLocation = recipeDetail.imagePath
     }
 
 // MARK: - TextField Delegate
@@ -177,6 +177,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         }
         else{
             editBtn.setImage(UIImage(named: "edit-unvalidated"), forState: UIControlState.Normal)
+            self.imageLocation = self.titleRecipeDetail.text!+".jpg"
             self.updatePropertyInDB(KeyFieldConstants.imageKey)
             self.editionOff()
             if(displayMessageForAlertView() == "" && self.checkPicker){
@@ -186,6 +187,9 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
                 else{
                     self.postRecipe()
                 }
+                AlamofireManager.SharedInstance.uploadImageRecipeNetwork(self.recipeDetail.title, image: self.imageRecipe.image!, completion: { (success) -> Void in
+                    print("Image uplaod")
+                })
             }
             else{
                 self.displayAlert(self.displayMessageForAlertView())
@@ -214,9 +218,9 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
         let image: UIImage  = info[UIImagePickerControllerOriginalImage]as! UIImage
         imageRecipe.image = image
-        PhotoManager.sharedInstance.saveImage(image) { (imageLocation) -> Void in
+      /*  PhotoManager.sharedInstance.saveImage(image) { (imageLocation) -> Void in
             self.imageLocation = imageLocation
-        }
+        }*/
     }
 
 // MARK: - DB Update & WS
@@ -263,9 +267,6 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
             let dateInFormat:String = dateFormatter.stringFromDate(todaysDate)
             self.recipeDetail.date = dateInFormat
         }
-        
-        self.recipeDetail.image = self.imageLocation
-        
         AlamofireManager.SharedInstance.postRecipe(self.recipeDetail) { (success) -> Void in
             if(success){
                 self.newRecipe = true

@@ -86,6 +86,7 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-MyCookBook/AKPickerView_Swift.framework"
   install_framework "Pods-MyCookBook/Alamofire.framework"
+  install_framework "Pods-MyCookBook/AlamofireImage.framework"
   install_framework "Pods-MyCookBook/IQKeyboardManagerSwift.framework"
   install_framework "Pods-MyCookBook/Realm.framework"
   install_framework "Pods-MyCookBook/RealmSwift.framework"
@@ -94,6 +95,7 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-MyCookBook/AKPickerView_Swift.framework"
   install_framework "Pods-MyCookBook/Alamofire.framework"
+  install_framework "Pods-MyCookBook/AlamofireImage.framework"
   install_framework "Pods-MyCookBook/IQKeyboardManagerSwift.framework"
   install_framework "Pods-MyCookBook/Realm.framework"
   install_framework "Pods-MyCookBook/RealmSwift.framework"

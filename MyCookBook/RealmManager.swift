@@ -55,7 +55,7 @@ class RealmManager: NSObject {
                     object.preparation = propertyNeedUpdate
                 }
                 else if(keyField == KeyFieldConstants.imageKey){
-                     object.image = propertyNeedUpdate
+                     object.imagePath = propertyNeedUpdate
                 }
                 else if(keyField == KeyFieldConstants.ingredientsKey){
                     object.ingredients = propertyNeedUpdate
