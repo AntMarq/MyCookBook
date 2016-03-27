@@ -10,11 +10,7 @@ import UIKit
 import Alamofire
 
 class RecipeCollectionViewCell: UICollectionViewCell {
-    
-    var imagePath: String = ""
-    var request: Request?
-    let downladImageRecipe      = NetworkConstants.ip_server+NetworkConstants.downloadImage
-    
+        
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var titleRecipe: UILabel!
     @IBOutlet weak var imageRecipe: UIImageView!
@@ -40,25 +36,22 @@ class RecipeCollectionViewCell: UICollectionViewCell {
     
     func reset(){
         imageRecipe.image = nil
-        request?.cancel()
     }
     
-    func loadImage() {
-        loadingIndicator.hidden = false
-        loadingIndicator.startAnimating()
+    func downloadImage(){
         let urlString = titleRecipe.text! + ".jpg"
         AlamofireManager.SharedInstance.getNetworkImage(urlString) { (image) -> Void in
             self.populateCell(image)
         }
-        
-        
-        /*request = AlamofireManager.SharedInstance.getNetworkImage(urlString) { image in
-            self.populateCell(image!)
-        }*/
-        
-       /* AlamofireManager.SharedInstance.getNetworkImage(urlString) { (image) -> Void in
-            self.populateCell(image)
-        }*/
+    }
+    
+    func loadImage() {
+        loadingIndicator.hidden = false
+        if let image = AlamofireManager.SharedInstance.cachedImage(titleRecipe.text! + ".jpg") {
+            populateCell(image)
+            return
+        }
+        downloadImage()
     }
     
     func populateCell(image: UIImage) {
@@ -66,8 +59,4 @@ class RecipeCollectionViewCell: UICollectionViewCell {
         loadingIndicator.hidden = true
         imageRecipe.image = image
     }
-    
-    
-    
-    
 }

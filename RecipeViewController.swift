@@ -90,9 +90,6 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     
     func loadInfo(){
         navigationItem.title = recipeDetail.title
-        /*PhotoManager.sharedInstance.retrieveImageWithIdentifer(recipeDetail.imagePath, completion: { (image) -> Void in
-            self.imageRecipe.image = image
-        })*/
         titleRecipeDetail.text = recipeDetail.title
         let modifiedIngredient = recipeDetail.ingredients.stringByReplacingOccurrencesOfString(", ", withString: "\n", options: NSStringCompareOptions.LiteralSearch, range: nil)
         ingredientsDetail.text = modifiedIngredient
@@ -103,6 +100,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         self.checkPicker = true
         self.pickerView.selectItem(Int(recipeDetail.categorie)!)
         self.imageLocation = recipeDetail.imagePath
+        self.imageRecipe.image = AlamofireManager.SharedInstance.cachedImage(recipeDetail.imagePath)
     }
 
 // MARK: - TextField Delegate
@@ -218,9 +216,6 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
         let image: UIImage  = info[UIImagePickerControllerOriginalImage]as! UIImage
         imageRecipe.image = image
-      /*  PhotoManager.sharedInstance.saveImage(image) { (imageLocation) -> Void in
-            self.imageLocation = imageLocation
-        }*/
     }
 
 // MARK: - DB Update & WS

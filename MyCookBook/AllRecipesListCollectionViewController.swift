@@ -91,15 +91,6 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
         let cell:RecipeCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! RecipeCollectionViewCell
         cell.titleRecipe.text = listRecipes[indexPath.row].title
         cell.configure(listRecipes[indexPath.row])
-        
-       // cell.imagePath = listRecipes[indexPath.row].image
-        //cell.imageRecipe.image = UIImage(named: listRecipes[indexPath.row].image)
-        /*PhotoManager.sharedInstance.retrieveImageWithIdentifer(listRecipes[indexPath.row].image) { (image) -> Void in
-            cell.imageRecipe.image = image
-        }*/
-        
-        
-
         return cell
     }
     

@@ -13,6 +13,10 @@ import SwiftyJSON
 class AlamofireManager: NSObject {
     
     static let SharedInstance = AlamofireManager()
+    let imageCache = AutoPurgingImageCache(
+        memoryCapacity: 200 * 1024 * 1024,
+        preferredMemoryUsageAfterPurge: 60 * 1024 * 1024
+    )
     
     var token = ""
     
@@ -23,8 +27,6 @@ class AlamofireManager: NSObject {
     let updateRecipe            = NetworkConstants.ip_server+NetworkConstants.updateRecipe
     let uploadRecipe            = NetworkConstants.ip_server+NetworkConstants.uploadRecipe
     let downladImageRecipe      = NetworkConstants.ip_server+NetworkConstants.downloadImage
-
-
 
     func setChallenge(){
     
@@ -178,17 +180,6 @@ class AlamofireManager: NSObject {
         );
     }
     
-    /* func getNetworkImage(urlString: String, completion: (UIImage? -> Void)) -> (Request) {
-        let imagePath = downladImageRecipe+urlString+"?access_token=" + token
-        return Alamofire.request(.GET, imagePath).responseImage { (response) -> Void in
-            guard let image = response.result.value
-            else {
-                return
-            }
-            completion(image)
-        }
-    }*/
-    
     func getNetworkImage(urlString: String, completion:(image:UIImage)->Void){
         let urlStringWithoutSpace = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         
@@ -197,9 +188,9 @@ class AlamofireManager: NSObject {
             switch response.result{
             case .Success :
                 if response.response!.statusCode == 200 {
-                    if let image = response.result.value {
-                        completion(image:image)
-                    }
+                    guard let image = response.result.value else { return }
+                    completion(image: image)
+                    self.cacheImage(image, urlString: urlString)
                 }
             case .Failure(let error):
                 print(error)
@@ -208,5 +199,16 @@ class AlamofireManager: NSObject {
                 debugPrint(response.result)
             }
         }
+    }
+    
+    
+    //MARK: = Image Caching
+    
+    func cacheImage(image: Image, urlString: String) {
+        imageCache.addImage(image, withIdentifier: urlString)
+    }
+    
+    func cachedImage(urlString: String) -> Image? {
+        return imageCache.imageWithIdentifier(urlString)
     }
 }
