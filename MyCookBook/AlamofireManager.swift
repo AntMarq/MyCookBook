@@ -180,7 +180,7 @@ class AlamofireManager: NSObject {
         );
     }
     
-    func getNetworkImage(urlString: String, completion:(image:UIImage)->Void){
+    func getNetworkImage(urlString: String, completion:(image:UIImage!, success:Bool)->Void){
         let urlStringWithoutSpace = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         
         let imagePath = downladImageRecipe+urlStringWithoutSpace!+"?access_token=" + token
@@ -189,14 +189,12 @@ class AlamofireManager: NSObject {
             case .Success :
                 if response.response!.statusCode == 200 {
                     guard let image = response.result.value else { return }
-                    completion(image: image)
+                    completion(image: image, success: true)
                     self.cacheImage(image, urlString: urlString)
                 }
             case .Failure(let error):
                 print(error)
-                print(response.request)
-                print(response.response)
-                debugPrint(response.result)
+                completion(image: nil, success: false)
             }
         }
     }

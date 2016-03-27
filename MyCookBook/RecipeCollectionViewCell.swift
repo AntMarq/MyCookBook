@@ -40,8 +40,13 @@ class RecipeCollectionViewCell: UICollectionViewCell {
     
     func downloadImage(){
         let urlString = titleRecipe.text! + ".jpg"
-        AlamofireManager.SharedInstance.getNetworkImage(urlString) { (image) -> Void in
-            self.populateCell(image)
+        AlamofireManager.SharedInstance.getNetworkImage(urlString) { (image,success) -> Void in
+            if(success){
+                self.populateCell(image)
+            }
+            else{
+                self.loadingIndicator.hidden = true
+            }
         }
     }
     
