@@ -53,33 +53,39 @@ class AlamofireManager: NSObject {
     }
     
     func getToken(completion: (Bool) -> Void) {
-        if (self.token != ""){
-            completion(true)
-        }
-        else{
-            print("Authentification : \(post_token)...")
-            Alamofire.request(.POST, post_token, parameters: login_params, encoding: .JSON) .responseJSON{
-                response in
-                switch response.result {
-                    
-                case .Success:
-                    if response.response!.statusCode == 200 {
-                        let credential = JSON(response.result.value!)
-                        print("Token ok")
-                        //print("...Token ok: \(credential)")
-                        self.token = credential["id"].stringValue
-                        completion(true)
+        if Reachability.isConnectedToNetwork() == true {
+            if (self.token != ""){
+                completion(true)
+            }
+            else{
+                print("Authentification : \(post_token)...")
+                Alamofire.request(.POST, post_token, parameters: login_params, encoding: .JSON) .responseJSON{
+                    response in
+                    switch response.result {
                         
-                    } else {
-                        print("Request failed with error: \(response.response!.statusCode)")
+                    case .Success:
+                        if response.response!.statusCode == 200 {
+                            let credential = JSON(response.result.value!)
+                            print("Token ok")
+                            //print("...Token ok: \(credential)")
+                            self.token = credential["id"].stringValue
+                            completion(true)
+                            
+                        } else {
+                            print("Request failed with error: \(response.response!.statusCode)")
+                            completion(false)
+                        }
+                    case .Failure(let error):
+                        print("Request failed with error: \(error)")
                         completion(false)
                     }
-                case .Failure(let error):
-                    print("Request failed with error: \(error)")
-                    completion(false)
                 }
             }
         }
+        else{
+            completion(false)
+        }
+        
     }
     
     func downloadOrderedRecipes(category:String, completion: (recipes: JSON) -> Void) {
@@ -172,7 +178,7 @@ class AlamofireManager: NSObject {
                     
                 case .Failure(let encodingError):
                     //Show Alert in UI
-                    print("Avatar uploaded");
+                    print(encodingError);
                     completion(success: false)
 
                 }

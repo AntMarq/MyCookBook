@@ -45,13 +45,13 @@ class RecipeCollectionViewCell: UICollectionViewCell {
                 self.populateCell(image)
             }
             else{
-                self.loadingIndicator.hidden = true
+                self.loadingIndicator.stopAnimating()
             }
         }
     }
     
     func loadImage() {
-        loadingIndicator.hidden = false
+        loadingIndicator.startAnimating()
         if let image = AlamofireManager.SharedInstance.cachedImage(titleRecipe.text! + ".jpg") {
             populateCell(image)
             return
@@ -61,7 +61,6 @@ class RecipeCollectionViewCell: UICollectionViewCell {
     
     func populateCell(image: UIImage) {
         loadingIndicator.stopAnimating()
-        loadingIndicator.hidden = true
         imageRecipe.image = image
     }
 }
