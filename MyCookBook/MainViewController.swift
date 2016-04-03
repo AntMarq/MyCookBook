@@ -13,10 +13,16 @@ private let segueID = "HomeToRecipesList"
 class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelegate {
     
     var imgID = 0
+    let titleImgApero:String = "Mes Apéritifs"
     let titleImgEntree:String = "Mes Entrées"
     let titleImgPlat:String = "Mes Plats Principaux"
     let titleImgDessert:String = "Mes Desserts"
     var categoryList:[UIImage] = []
+    let idCategoryApero:Int = 4
+    let idCategoryEntree:Int = 1
+    let idCategoryPlat:Int = 2
+    let idCategoryDessert:Int = 3
+
     
     @IBOutlet weak var carousel: iCarousel!
     @IBOutlet weak var imgEntree: UIImageView!
@@ -34,8 +40,10 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        categoryList = [imgEntree.image!,imgDessert.image!, imgApero.image!,imgPlat.image!]
+        
+        categoryList = [imgApero.image!,imgEntree.image!,imgPlat.image!,imgDessert.image!]
         carousel.type = iCarouselType.Rotary
+        carousel.scrollSpeed = 0.4
         AlamofireManager.SharedInstance.getToken { (success) -> Void in
             if(!success){
                 print("No token")
@@ -48,36 +56,26 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
         // Dispose of any resources that can be recreated.
     }
     
-    func imageTapped(sender: UITapGestureRecognizer)
-    {
-        if sender.view?.tag == 1{
-            imgID = 1
-        }
-        else if sender.view?.tag == 2{
-            imgID = 2
-        }
-        else if sender.view?.tag == 3{
-            imgID = 3
-        }
-        else if sender.view?.tag == 4{
-            imgID = 4
-        }
-        self.performSegueWithIdentifier(segueID, sender: self)
-    }
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == segueID
         {
             if let destinationVC = segue.destinationViewController as? AllRecipesListCollectionViewController{
-                destinationVC.categorieFilter = String(imgID)
+
                 if imgID == 1{
-                    destinationVC.titleViewController = self.titleImgEntree
+                    destinationVC.titleViewController = self.titleImgApero
+                    destinationVC.categorieFilter = String(self.idCategoryApero)
                 }
                 else if imgID == 2{
-                    destinationVC.titleViewController = self.titleImgPlat
+                    destinationVC.titleViewController = self.titleImgEntree
+                    destinationVC.categorieFilter = String(self.idCategoryEntree)
                 }
                 else if imgID == 3{
+                    destinationVC.titleViewController = self.titleImgPlat
+                    destinationVC.categorieFilter = String(self.idCategoryPlat)
+                }
+                else{
                     destinationVC.titleViewController = self.titleImgDessert
+                    destinationVC.categorieFilter = String(self.idCategoryDessert)
                 }
             }
         }
@@ -142,6 +140,12 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
         }
         return value
     }
+    
+    func carousel(carousel: iCarousel, didSelectItemAtIndex index: Int) {
+        imgID = index+1
+        self.performSegueWithIdentifier(segueID, sender: self)
+    }
+
     
     
 }
