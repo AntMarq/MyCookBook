@@ -201,7 +201,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ardoise" translatesAutoresizingMaskIntoConstraints="NO" id="Rfp-ND-ka0">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ardoise" translatesAutoresizingMaskIntoConstraints="NO" id="Rfp-ND-ka0">
                                 <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YJ2-U1-ZLu">
@@ -295,7 +295,7 @@
                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="MON TITRE" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gp6-Y7-7an">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="MON TITRE" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gp6-Y7-7an">
                                 <rect key="frame" x="539" y="72" width="429" height="26"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="22"/>
@@ -329,7 +329,7 @@
                                     <constraint firstAttribute="trailing" secondItem="DMs-Q6-Dq2" secondAttribute="trailing" constant="8" id="uVn-Tw-7HS"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Catégorie :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xq8-CV-aGX">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Catégorie :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xq8-CV-aGX">
                                 <rect key="frame" x="520" y="120" width="112" height="21"/>
                                 <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="18"/>
                                 <color key="textColor" red="1" green="0.98206378419999996" blue="0.94613245180000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -452,6 +452,7 @@
                         <outlet property="cuissonTime" destination="Lcu-Wh-2Qh" id="6GR-AI-odo"/>
                         <outlet property="editBtn" destination="OlE-u9-JZV" id="6Ab-uA-juO"/>
                         <outlet property="imageRecipe" destination="YJ2-U1-ZLu" id="Jla-Dx-ZgW"/>
+                        <outlet property="infoView" destination="N1Y-Mw-jGA" id="Kzk-Um-mPV"/>
                         <outlet property="ingredientsDetail" destination="Fab-9w-2fA" id="6xW-ls-zo4"/>
                         <outlet property="nb_personne" destination="Ihp-jK-X4O" id="hEI-jH-21O"/>
                         <outlet property="pickerView" destination="gxD-wK-zUI" id="VQR-cD-pxJ"/>

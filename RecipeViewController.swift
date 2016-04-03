@@ -33,6 +33,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet weak var btnTakePhoto: UIButton!
     @IBOutlet weak var btnChoosePhotoInAlbum: UIButton!
     
+    @IBOutlet weak var infoView: UIView!
     let titles = [" ", "Mes entrées", "Mes plats", "Mes desserts", "Mes apéros"]
     let placeholderPreparation = "Ma nouvelle préparation..."
     let placeholderIngrédients = "Mes ingrédients..."
@@ -207,7 +208,12 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .PhotoLibrary
+        imagePicker.modalPresentationStyle = UIModalPresentationStyle.Popover
         presentViewController(imagePicker, animated: true, completion: nil)
+        let presentationController:UIPopoverPresentationController = imagePicker.popoverPresentationController!
+        presentationController.sourceView = self.imageRecipe
+        presentationController.sourceRect = CGRectMake(0, (self.imageRecipe.frame.size.height/2)-1 ,self.imageRecipe.frame.size.width ,self.imageRecipe.frame.size.height);
+        
     }
     
 // MARK: - Take Photo methods
