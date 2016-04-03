@@ -147,13 +147,13 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background_1" translatesAutoresizingMaskIntoConstraints="NO" id="8x5-05-JaQ" userLabel="background">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                             </imageView>
-                            <imageView tag="4" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="apero2" translatesAutoresizingMaskIntoConstraints="NO" id="ygj-ZZ-yXp">
+                            <imageView hidden="YES" tag="4" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="apero2" translatesAutoresizingMaskIntoConstraints="NO" id="ygj-ZZ-yXp">
                                 <rect key="frame" x="66" y="228" width="240" height="261"/>
                             </imageView>
-                            <imageView tag="2" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="plat" translatesAutoresizingMaskIntoConstraints="NO" id="2nE-a7-w8T">
+                            <imageView hidden="YES" tag="2" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="plat" translatesAutoresizingMaskIntoConstraints="NO" id="2nE-a7-w8T">
                                 <rect key="frame" x="392" y="384" width="240" height="261"/>
                             </imageView>
-                            <imageView tag="3" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dessert2" translatesAutoresizingMaskIntoConstraints="NO" id="Fyc-ez-R4I">
+                            <imageView hidden="YES" tag="3" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dessert2" translatesAutoresizingMaskIntoConstraints="NO" id="Fyc-ez-R4I">
                                 <rect key="frame" x="720" y="228" width="240" height="261"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jrF-ax-rjf">
@@ -166,8 +166,16 @@
                                     <segue destination="Qoj-Hj-fQk" kind="show" identifier="newRecipe" id="vVa-cM-dDd"/>
                                 </connections>
                             </button>
-                            <imageView tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="entree" translatesAutoresizingMaskIntoConstraints="NO" id="Ycg-Os-U8Z">
-                                <rect key="frame" x="392" y="64" width="240" height="261"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="abG-6g-2Cx" customClass="iCarousel">
+                                <rect key="frame" x="175" y="246" width="674" height="275"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="zZk-jM-YoI"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="hmh-xL-I38"/>
+                                </connections>
+                            </view>
+                            <imageView hidden="YES" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="entree" translatesAutoresizingMaskIntoConstraints="NO" id="Ycg-Os-U8Z">
+                                <rect key="frame" x="392" y="61" width="240" height="190"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -177,6 +185,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
                     <connections>
+                        <outlet property="carousel" destination="abG-6g-2Cx" id="BLm-0C-WKH"/>
                         <outlet property="imgApero" destination="ygj-ZZ-yXp" id="cyc-ig-pTb"/>
                         <outlet property="imgDessert" destination="Fyc-ez-R4I" id="zJ4-RL-ZMa"/>
                         <outlet property="imgEntree" destination="Ycg-Os-U8Z" id="jBH-Ze-7fU"/>
@@ -500,6 +509,6 @@
         <image name="preparation_time" width="64" height="64"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YvH-R1-Fi4"/>
+        <segue reference="vVa-cM-dDd"/>
     </inferredMetricsTieBreakers>
 </document>
