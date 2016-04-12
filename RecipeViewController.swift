@@ -186,9 +186,12 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
                 else{
                     self.postRecipe()
                 }
-                AlamofireManager.SharedInstance.uploadImageRecipeNetwork(self.recipeDetail.title, image: self.imageRecipe.image!, completion: { (success) -> Void in
-                    print("Image uplaod")
-                })
+                
+                if((self.imageRecipe.image) != nil){
+                    AlamofireManager.SharedInstance.uploadImageRecipeNetwork(self.recipeDetail.title, image: self.imageRecipe.image!, completion: { (success) -> Void in
+                        print("Image uplaod")
+                    })
+                }
             }
             else{
                 self.displayAlert(self.displayMessageForAlertView())
