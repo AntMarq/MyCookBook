@@ -33,7 +33,7 @@ class Recipe: Object {
         return "id"
     }
     
-    func setData(dictionary: JSON) -> Recipe{
+    func setData(_ dictionary: JSON) -> Recipe{
         
         id                 = dictionary["id"].stringValue
         title              = dictionary["title"].stringValue
@@ -82,11 +82,11 @@ class Recipe: Object {
     
     
     func toDic() -> Dictionary<String, AnyObject> {
-        return ["id":self.id, "preparation":self.preparation, "ingredients":self.ingredients, "tps_preparation":self.tps_preparation, "tps_cuisson":self.tps_cuisson, "categorie":self.categorie, "title":self.title, "nb_personne":self.nb_personne, "day":self.date, "image":self.imagePath]
+        return ["id":self.id as AnyObject, "preparation":self.preparation as AnyObject, "ingredients":self.ingredients as AnyObject, "tps_preparation":self.tps_preparation as AnyObject, "tps_cuisson":self.tps_cuisson as AnyObject, "categorie":self.categorie as AnyObject, "title":self.title as AnyObject, "nb_personne":self.nb_personne, "day":self.date, "image":self.imagePath]
     }
     
     func toDicPOST() -> Dictionary<String, AnyObject> {
-        return ["preparation":self.preparation, "ingredients":self.ingredients, "tps_preparation":self.tps_preparation, "tps_cuisson":self.tps_cuisson, "categorie":self.categorie, "title":self.title, "nb_personne":self.nb_personne, "day":self.date, "image":self.imagePath]
+        return ["preparation":self.preparation as AnyObject, "ingredients":self.ingredients as AnyObject, "tps_preparation":self.tps_preparation as AnyObject, "tps_cuisson":self.tps_cuisson as AnyObject, "categorie":self.categorie as AnyObject, "title":self.title as AnyObject, "nb_personne":self.nb_personne as AnyObject, "day":self.date, "image":self.imagePath]
     }
     
 }
