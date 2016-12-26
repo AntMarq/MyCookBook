@@ -24,7 +24,8 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
     {
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = false
-        IQKeyboardManager.sharedManager().canAdjustTextView = true
+        
+        IQ .sharedManager().canAdjustTextView = true
         
         AlamofireManager.SharedInstance.getToken { (success) -> Void in
             if(success){
@@ -56,7 +57,7 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
         if(self.categorieFilter != "0"){
             RealmManager.SharedInstance.getRecipesCategoryFromDB(self.categorieFilter, completion:{ (recipe) -> Void in
                 self.listRecipes = recipe
-                completion(recipeArray: self.listRecipes)
+                completion(self.listRecipes)
             })
         }
         else{
