@@ -25,7 +25,7 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = false
         
-        IQ .sharedManager().canAdjustTextView = true
+        //IQKeyboardManager.sharedManager().canAdjustTextView = true
         
         AlamofireManager.SharedInstance.getToken { (success) -> Void in
             if(success){

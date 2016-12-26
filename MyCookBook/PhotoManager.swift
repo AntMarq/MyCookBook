@@ -64,7 +64,7 @@ class PhotoManager: NSObject {
         let collection = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
         
         if let _: AnyObject = collection.firstObject {
-            return collection.firstObject as! PHAssetCollection
+            return collection.firstObject
         }
         return nil
     }
@@ -83,7 +83,8 @@ class PhotoManager: NSObject {
             imageIdentifier = placeHolder!.localIdentifier
             
             let albumChangeRequest = PHAssetCollectionChangeRequest(for: self.assetCollection)
-            albumChangeRequest!.addAssets([placeHolder!])
+            albumChangeRequest?.addAssets([placeHolder!] as NSArray)
+            
             }, completionHandler: { (success, error) -> Void in
                 if success {
                     completion(imageIdentifier!)

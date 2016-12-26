@@ -22,7 +22,6 @@
 		FC05DC2C1C46EEC1000E9534 /* MyCookBookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC05DC2B1C46EEC1000E9534 /* MyCookBookTests.swift */; };
 		FC05DC371C46EEC1000E9534 /* MyCookBookUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC05DC361C46EEC1000E9534 /* MyCookBookUITests.swift */; };
 		FC6B8D6D1C8C77CC0077E999 /* UIImagePickerController+SupportedOrientations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6B8D6C1C8C77CC0077E999 /* UIImagePickerController+SupportedOrientations.swift */; };
-		FC6B8D721CA96A500077E999 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6B8D711CA96A500077E999 /* Reachability.swift */; };
 		FC6B8D781CB19D400077E999 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6B8D771CB19D400077E999 /* iCarousel.m */; };
 		FC88D1E51C70AEBC00AE3952 /* KeyFieldConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC88D1E41C70AEBC00AE3952 /* KeyFieldConstants.swift */; };
 		FCD8A0361C49D64300529944 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD8A0351C49D64300529944 /* Recipe.swift */; };
@@ -79,7 +78,6 @@
 		FC05DC361C46EEC1000E9534 /* MyCookBookUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCookBookUITests.swift; sourceTree = "<group>"; };
 		FC05DC381C46EEC1000E9534 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC6B8D6C1C8C77CC0077E999 /* UIImagePickerController+SupportedOrientations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+SupportedOrientations.swift"; sourceTree = "<group>"; };
-		FC6B8D711CA96A500077E999 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		FC6B8D751CB19D3F0077E999 /* MyCookBook-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyCookBook-Bridging-Header.h"; sourceTree = "<group>"; };
 		FC6B8D761CB19D400077E999 /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		FC6B8D771CB19D400077E999 /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
@@ -262,7 +260,6 @@
 				FCD8A0431C53C44A00529944 /* RealmManager.swift */,
 				FCD8A0411C53C36D00529944 /* AlamofireManager.swift */,
 				FCD8A0451C67CC5600529944 /* PhotoManager.swift */,
-				FC6B8D711CA96A500077E999 /* Reachability.swift */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -585,7 +582,6 @@
 				386B32EF1C4D137500F834C6 /* AllRecipesListCollectionViewController.swift in Sources */,
 				FC05DC191C46EEC1000E9534 /* MainViewController.swift in Sources */,
 				FCD8A0461C67CC5600529944 /* PhotoManager.swift in Sources */,
-				FC6B8D721CA96A500077E999 /* Reachability.swift in Sources */,
 				FC88D1E51C70AEBC00AE3952 /* KeyFieldConstants.swift in Sources */,
 				FC05DC171C46EEC1000E9534 /* AppDelegate.swift in Sources */,
 				386B32DE1C48172D00F834C6 /* RecipeViewController.swift in Sources */,
