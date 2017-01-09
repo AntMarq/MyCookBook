@@ -29,59 +29,75 @@ class AlamofireManager: NSObject {
     let downladImageRecipe      = NetworkConstants.ip_server+NetworkConstants.downloadImage
 
     func setChallenge(){
+		
+		// Your hostname and endpoint
+		let cert = "certificate" // e.g. for cert.der, this should just be "cert"
+		
+		// Set up certificates
+		let pathToCert = Bundle.main.path(forResource: cert, ofType: "cer")
+		let localCertificate = NSData(contentsOfFile: pathToCert!)
+		let certificates = [SecCertificateCreateWithData(nil, localCertificate!)!]
+		
+		// Configure the trust policy manager
+		let serverTrustPolicy = ServerTrustPolicy.pinCertificates(
+			certificates: certificates,
+			validateCertificateChain: true,
+			validateHost: true
+		)
+		let serverTrustPolicies = [NetworkConstants.ip_server: serverTrustPolicy]
+		let serverTrustPolicyManager = ServerTrustPolicyManager(policies: serverTrustPolicies)
+		
+		// Configure session manager with trust policy
+		let afManager = SessionManager(
+			configuration: URLSessionConfiguration.default,
+			serverTrustPolicyManager: serverTrustPolicyManager
+		)
+
         
-        let serverTrustPolicies: [String: ServerTrustPolicy] = [
-            NetworkConstants.ip_server: .disableEvaluation
-        ]
-        
-        let sessionManager = Alamofire.SessionManager(
-            configuration: URLSessionConfiguration.default,
-            serverTrustPolicyManager: ServerTrustPolicyManager(policies: serverTrustPolicies)
-        )
-        
-        let delegate: Alamofire.SessionDelegate = sessionManager.delegate
-        
-        delegate.sessionDidReceiveChallenge = {
-            session, challenge in
-            var disposition: URLSession.AuthChallengeDisposition = .performDefaultHandling
-            var credential: URLCredential?
-            
-            if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
-                disposition = URLSession.AuthChallengeDisposition.useCredential
-                credential = URLCredential(trust: challenge.protectionSpace as! SecTrust)
-            } else {
-                if challenge.previousFailureCount > 0 {
-                    disposition = .cancelAuthenticationChallenge
-                } else {
-                    credential = sessionManager.session.configuration.urlCredentialStorage?.defaultCredential(for: challenge.protectionSpace)
-                    
-                    if credential != nil {
-                        disposition = .useCredential
-                    }
-                }
-            }
-            return (disposition, credential)
-        }
-        /*Alamofire.Manager.sharedInstance.delegate.sessionDidReceiveChallenge = { session, challenge in
-            var disposition: NSURLSessionAuthChallengeDisposition = .PerformDefaultHandling
-            var credential: NSURLCredential?
-            
-            if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
-                disposition = NSURLSessionAuthChallengeDisposition.UseCredential
-                credential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!)
-            } else {
-                if challenge.previousFailureCount > 0 {
-                    disposition = .CancelAuthenticationChallenge
-                } else {
-                    credential = Alamofire.Manager.sharedInstance.session.configuration.URLCredentialStorage?.defaultCredentialForProtectionSpace(challenge.protectionSpace)
-                    
-                    if credential != nil {
-                        disposition = .UseCredential
-                    }
-                }
-            }
-            return (disposition, credential)
-        }*/
+//        let serverTrustPolicies: [String: ServerTrustPolicy] = [
+//            "mobile-api": .disableEvaluation
+//        ]
+//		
+//		let configuration = URLSessionConfiguration.default
+//		configuration.httpAdditionalHeaders = Alamofire.SessionManager.defaultHTTPHeaders
+//		
+////		let serverTrustPolicies: [String: ServerTrustPolicy] = [
+////					"mobile-api": .pinCertificates(
+////						certificates: ServerTrustPolicy.certificates(),
+////						validateCertificateChain: true,
+////						validateHost: true
+////					),
+////					//"insecure.expired-apis.com": .disableEvaluation
+////				]
+//		
+//        let sessionManager = Alamofire.SessionManager(
+//            configuration: configuration,
+//            serverTrustPolicyManager: ServerTrustPolicyManager(policies: serverTrustPolicies)
+//        )
+//        
+//        let delegate: Alamofire.SessionDelegate = sessionManager.delegate
+//        
+//        delegate.sessionDidReceiveChallenge = {
+//            session, challenge in
+//            var disposition: URLSession.AuthChallengeDisposition = .performDefaultHandling
+//            var credential: URLCredential?
+//            
+//            if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+//                disposition = URLSession.AuthChallengeDisposition.useCredential
+//                credential = URLCredential(trust: challenge.protectionSpace as! SecTrust)
+//            } else {
+//                if challenge.previousFailureCount > 0 {
+//                    disposition = .cancelAuthenticationChallenge
+//                } else {
+//                    credential = sessionManager.session.configuration.urlCredentialStorage?.defaultCredential(for: challenge.protectionSpace)
+//                    
+//                    if credential != nil {
+//                        disposition = .useCredential
+//                    }
+//                }
+//            }
+//            return (disposition, credential)
+//        }
     }
     
     func getToken(_ completion: @escaping (Bool) -> Void) {

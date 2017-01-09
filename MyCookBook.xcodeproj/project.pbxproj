@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0A73BED1D752BB0C7F91A839 /* Pods_MyCookBookUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 330BB0E1B756A78D5F76E2D8 /* Pods_MyCookBookUITests.framework */; };
+		384181A81E23898C00560CF8 /* certificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 384181A71E23898C00560CF8 /* certificate.cer */; };
 		386B32DE1C48172D00F834C6 /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386B32DD1C48172D00F834C6 /* RecipeViewController.swift */; };
 		386B32EF1C4D137500F834C6 /* AllRecipesListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386B32EE1C4D137500F834C6 /* AllRecipesListCollectionViewController.swift */; };
 		386B32F21C4D16DD00F834C6 /* RecipeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386B32F11C4D16DD00F834C6 /* RecipeCollectionViewCell.swift */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		1E170C75DB93129A38B969B4 /* Pods-MyCookBookTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCookBookTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyCookBookTests/Pods-MyCookBookTests.debug.xcconfig"; sourceTree = "<group>"; };
 		330BB0E1B756A78D5F76E2D8 /* Pods_MyCookBookUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyCookBookUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		384181A71E23898C00560CF8 /* certificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = certificate.cer; sourceTree = "<group>"; };
 		386B32DD1C48172D00F834C6 /* RecipeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = RecipeViewController.swift; path = ../RecipeViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		386B32EE1C4D137500F834C6 /* AllRecipesListCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AllRecipesListCollectionViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		386B32F11C4D16DD00F834C6 /* RecipeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				FCD8A0321C49D5CB00529944 /* Models */,
 				FCD8A0341C49D5F300529944 /* IHM */,
 				FC05DC1D1C46EEC1000E9534 /* Assets.xcassets */,
+				384181A71E23898C00560CF8 /* certificate.cer */,
 				FC05DC221C46EEC1000E9534 /* Info.plist */,
 				FC6B8D751CB19D3F0077E999 /* MyCookBook-Bridging-Header.h */,
 			);
@@ -409,6 +412,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				386B32F41C4D18FB00F834C6 /* RecipeCollectionViewCell.xib in Resources */,
+				384181A81E23898C00560CF8 /* certificate.cer in Resources */,
 				FC05DC211C46EEC1000E9534 /* LaunchScreen.storyboard in Resources */,
 				FC05DC1E1C46EEC1000E9534 /* Assets.xcassets in Resources */,
 				FC05DC1C1C46EEC1000E9534 /* Main.storyboard in Resources */,
