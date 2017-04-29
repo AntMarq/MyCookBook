@@ -4,11 +4,11 @@ PODS:
   - AlamofireImage (3.2.0):
     - Alamofire (~> 4.1)
   - IQKeyboardManagerSwift (4.0.9)
-  - Realm (0.103.2):
-    - Realm/Headers (= 0.103.2)
-  - Realm/Headers (0.103.2)
-  - RealmSwift (0.103.2):
-    - Realm (= 0.103.2)
+  - Realm (2.6.2):
+    - Realm/Headers (= 2.6.2)
+  - Realm/Headers (2.6.2)
+  - RealmSwift (2.6.2):
+    - Realm (= 2.6.2)
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
@@ -34,8 +34,8 @@ SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireImage: 157ed682cc81d3b9db4fb90c1f12180ac552d93b
   IQKeyboardManagerSwift: 2eefe6c429b86aa08bfbc1b5c891164d754adf91
-  Realm: 448f0416079fe5b0ed947e7d86f3c4e1c75826cb
-  RealmSwift: 8a45cc8f02dfac093b72a3b5a01d567e27e15891
+  Realm: 29222766425b9f831228f81b63f0e38a97a4d700
+  RealmSwift: d161a80f96cb91ae88391a7d5a9cf08024a7bc8e
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
 PODFILE CHECKSUM: 2c9ce362c6edf6eb699587770cd4ebd1883f118b

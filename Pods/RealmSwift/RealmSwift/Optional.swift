@@ -29,50 +29,20 @@ extension Float: RealmOptionalType {}
 extension Double: RealmOptionalType {}
 extension Bool: RealmOptionalType {}
 
-// Not all RealmOptionalType's can be cast to AnyObject, so handle casting logic here.
-private func realmOptionalToAnyObject<T: RealmOptionalType>(value: T?) -> AnyObject? {
-    if let anyObjectValue: AnyObject = value as? AnyObject {
-        return anyObjectValue
-    } else if let int8Value = value as? Int8 {
-        return NSNumber(long: Int(int8Value))
-    } else if let int16Value = value as? Int16 {
-        return NSNumber(long: Int(int16Value))
-    } else if let int32Value = value as? Int32 {
-        return NSNumber(long: Int(int32Value))
-    } else if let int64Value = value as? Int64 {
-        return NSNumber(longLong: int64Value)
-    }
-    return nil
-}
-
-// Not all RealmOptionalType's can be cast from AnyObject, so handle casting logic here.
-private func anyObjectToRealmOptional<T: RealmOptionalType>(anyObject: AnyObject?) -> T? {
-    if T.self is Int8.Type {
-        return ((anyObject as! NSNumber?)?.longValue).map { Int8($0) } as! T?
-    } else if T.self is Int16.Type {
-        return ((anyObject as! NSNumber?)?.longValue).map { Int16($0) } as! T?
-    } else if T.self is Int32.Type {
-        return ((anyObject as! NSNumber?)?.longValue).map { Int32($0) } as! T?
-    } else if T.self is Int64.Type {
-        return (anyObject as! NSNumber?)?.longLongValue as! T?
-    }
-    return anyObject as! T?
-}
-
 /**
- A `RealmOptional` instance represents a optional value for types that can't be directly declared as `dynamic` in Swift,
+ A `RealmOptional` instance represents an optional value for types that can't be directly declared as `dynamic` in Swift,
  such as `Int`, `Float`, `Double`, and `Bool`.
 
  To change the underlying value stored by a `RealmOptional` instance, mutate the instance's `value` property.
-*/
+ */
 public final class RealmOptional<T: RealmOptionalType>: RLMOptionalBase {
-    /// The value this optional represents.
+    /// The value the optional represents.
     public var value: T? {
         get {
-            return anyObjectToRealmOptional(underlyingValue)
+            return underlyingValue.map(dynamicBridgeCast)
         }
         set {
-            underlyingValue = realmOptionalToAnyObject(newValue)
+            underlyingValue = newValue.map(dynamicBridgeCast)
         }
     }
 
