@@ -52,7 +52,7 @@ class AlamofireManager: NSObject {
         }
     }
     
-    func getToken(completion: (Bool) -> Void) {
+    func getToken(_ completion: @escaping (Bool) -> Void) {
         if Reachability.isConnectedToNetwork() == true {
             if (self.token != ""){
                 completion(true)
@@ -88,7 +88,7 @@ class AlamofireManager: NSObject {
         
     }
     
-    func downloadOrderedRecipes(category:String, completion: (recipes: JSON) -> Void) {
+    func downloadOrderedRecipes(_ category:String, completion: (_ recipes: JSON) -> Void) {
         let uriNews = get_recipes+token+NetworkConstants.filter_recipe+category
       
         Alamofire.request(.GET,uriNews).responseJSON{
@@ -109,7 +109,7 @@ class AlamofireManager: NSObject {
         }
     }
     
-    func putRecipe(recipe:Recipe,completion:(success:Bool)->Void){
+    func putRecipe(_ recipe:Recipe,completion:@escaping (_ success:Bool)->Void){
         let params = recipe.toDic()
         Alamofire.request(.PUT, updateRecipe+token, parameters:params, encoding: .JSON) .responseJSON{
             response in
@@ -128,7 +128,7 @@ class AlamofireManager: NSObject {
             }
         }
     
-    func postRecipe(recipe:Recipe,completion:(success:Bool)->Void){
+    func postRecipe(_ recipe:Recipe,completion:@escaping (_ success:Bool)->Void){
         let params = recipe.toDicPOST()
         Alamofire.request(.POST, updateRecipe+token, parameters:params, encoding: .JSON) .responseJSON{
             response in
@@ -149,7 +149,7 @@ class AlamofireManager: NSObject {
         }
     }
     
-    func uploadImageRecipeNetwork(title:String, image:UIImage, completion:(success:Bool)->Void){
+    func uploadImageRecipeNetwork(_ title:String, image:UIImage, completion:@escaping (_ success:Bool)->Void){
       let imageData = UIImageJPEGRepresentation(image, 0.5)!
         
        Alamofire.upload(.POST,
@@ -186,8 +186,8 @@ class AlamofireManager: NSObject {
         );
     }
     
-    func getNetworkImage(urlString: String, completion:(image:UIImage!, success:Bool)->Void){
-        let urlStringWithoutSpace = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+    func getNetworkImage(_ urlString: String, completion:@escaping (_ image:UIImage?, _ success:Bool)->Void){
+        let urlStringWithoutSpace = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
         
         let imagePath = downladImageRecipe+urlStringWithoutSpace!+"?access_token=" + token
         Alamofire.request(.GET, imagePath).responseImage { response in
@@ -208,11 +208,11 @@ class AlamofireManager: NSObject {
     
     //MARK: = Image Caching
     
-    func cacheImage(image: Image, urlString: String) {
+    func cacheImage(_ image: Image, urlString: String) {
         imageCache.addImage(image, withIdentifier: urlString)
     }
     
-    func cachedImage(urlString: String) -> Image? {
+    func cachedImage(_ urlString: String) -> Image? {
         return imageCache.imageWithIdentifier(urlString)
     }
 }

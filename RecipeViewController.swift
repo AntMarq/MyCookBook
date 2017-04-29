@@ -39,10 +39,10 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     let placeholderIngrédients = "Mes ingrédients..."
     let placeholderTitle = "MON TITRE"
     
-    override func viewWillAppear(animated: Bool)
+    override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = false
     }
 
     override func viewDidLoad() {
@@ -66,7 +66,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
 
 // MARK: - Views Parameters
     func setViewsParameters(){
-        popupView.hidden = true
+        popupView.isHidden = true
         popupView.layer.cornerRadius = 5;
         popupView.layer.masksToBounds = true
 
@@ -92,7 +92,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     func loadInfo(){
         navigationItem.title = recipeDetail.title
         titleRecipeDetail.text = recipeDetail.title
-        let modifiedIngredient = recipeDetail.ingredients.stringByReplacingOccurrencesOfString(", ", withString: "\n", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let modifiedIngredient = recipeDetail.ingredients.replacingOccurrences(of: ", ", with: "\n", options: NSString.CompareOptions.literal, range: nil)
         ingredientsDetail.text = modifiedIngredient
         preparationRecipeDetail.text = recipeDetail.preparation
         self.nb_personne.text = recipeDetail.nb_personne
@@ -106,7 +106,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
 
 // MARK: - TextField Delegate
 
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         if(textField == self.preparationTime){
             if(newRecipe){
                 recipeDetail.tps_preparation = self.preparationTime.text!
@@ -144,7 +144,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     
 // MARK: -  TextView Delegate
     
-    func textViewDidEndEditing(textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
         if(textView == self.ingredientsDetail){
             if(newRecipe){
                recipeDetail.ingredients = self.ingredientsDetail.text
@@ -165,17 +165,17 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     
 // MARK: - IBAction
     
-    @IBAction func backController(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func backController(_ sender: AnyObject) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func pressEdit(sender: AnyObject) {
-        if(!ingredientsDetail.editable){
-            editBtn.setImage(UIImage(named: "edit-validated"), forState: UIControlState.Normal)
+    @IBAction func pressEdit(_ sender: AnyObject) {
+        if(!ingredientsDetail.isEditable){
+            editBtn.setImage(UIImage(named: "edit-validated"), for: UIControlState())
             self.editionOn()
         }
         else{
-            editBtn.setImage(UIImage(named: "edit-unvalidated"), forState: UIControlState.Normal)
+            editBtn.setImage(UIImage(named: "edit-unvalidated"), for: UIControlState())
             self.imageLocation = self.titleRecipeDetail.text!+".jpg"
             self.updatePropertyInDB(KeyFieldConstants.imageKey)
             self.editionOff()
@@ -199,37 +199,37 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         }
     }
     
-    @IBAction func takePhoto(sender: AnyObject) {
+    @IBAction func takePhoto(_ sender: AnyObject) {
         imagePicker =  UIImagePickerController()
         imagePicker.delegate = self
-        imagePicker.sourceType = .Camera
-        presentViewController(imagePicker, animated: true, completion: nil)
+        imagePicker.sourceType = .camera
+        present(imagePicker, animated: true, completion: nil)
     }
     
-    @IBAction func loadImageButtonTapped(sender: UIButton) {
+    @IBAction func loadImageButtonTapped(_ sender: UIButton) {
         imagePicker =  UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
-        imagePicker.sourceType = .PhotoLibrary
-        imagePicker.modalPresentationStyle = UIModalPresentationStyle.Popover
-        presentViewController(imagePicker, animated: true, completion: nil)
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.modalPresentationStyle = UIModalPresentationStyle.popover
+        present(imagePicker, animated: true, completion: nil)
         let presentationController:UIPopoverPresentationController = imagePicker.popoverPresentationController!
         presentationController.sourceView = self.imageRecipe
-        presentationController.sourceRect = CGRectMake(0, (self.imageRecipe.frame.size.height/2)-1 ,self.imageRecipe.frame.size.width ,self.imageRecipe.frame.size.height);
+        presentationController.sourceRect = CGRect(x: 0, y: (self.imageRecipe.frame.size.height/2)-1 ,width: self.imageRecipe.frame.size.width ,height: self.imageRecipe.frame.size.height);
         
     }
     
 // MARK: - Take Photo methods
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        imagePicker.dismiss(animated: true, completion: nil)
         let image: UIImage  = info[UIImagePickerControllerOriginalImage]as! UIImage
         imageRecipe.image = image
     }
 
 // MARK: - DB Update & WS
     
-    func updatePropertyInDB(keyField:String){
+    func updatePropertyInDB(_ keyField:String){
         if(keyField == KeyFieldConstants.ingredientsKey){
             RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate: self.ingredientsDetail.text, keyField: keyField)
         }
@@ -256,38 +256,38 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     func updateRecipe(){
         AlamofireManager.SharedInstance.putRecipe(self.recipeDetail) { (success) -> Void in
             if(success){
-                self.popupView.hidden = false
+                self.popupView.isHidden = false
                 self.popupView.alpha = 2.0
-                _ = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("showSavePopup"), userInfo: nil, repeats: false)
+                _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: Selector("showSavePopup"), userInfo: nil, repeats: false)
             }
         }
     }
     
     func postRecipe(){
         if(self.recipeDetail.date == ""){
-            let todaysDate:NSDate = NSDate()
-            let dateFormatter:NSDateFormatter = NSDateFormatter()
+            let todaysDate:Date = Date()
+            let dateFormatter:DateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
-            let dateInFormat:String = dateFormatter.stringFromDate(todaysDate)
+            let dateInFormat:String = dateFormatter.string(from: todaysDate)
             self.recipeDetail.date = dateInFormat
         }
         AlamofireManager.SharedInstance.postRecipe(self.recipeDetail) { (success) -> Void in
             if(success){
                 self.newRecipe = true
-                self.popupView.hidden = false
+                self.popupView.isHidden = false
                 self.popupView.alpha = 2.0
-                _ = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("showSavePopup"), userInfo: nil, repeats: false)
+                _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: Selector("showSavePopup"), userInfo: nil, repeats: false)
             }
         }
     }
     
 // MARK: - PickerView delegate
  
-    func numberOfItemsInPickerView(pickerView: AKPickerView) -> Int {
+    func numberOfItemsInPickerView(_ pickerView: AKPickerView) -> Int {
         return self.titles.count
     }
     
-    func pickerView(pickerView: AKPickerView, didSelectItem item: Int) {
+    func pickerView(_ pickerView: AKPickerView, didSelectItem item: Int) {
         self.checkPicker = false
         if(item != 0){
             RealmManager.SharedInstance.updateDataWithKey(self.recipeDetail, propertyNeedUpdate:String(item), keyField:KeyFieldConstants.categoryKey)
@@ -295,27 +295,27 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         }
     }
     
-    func pickerView(pickerView: AKPickerView, titleForItem item: Int) -> String {
+    func pickerView(_ pickerView: AKPickerView, titleForItem item: Int) -> String {
         return self.titles[item] 
     }
     
-    func pickerView(pickerView: AKPickerView, imageForItem item: Int) -> UIImage {
+    func pickerView(_ pickerView: AKPickerView, imageForItem item: Int) -> UIImage {
         return UIImage(named: self.titles[item] )!
     }
 
 // MARK: - AlertView
     
-    func displayAlert(message:String){
-        let alert = UIAlertController(title: "Information", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+    func displayAlert(_ message:String){
+        let alert = UIAlertController(title: "Information", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
 // MARK: - Toast Android is the best ;)
     
     func showSavePopup() {
         //  PopUpView.hidden = true
-        UIView.animateWithDuration(2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+        UIView.animate(withDuration: 2.0, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
             self.popupView.alpha = 0.0
             }, completion: nil)
     }
@@ -323,26 +323,26 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
 // MARK: - UserInteraction
     
     func editionOff(){
-        ingredientsDetail.editable = false
-        preparationRecipeDetail.editable = false
-        btnTakePhoto.hidden = true
-        btnChoosePhotoInAlbum.hidden = true
-        titleRecipeDetail.userInteractionEnabled = false
-        nb_personne.userInteractionEnabled = false
-        preparationTime.userInteractionEnabled = false
-        cuissonTime.userInteractionEnabled = false
+        ingredientsDetail.isEditable = false
+        preparationRecipeDetail.isEditable = false
+        btnTakePhoto.isHidden = true
+        btnChoosePhotoInAlbum.isHidden = true
+        titleRecipeDetail.isUserInteractionEnabled = false
+        nb_personne.isUserInteractionEnabled = false
+        preparationTime.isUserInteractionEnabled = false
+        cuissonTime.isUserInteractionEnabled = false
         self.pickerView.userInteractionEnabled = false
     }
     
     func editionOn(){
-        ingredientsDetail.editable = true
-        preparationRecipeDetail.editable = true
-        btnTakePhoto.hidden = false
-        btnChoosePhotoInAlbum.hidden = false
-        titleRecipeDetail.userInteractionEnabled = true
-        nb_personne.userInteractionEnabled = true
-        preparationTime.userInteractionEnabled = true
-        cuissonTime.userInteractionEnabled = true
+        ingredientsDetail.isEditable = true
+        preparationRecipeDetail.isEditable = true
+        btnTakePhoto.isHidden = false
+        btnChoosePhotoInAlbum.isHidden = false
+        titleRecipeDetail.isUserInteractionEnabled = true
+        nb_personne.isUserInteractionEnabled = true
+        preparationTime.isUserInteractionEnabled = true
+        cuissonTime.isUserInteractionEnabled = true
         self.pickerView.userInteractionEnabled = true
     }
     
@@ -365,7 +365,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         return errorMessage
     }
     
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return false
     }
     

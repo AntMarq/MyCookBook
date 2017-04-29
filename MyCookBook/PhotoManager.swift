@@ -23,21 +23,21 @@ class PhotoManager: NSObject {
             return
         }
         
-        if PHPhotoLibrary.authorizationStatus() != PHAuthorizationStatus.Authorized {
+        if PHPhotoLibrary.authorizationStatus() != PHAuthorizationStatus.authorized {
             PHPhotoLibrary.requestAuthorization({ (status: PHAuthorizationStatus) -> Void in
                 status
             })
         }
         
-        if PHPhotoLibrary.authorizationStatus() == PHAuthorizationStatus.Authorized {
+        if PHPhotoLibrary.authorizationStatus() == PHAuthorizationStatus.authorized {
             self.createAlbum()
         } else {
             PHPhotoLibrary.requestAuthorization(requestAuthorizationHandler)
         }
     }
     
-    func requestAuthorizationHandler(status: PHAuthorizationStatus) {
-        if PHPhotoLibrary.authorizationStatus() == PHAuthorizationStatus.Authorized {
+    func requestAuthorizationHandler(_ status: PHAuthorizationStatus) {
+        if PHPhotoLibrary.authorizationStatus() == PHAuthorizationStatus.authorized {
             // ideally this ensures the creation of the photo album even if authorization wasn't prompted till after init was done
             print("trying again to create the album")
             self.createAlbum()
@@ -47,8 +47,8 @@ class PhotoManager: NSObject {
     }
     
     func createAlbum() {
-        PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-            PHAssetCollectionChangeRequest.creationRequestForAssetCollectionWithTitle(PhotoManager.albumName)   // create an asset collection with the album name
+        PHPhotoLibrary.shared().performChanges({
+            PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: PhotoManager.albumName)   // create an asset collection with the album name
             }) { success, error in
                 if success {
                     self.assetCollection = self.fetchAssetCollectionForAlbum()
@@ -61,7 +61,7 @@ class PhotoManager: NSObject {
     func fetchAssetCollectionForAlbum() -> PHAssetCollection! {
         let fetchOptions = PHFetchOptions()
         fetchOptions.predicate = NSPredicate(format: "title = %@", PhotoManager.albumName)
-        let collection = PHAssetCollection.fetchAssetCollectionsWithType(.Album, subtype: .Any, options: fetchOptions)
+        let collection = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
         
         if let _: AnyObject = collection.firstObject {
             return collection.firstObject as! PHAssetCollection
@@ -69,48 +69,48 @@ class PhotoManager: NSObject {
         return nil
     }
     
-    func saveImage(image: UIImage, completion: (imageLocation:String) -> Void) {
+    func saveImage(_ image: UIImage, completion: @escaping (_ imageLocation:String) -> Void) {
         if assetCollection == nil {
             return                          // if there was an error upstream, skip the save
         }
         
         var imageIdentifier: String?
         
-        PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-            let assetChangeRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(image)
+        PHPhotoLibrary.shared().performChanges({
+            let assetChangeRequest = PHAssetChangeRequest.creationRequestForAsset(from: image)
          //   let assetPlaceHolder = assetChangeRequest!.placeholderForCreatedAsset
             let placeHolder = assetChangeRequest.placeholderForCreatedAsset
             imageIdentifier = placeHolder!.localIdentifier
             
-            let albumChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: self.assetCollection)
+            let albumChangeRequest = PHAssetCollectionChangeRequest(for: self.assetCollection)
             albumChangeRequest!.addAssets([placeHolder!])
             }, completionHandler: { (success, error) -> Void in
                 if success {
-                    completion(imageLocation: imageIdentifier!)
+                    completion(imageIdentifier!)
                 } else {
-                    completion(imageLocation: "")
+                    completion("")
                 }
            })
         
      }
     
-    func retrieveImageWithIdentifer(localIdentifier:String, completion: (image:UIImage?) -> Void) {
+    func retrieveImageWithIdentifer(_ localIdentifier:String, completion: @escaping (_ image:UIImage?) -> Void) {
         let fetchOptions = PHFetchOptions()
-        fetchOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.Image.rawValue)
-        let fetchResults = PHAsset.fetchAssetsWithLocalIdentifiers([localIdentifier], options: fetchOptions)
+        fetchOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
+        let fetchResults = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: fetchOptions)
         
         if fetchResults.count > 0 {
-            if let imageAsset = fetchResults.objectAtIndex(0) as? PHAsset {
+            if let imageAsset = fetchResults.object(at: 0) as? PHAsset {
                 let requestOptions = PHImageRequestOptions()
-                requestOptions.deliveryMode = .HighQualityFormat
-                PHImageManager.defaultManager().requestImageForAsset(imageAsset, targetSize: PHImageManagerMaximumSize, contentMode: .AspectFill, options: requestOptions, resultHandler: { (image, info) -> Void in
-                    completion(image: image)
+                requestOptions.deliveryMode = .highQualityFormat
+                PHImageManager.default().requestImage(for: imageAsset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: requestOptions, resultHandler: { (image, info) -> Void in
+                    completion(image)
                 })
             } else {
-                completion(image: nil)
+                completion(nil)
             }
         } else {
-            completion(image: nil)
+            completion(nil)
         }
     }
 }
