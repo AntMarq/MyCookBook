@@ -81,7 +81,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         self.pickerView.dataSource = self
         self.pickerView.font = UIFont(name: "HelveticaNeue-Light", size: 20)!
         self.pickerView.highlightedFont = UIFont(name: "HelveticaNeue", size: 20)!
-        self.pickerView.pickerViewStyle = .Wheel
+        self.pickerView.pickerViewStyle = .wheel
         self.pickerView.maskDisabled = false
         self.pickerView.reloadData()
     }
@@ -258,7 +258,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
             if(success){
                 self.popupView.isHidden = false
                 self.popupView.alpha = 2.0
-                _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: Selector("showSavePopup"), userInfo: nil, repeats: false)
+                _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(RecipeViewController.showSavePopup), userInfo: nil, repeats: false)
             }
         }
     }
@@ -276,7 +276,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
                 self.newRecipe = true
                 self.popupView.isHidden = false
                 self.popupView.alpha = 2.0
-                _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: Selector("showSavePopup"), userInfo: nil, repeats: false)
+                _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(RecipeViewController.showSavePopup), userInfo: nil, repeats: false)
             }
         }
     }
@@ -331,7 +331,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         nb_personne.isUserInteractionEnabled = false
         preparationTime.isUserInteractionEnabled = false
         cuissonTime.isUserInteractionEnabled = false
-        self.pickerView.userInteractionEnabled = false
+        self.pickerView.isUserInteractionEnabled = false
     }
     
     func editionOn(){
@@ -343,7 +343,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         nb_personne.isUserInteractionEnabled = true
         preparationTime.isUserInteractionEnabled = true
         cuissonTime.isUserInteractionEnabled = true
-        self.pickerView.userInteractionEnabled = true
+        self.pickerView.isUserInteractionEnabled = true
     }
     
 // MARK: - Utility

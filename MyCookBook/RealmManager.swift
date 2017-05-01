@@ -37,7 +37,7 @@ class RealmManager: NSObject {
     //DB => recherche d'un objet similaire
     func getRecipeWithId(_ _id: String, completion: (_ description: Results<(Recipe)>) -> Void) {
         let realm = try! Realm()
-        completion(description: realm.objects(Recipe).filter("id = %@", _id))
+        completion(realm.objects(Recipe.self).filter("id = %@", _id))
     }
     
     //DB => ecriture en base
@@ -82,17 +82,17 @@ class RealmManager: NSObject {
     //Print all db recipe
     func getAllRecipes() -> Results<(Recipe)> {
         let realm = try! Realm()
-        return realm.objects(Recipe)
+        return realm.objects(Recipe.self)
     }
     
     //Get DB Recipes
     func getAllRecipeFromDB(_ completion: (_ news: Array<Recipe>) -> Void) {
         let realm = try! Realm()
-        completion(news: Array<Recipe>(realm.objects(Recipe)))
+        completion(Array<Recipe>(realm.objects(Recipe.self)))
     }
     
     func getRecipesCategoryFromDB(_ category:String, completion: (_ news: Array<Recipe>) -> Void) {
         let realm = try! Realm()
-        completion(news: Array<Recipe>(realm.objects(Recipe).filter("categorie = %@",category)))
+        completion(Array<Recipe>(realm.objects(Recipe.self).filter("categorie = %@",category)))
     }
 }

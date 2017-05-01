@@ -42,7 +42,7 @@ class RecipeCollectionViewCell: UICollectionViewCell {
         let urlString = titleRecipe.text! + ".jpg"
         AlamofireManager.SharedInstance.getNetworkImage(urlString) { (image,success) -> Void in
             if(success){
-                self.populateCell(image)
+                self.populateCell(image!)
             }
             else{
                 self.loadingIndicator.stopAnimating()
