@@ -20,11 +20,11 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
     var listRecipes:Array<Recipe> = Array<Recipe>()
     var recipeDetail:Recipe = Recipe()
     
-    override func viewWillAppear(animated: Bool)
+    override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillDisappear(animated)
-        self.navigationController?.navigationBarHidden = false
-        IQKeyboardManager.sharedManager().canAdjustTextView = true
+        self.navigationController?.isNavigationBarHidden = false
+        //IQKeyboardManager.sharedManager().canAdjustTextView = true
         
         AlamofireManager.SharedInstance.getToken { (success) -> Void in
             if(success){
@@ -47,22 +47,22 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.recipeCollectionView?.registerNib(UINib (nibName: "RecipeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+        self.recipeCollectionView?.register(UINib (nibName: "RecipeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
         navigationItem.title = titleViewController
         
     }
     
-    func getRecipesfromDB(category:String, completion: (recipeArray: Array<Recipe>) -> Void){
+    func getRecipesfromDB(_ category:String, completion: @escaping (_ recipeArray: Array<Recipe>) -> Void){
         if(self.categorieFilter != "0"){
             RealmManager.SharedInstance.getRecipesCategoryFromDB(self.categorieFilter, completion:{ (recipe) -> Void in
                 self.listRecipes = recipe
-                completion(recipeArray: self.listRecipes)
+                completion(self.listRecipes)
             })
         }
         else{
             RealmManager.SharedInstance.getAllRecipeFromDB { (recipe) -> Void in
                 self.listRecipes = recipe
-                completion(recipeArray: self.listRecipes)
+                completion(self.listRecipes)
             }
         }
     }
@@ -72,39 +72,39 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func backViewController(sender: UIBarButtonItem) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func backViewController(_ sender: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: UICollectionViewDataSource
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return listRecipes.count
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell:RecipeCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! RecipeCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell:RecipeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! RecipeCollectionViewCell
         cell.titleRecipe.text = listRecipes[indexPath.row].title
         cell.configure(listRecipes[indexPath.row])
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
-            performSegueWithIdentifier(segueID, sender: cell)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            performSegue(withIdentifier: segueID, sender: cell)
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let indexPath = self.recipeCollectionView?.indexPathForCell(sender as! UICollectionViewCell) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let indexPath = self.recipeCollectionView?.indexPath(for: sender as! UICollectionViewCell) {
             if segue.identifier == segueID
             {
-                if let destinationVC = segue.destinationViewController as? RecipeViewController{
+                if let destinationVC = segue.destination as? RecipeViewController{
                     let objectData:Recipe = listRecipes[indexPath.row]
                     destinationVC.recipeDetail = objectData
                     destinationVC.newRecipe = false

@@ -33,7 +33,7 @@ class Recipe: Object {
         return "id"
     }
     
-    func setData(dictionary: JSON) -> Recipe{
+    func setData(_ dictionary: JSON) -> Recipe{
         
         id                 = dictionary["id"].stringValue
         title              = dictionary["title"].stringValue
@@ -82,11 +82,52 @@ class Recipe: Object {
     
     
     func toDic() -> Dictionary<String, AnyObject> {
-        return ["id":self.id, "preparation":self.preparation, "ingredients":self.ingredients, "tps_preparation":self.tps_preparation, "tps_cuisson":self.tps_cuisson, "categorie":self.categorie, "title":self.title, "nb_personne":self.nb_personne, "day":self.date, "image":self.imagePath]
+        let dic = ["id":self.id , "preparation":self.preparation , "ingredients":self.ingredients , "tps_preparation":self.tps_preparation, "tps_cuisson":self.tps_cuisson , "categorie":self.categorie, "title":self.title as AnyObject, "nb_personne":self.nb_personne, "day":self.date, "image":self.imagePath] as [String : Any]
+        
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted)
+            // here "jsonData" is the dictionary encoded in JSON data
+            
+            let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
+            // here "decoded" is of type `Any`, decoded from JSON data
+            
+            // you can now cast it with the right type
+            if let dictFromJSON = decoded as? [String:String] {
+                // use dictFromJSON
+                return dictFromJSON as Dictionary<String, AnyObject>
+            }
+        } catch {
+            print(error.localizedDescription)
+            let dictFromJSON = ["null":"null"]
+            return dictFromJSON as Dictionary<String, AnyObject>
+        }
+        
+        let dictFromJSON = ["null":"null"]
+        return dictFromJSON as Dictionary<String, AnyObject>
     }
     
     func toDicPOST() -> Dictionary<String, AnyObject> {
-        return ["preparation":self.preparation, "ingredients":self.ingredients, "tps_preparation":self.tps_preparation, "tps_cuisson":self.tps_cuisson, "categorie":self.categorie, "title":self.title, "nb_personne":self.nb_personne, "day":self.date, "image":self.imagePath]
+        
+        let dic = ["preparation":self.preparation , "ingredients":self.ingredients , "tps_preparation":self.tps_preparation, "tps_cuisson":self.tps_cuisson , "categorie":self.categorie, "title":self.title as AnyObject, "nb_personne":self.nb_personne, "day":self.date, "image":self.imagePath] as [String : Any]
+        
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted)
+            // here "jsonData" is the dictionary encoded in JSON data
+            
+            let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
+            // here "decoded" is of type `Any`, decoded from JSON data
+            
+            // you can now cast it with the right type
+            if let dictFromJSON = decoded as? [String:String] {
+                // use dictFromJSON
+                return dictFromJSON as Dictionary<String, AnyObject>
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        let dictFromJSON = ["null":"null"]
+        return dictFromJSON as Dictionary<String, AnyObject>
     }
     
 }

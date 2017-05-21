@@ -18,11 +18,14 @@
 
 #import "RLMArray_Private.hpp"
 
-#import "RLMObject_Private.h"
-#import "RLMObjectStore.h"
 #import "RLMObjectSchema.h"
+#import "RLMObjectStore.h"
+#import "RLMObject_Private.h"
+#import "RLMProperty_Private.h"
 #import "RLMQueryUtil.hpp"
+#import "RLMSchema_Private.h"
 #import "RLMSwiftSupport.h"
+#import "RLMThreadSafeReference_Private.hpp"
 #import "RLMUtil.hpp"
 
 #import <realm/link_view.hpp>
@@ -36,14 +39,18 @@
 @implementation RLMArrayHolder
 @end
 
+@interface RLMArray () <RLMThreadConfined_Private>
+@end
+
 @implementation RLMArray {
 @public
-    // array for standalone
+    // Backing array when this instance is unmanaged
     NSMutableArray *_backingArray;
 }
 
 template<typename IndexSetFactory>
-static void changeArray(__unsafe_unretained RLMArray *const ar, NSKeyValueChange kind, dispatch_block_t f, IndexSetFactory&& is) {
+static void changeArray(__unsafe_unretained RLMArray *const ar,
+                        NSKeyValueChange kind, dispatch_block_t f, IndexSetFactory&& is) {
     if (!ar->_backingArray) {
         ar->_backingArray = [NSMutableArray new];
     }
@@ -71,7 +78,7 @@ static void changeArray(__unsafe_unretained RLMArray *const ar, NSKeyValueChange
     changeArray(ar, kind, f, [=] { return is; });
 }
 
-- (instancetype)initWithObjectClassName:(NSString *)objectClassName {
+- (instancetype)initWithObjectClassName:(__unsafe_unretained NSString *const)objectClassName {
     self = [super init];
     if (self) {
         _objectClassName = objectClassName;
@@ -128,15 +135,20 @@ static void changeArray(__unsafe_unretained RLMArray *const ar, NSKeyValueChange
 }
 
 //
-// Standalone RLMArray implementation
+// Unmanaged RLMArray implementation
 //
 
 static void RLMValidateMatchingObjectType(RLMArray *array, RLMObject *object) {
     if (!object) {
         @throw RLMException(@"Object must not be nil");
     }
+    if (!object->_objectSchema) {
+        @throw RLMException(@"Object cannot be inserted unless the schema is initialized. "
+                            "This can happen if you try to insert objects into a RLMArray / List from a default value or from an overriden unmanaged initializer (`init()`).");
+    }
     if (![array->_objectClassName isEqualToString:object->_objectSchema.className]) {
-        @throw RLMException(@"Object type '%@' does not match RLMArray type '%@'.", object->_objectSchema.className, array->_objectClassName);
+        @throw RLMException(@"Object type '%@' does not match RLMArray type '%@'.",
+                            object->_objectSchema.className, array->_objectClassName);
     }
 }
 
@@ -290,8 +302,10 @@ static void RLMValidateArrayBounds(__unsafe_unretained RLMArray *const ar,
 - (RLMResults *)objectsWhere:(NSString *)predicateFormat, ...
 {
     va_list args;
-    RLM_VARARG(predicateFormat, args);
-    return [self objectsWhere:predicateFormat args:args];
+    va_start(args, predicateFormat);
+    RLMResults *results = [self objectsWhere:predicateFormat args:args];
+    va_end(args);
+    return results;
 }
 
 - (RLMResults *)objectsWhere:(NSString *)predicateFormat args:(va_list)args
@@ -305,7 +319,7 @@ static void RLMValidateArrayBounds(__unsafe_unretained RLMArray *const ar,
     }
     // Although delegating to valueForKeyPath: here would allow to support
     // nested key paths as well, limiting functionality gives consistency
-    // between standalone and persisted arrays.
+    // between unmanaged and managed arrays.
     if ([keyPath characterAtIndex:0] == '@') {
         NSRange operatorRange = [keyPath rangeOfString:@"." options:NSLiteralSearch];
         if (operatorRange.location != NSNotFound) {
@@ -320,7 +334,7 @@ static void RLMValidateArrayBounds(__unsafe_unretained RLMArray *const ar,
 
 - (id)valueForKey:(NSString *)key {
     if ([key isEqualToString:RLMInvalidatedKey]) {
-        return @NO; // Standalone arrays are never invalidated
+        return @NO; // Unmanaged arrays are never invalidated
     }
     if (!_backingArray) {
         return @[];
@@ -330,6 +344,55 @@ static void RLMValidateArrayBounds(__unsafe_unretained RLMArray *const ar,
 
 - (void)setValue:(id)value forKey:(NSString *)key {
     [_backingArray setValue:value forKey:key];
+}
+
+- (void)validateAggregateProperty:(NSString *)propertyName
+                           method:(SEL)aggregateMethod
+                        allowDate:(bool)allowDate {
+    RLMObjectSchema *objectSchema;
+    if (_backingArray.count) {
+        objectSchema = [_backingArray[0] objectSchema];
+    }
+    else {
+        objectSchema = [RLMSchema.partialSharedSchema schemaForClassName:_objectClassName];
+    }
+
+    RLMProperty *prop = RLMValidatedProperty(objectSchema, propertyName);
+    switch (prop.type) {
+        case RLMPropertyTypeInt:
+        case RLMPropertyTypeFloat:
+        case RLMPropertyTypeDouble:
+            break;
+        case RLMPropertyTypeDate:
+            if (allowDate) {
+                break;
+            }
+            [[clang::fallthrough]];
+        default:
+            @throw RLMException(@"%@ is not supported for %@ property '%@.%@'",
+                                NSStringFromSelector(aggregateMethod),
+                                RLMTypeToString(prop.type), _objectClassName, propertyName);
+    }
+}
+
+- (id)minOfProperty:(NSString *)property {
+    [self validateAggregateProperty:property method:_cmd allowDate:true];
+    return [_backingArray valueForKeyPath:[@"@min." stringByAppendingString:property]];
+}
+
+- (id)maxOfProperty:(NSString *)property {
+    [self validateAggregateProperty:property method:_cmd allowDate:true];
+    return [_backingArray valueForKeyPath:[@"@max." stringByAppendingString:property]];
+}
+
+- (id)sumOfProperty:(NSString *)property {
+    [self validateAggregateProperty:property method:_cmd allowDate:false];
+    return [_backingArray valueForKeyPath:[@"@sum." stringByAppendingString:property]];
+}
+
+- (id)averageOfProperty:(NSString *)property {
+    [self validateAggregateProperty:property method:_cmd allowDate:false];
+    return [_backingArray valueForKeyPath:[@"@avg." stringByAppendingString:property]];
 }
 
 - (NSUInteger)indexOfObjectWithPredicate:(NSPredicate *)predicate {
@@ -354,34 +417,49 @@ static void RLMValidateArrayBounds(__unsafe_unretained RLMArray *const ar,
 }
 
 //
-// Methods unsupported on standalone RLMArray instances
+// Methods unsupported on unmanaged RLMArray instances
 //
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 
 - (RLMResults *)objectsWithPredicate:(NSPredicate *)predicate
 {
-    @throw RLMException(@"This method can only be called on RLMArray instances retrieved from an RLMRealm");
+    @throw RLMException(@"This method may only be called on RLMArray instances retrieved from an RLMRealm");
+}
+
+- (RLMResults *)sortedResultsUsingKeyPath:(NSString *)keyPath ascending:(BOOL)ascending
+{
+    return [self sortedResultsUsingDescriptors:@[[RLMSortDescriptor sortDescriptorWithKeyPath:keyPath ascending:ascending]]];
 }
 
 - (RLMResults *)sortedResultsUsingProperty:(NSString *)property ascending:(BOOL)ascending
 {
-    return [self sortedResultsUsingDescriptors:@[[RLMSortDescriptor sortDescriptorWithProperty:property ascending:ascending]]];
+    return [self sortedResultsUsingKeyPath:property ascending:ascending];
 }
 
-- (RLMResults *)sortedResultsUsingDescriptors:(NSArray *)properties
+- (RLMResults *)sortedResultsUsingDescriptors:(NSArray<RLMSortDescriptor *> *)properties
 {
-    @throw RLMException(@"This method can only be called on RLMArray instances retrieved from an RLMRealm");
+    @throw RLMException(@"This method may only be called on RLMArray instances retrieved from an RLMRealm");
 }
 
-#pragma GCC diagnostic pop
+// The compiler complains about the method's argument type not matching due to
+// it not having the generic type attached, but it doesn't seem to be possible
+// to actually include the generic type
+// http://www.openradar.me/radar?id=6135653276319744
+#pragma clang diagnostic ignored "-Wmismatched-parameter-types"
+- (RLMNotificationToken *)addNotificationBlock:(void (^)(RLMArray *, RLMCollectionChange *, NSError *))block {
+    @throw RLMException(@"This method may only be called on RLMArray instances retrieved from an RLMRealm");
+}
+#pragma clang diagnostic pop
 
 - (NSUInteger)indexOfObjectWhere:(NSString *)predicateFormat, ...
 {
     va_list args;
-    RLM_VARARG(predicateFormat, args);
-    return [self indexOfObjectWhere:predicateFormat args:args];
+    va_start(args, predicateFormat);
+    NSUInteger index = [self indexOfObjectWhere:predicateFormat args:args];
+    va_end(args);
+    return index;
 }
 
 - (NSUInteger)indexOfObjectWhere:(NSString *)predicateFormat args:(va_list)args
@@ -392,64 +470,51 @@ static void RLMValidateArrayBounds(__unsafe_unretained RLMArray *const ar,
 
 #pragma mark - Superclass Overrides
 
-- (NSString *)description
-{
+- (NSString *)description {
     return [self descriptionWithMaxDepth:RLMDescriptionMaxDepth];
 }
 
 - (NSString *)descriptionWithMaxDepth:(NSUInteger)depth {
-    if (depth == 0) {
-        return @"<Maximum depth exceeded>";
-    }
+    return RLMDescriptionWithMaxDepth(@"RLMArray", self, depth);
+}
 
-    const NSUInteger maxObjects = 100;
-    NSMutableString *mString = [NSMutableString stringWithFormat:@"RLMArray <%p> (\n", self];
-    unsigned long index = 0, skipped = 0;
-    for (id obj in self) {
-        NSString *sub;
-        if ([obj respondsToSelector:@selector(descriptionWithMaxDepth:)]) {
-            sub = [obj descriptionWithMaxDepth:depth - 1];
-        }
-        else {
-            sub = [obj description];
-        }
+#pragma mark - Thread Confined Protocol Conformance
 
-        // Indent child objects
-        NSString *objDescription = [sub stringByReplacingOccurrencesOfString:@"\n" withString:@"\n\t"];
-        [mString appendFormat:@"\t[%lu] %@,\n", index++, objDescription];
-        if (index >= maxObjects) {
-            skipped = self.count - maxObjects;
-            break;
-        }
-    }
-    
-    // Remove last comma and newline characters
-    if(self.count > 0)
-        [mString deleteCharactersInRange:NSMakeRange(mString.length-2, 2)];
-    if (skipped) {
-        [mString appendFormat:@"\n\t... %lu objects skipped.", skipped];
-    }
-    [mString appendFormat:@"\n)"];
-    return [NSString stringWithString:mString];
+- (std::unique_ptr<realm::ThreadSafeReferenceBase>)makeThreadSafeReference {
+    REALM_TERMINATE("Unexpected handover of unmanaged `RLMArray`");
+}
+
+- (id)objectiveCMetadata {
+    REALM_TERMINATE("Unexpected handover of unmanaged `RLMArray`");
+}
+
++ (instancetype)objectWithThreadSafeReference:(__unused std::unique_ptr<realm::ThreadSafeReferenceBase>)reference
+                                     metadata:(__unused id)metadata
+                                        realm:(__unused RLMRealm *)realm {
+    REALM_TERMINATE("Unexpected handover of unmanaged `RLMArray`");
 }
 
 @end
 
-@interface RLMSortDescriptor ()
-@property (nonatomic, strong) NSString *property;
-@property (nonatomic, assign) BOOL ascending;
-@end
-
 @implementation RLMSortDescriptor
-+ (instancetype)sortDescriptorWithProperty:(NSString *)propertyName ascending:(BOOL)ascending {
+
++ (instancetype)sortDescriptorWithKeyPath:(NSString *)keyPath ascending:(BOOL)ascending {
     RLMSortDescriptor *desc = [[RLMSortDescriptor alloc] init];
-    desc->_property = propertyName;
+    desc->_keyPath = keyPath;
     desc->_ascending = ascending;
     return desc;
 }
 
++ (instancetype)sortDescriptorWithProperty:(NSString *)propertyName ascending:(BOOL)ascending {
+    return [RLMSortDescriptor sortDescriptorWithKeyPath:propertyName ascending:ascending];
+}
+
 - (instancetype)reversedSortDescriptor {
-    return [self.class sortDescriptorWithProperty:_property ascending:!_ascending];
+    return [self.class sortDescriptorWithKeyPath:_keyPath ascending:!_ascending];
+}
+
+- (NSString *)property {
+    return _keyPath;
 }
 
 @end

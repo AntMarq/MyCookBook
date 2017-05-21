@@ -14,7 +14,7 @@ class RealmManager: NSObject {
     
     static let SharedInstance = RealmManager()
     
-    func writeRecipesInDB(result: JSON, needUpdate: Bool, completion:(bool:Bool)->Void) {
+    func writeRecipesInDB(_ result: JSON, needUpdate: Bool, completion:(_ bool:Bool)->Void) {
         for object in result {
             let recipeResult = self.generateRecipes(object.1)
             getRecipeWithId(recipeResult.id, completion: { (recipe) -> Void in
@@ -26,29 +26,29 @@ class RealmManager: NSObject {
                 }
             })
         }
-        completion(bool: true)
+        completion(true)
     }
     
     //Mapping => creation d'objet
-    func generateRecipes(dictionary: JSON) -> Recipe {
+    func generateRecipes(_ dictionary: JSON) -> Recipe {
         return Recipe().setData(dictionary)
     }
     
     //DB => recherche d'un objet similaire
-    func getRecipeWithId(_id: String, completion: (description: Results<(Recipe)>) -> Void) {
+    func getRecipeWithId(_ _id: String, completion: (_ description: Results<(Recipe)>) -> Void) {
         let realm = try! Realm()
-        completion(description: realm.objects(Recipe).filter("id = %@", _id))
+        completion(realm.objects(Recipe.self).filter("id = %@", _id))
     }
     
     //DB => ecriture en base
-    func writeData(object:Object){
+    func writeData(_ object:Object){
         let realm = try! Realm()
         try! realm.write {
             realm.add(object)
         }
     }
     
-    func updateDataWithKey(let object:Recipe, propertyNeedUpdate:String, keyField:String){
+    func updateDataWithKey(_ object:Recipe, propertyNeedUpdate:String, keyField:String){
             let realm = try! Realm()
             try! realm.write {
                 if(keyField == KeyFieldConstants.preparationKey){
@@ -82,17 +82,17 @@ class RealmManager: NSObject {
     //Print all db recipe
     func getAllRecipes() -> Results<(Recipe)> {
         let realm = try! Realm()
-        return realm.objects(Recipe)
+        return realm.objects(Recipe.self)
     }
     
     //Get DB Recipes
-    func getAllRecipeFromDB(completion: (news: Array<Recipe>) -> Void) {
+    func getAllRecipeFromDB(_ completion: (_ news: Array<Recipe>) -> Void) {
         let realm = try! Realm()
-        completion(news: Array<Recipe>(realm.objects(Recipe)))
+        completion(Array<Recipe>(realm.objects(Recipe.self)))
     }
     
-    func getRecipesCategoryFromDB(category:String, completion: (news: Array<Recipe>) -> Void) {
+    func getRecipesCategoryFromDB(_ category:String, completion: (_ news: Array<Recipe>) -> Void) {
         let realm = try! Realm()
-        completion(news: Array<Recipe>(realm.objects(Recipe).filter("categorie = %@",category)))
+        completion(Array<Recipe>(realm.objects(Recipe.self).filter("categorie = %@",category)))
     }
 }

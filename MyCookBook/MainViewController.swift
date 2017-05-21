@@ -31,10 +31,10 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
     @IBOutlet weak var imgApero: UIImageView!
     
    
-    override func viewWillAppear(animated: Bool)
+    override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillDisappear(animated)
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     override func viewDidLoad() {
@@ -42,7 +42,7 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
         // Do any additional setup after loading the view, typically from a nib.
         
         categoryList = [imgApero.image!,imgEntree.image!,imgPlat.image!,imgDessert.image!]
-        carousel.type = iCarouselType.Rotary
+        carousel.type = iCarouselType.rotary
         carousel.scrollSpeed = 0.4
         AlamofireManager.SharedInstance.getToken { (success) -> Void in
             if(!success){
@@ -56,10 +56,10 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
         // Dispose of any resources that can be recreated.
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueID
         {
-            if let destinationVC = segue.destinationViewController as? AllRecipesListCollectionViewController{
+            if let destinationVC = segue.destination as? AllRecipesListCollectionViewController{
 
                 if imgID == 1{
                     destinationVC.titleViewController = self.titleImgApero
@@ -80,7 +80,7 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
             }
         }
         else if(segue.identifier == "newRecipe"){
-            if let destinationVC = segue.destinationViewController as? RecipeViewController{
+            if let destinationVC = segue.destination as? RecipeViewController{
                 destinationVC.recipeDetail = Recipe()
                 destinationVC.newRecipe = true
             }
@@ -94,15 +94,15 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
     }*/
     
     func backController(){
-        navigationController?.popViewControllerAnimated(true)
+        navigationController?.popViewController(animated: true)
     }
     
-    func numberOfItemsInCarousel(carousel: iCarousel) -> Int
+    func numberOfItems(in carousel: iCarousel) -> Int
     {
         return 4
     }
     
-    func carousel(carousel: iCarousel, viewForItemAtIndex index: Int, reusingView view: UIView?) -> UIView
+    func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView
     {
         var itemView: UIImageView
         
@@ -114,7 +114,7 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
             //recycled and used with other index values later
             itemView = UIImageView(frame:CGRect(x:0, y:0, width:350, height:280))
             itemView.image = self.categoryList[index]
-            itemView.contentMode = .ScaleToFill
+            itemView.contentMode = .scaleToFill
             itemView.tag = index
         }
         else
@@ -132,18 +132,18 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
         return itemView
     }
     
-    func carousel(carousel: iCarousel, valueForOption option: iCarouselOption, withDefault value: CGFloat) -> CGFloat
+    func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat
     {
-        if (option == .Spacing)
+        if (option == .spacing)
         {
             return value * 3
         }
         return value
     }
     
-    func carousel(carousel: iCarousel, didSelectItemAtIndex index: Int) {
+    func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
         imgID = index+1
-        self.performSegueWithIdentifier(segueID, sender: self)
+        self.performSegue(withIdentifier: segueID, sender: self)
     }
 
     

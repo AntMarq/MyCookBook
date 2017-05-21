@@ -25,10 +25,10 @@ class RecipeCollectionViewCell: UICollectionViewCell {
     
     func setupView(){
         self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.blackColor().CGColor
+        self.layer.borderColor = UIColor.black.cgColor
     }
     
-    func configure(recipe: Recipe) {
+    func configure(_ recipe: Recipe) {
         self.recipe = recipe
         reset()
         loadImage()
@@ -42,7 +42,7 @@ class RecipeCollectionViewCell: UICollectionViewCell {
         let urlString = titleRecipe.text! + ".jpg"
         AlamofireManager.SharedInstance.getNetworkImage(urlString) { (image,success) -> Void in
             if(success){
-                self.populateCell(image)
+                self.populateCell(image!)
             }
             else{
                 self.loadingIndicator.stopAnimating()
@@ -59,7 +59,7 @@ class RecipeCollectionViewCell: UICollectionViewCell {
         downloadImage()
     }
     
-    func populateCell(image: UIImage) {
+    func populateCell(_ image: UIImage) {
         loadingIndicator.stopAnimating()
         imageRecipe.image = image
     }
