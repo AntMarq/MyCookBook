@@ -170,33 +170,40 @@ class AlamofireManager: NSObject {
     
     func uploadImageRecipeNetwork(_ title:String, image:UIImage, completion:@escaping (_ success:Bool)->Void){
         let imageData = UIImageJPEGRepresentation(image, 0.5)!
+        let imageSize: Int = imageData.count
+        print("size of image in KB: %f ", Double(imageSize) / 1024.0)
         let fileName = title+".jpg"
         let url = uploadRecipe + token
+        print("url:", url)
         
-        AlamofireManager.Manager.upload(
-            multipartFormData: { multipartFormData in
-                multipartFormData.append(imageData, withName: fileName, mimeType: "image/jpeg")
-        },
-            to: url,
-            encodingCompletion: { encodingResult in
-                switch encodingResult {
-                case .success(let upload, _, _):
-                    upload.uploadProgress { progress in // main queue by default
-                        print("Upload Progress: \(progress.fractionCompleted)")
-                        DispatchQueue.main.async {
-                            print("Async1")
-                        }
-                    }
-                    upload.responseJSON { response in
-                        DispatchQueue.main.async {
-                            print("Async1")
-                        }
-                    }
-                case .failure(let encodingError):
-                    print(encodingError)
-                }
+        
+        
+        let parameters = [
+            "file": fileName
+        ]
+        
+        AlamofireManager.Manager.upload(multipartFormData: { (multipartFormData) in
+            multipartFormData.append(UIImageJPEGRepresentation(image, 0.5)!, withName: fileName, fileName: fileName, mimeType: "image/jpeg")
+            for (key, value) in parameters {
+                multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
             }
-        )
+        }, to:url)
+        { (result) in
+            switch result {
+            case .success(let upload, _, _):
+                
+                upload.uploadProgress(closure: { (progress) in
+                    //Print progress
+                })
+                
+                upload.responseJSON { response in
+                    //print response.result
+                }
+                
+            case .failure(let encodingError):
+                print(encodingError)
+            }
+        }
     }
 
     func getNetworkImage(_ urlString: String, completion:@escaping (_ image:UIImage?, _ success:Bool)->Void){

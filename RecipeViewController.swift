@@ -54,6 +54,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         else{
             navigationItem.title = "Nouvelle Recette"
         }
+    
         self.setViewsParameters()
         //Disable user interaction
         self.editionOff()
@@ -166,7 +167,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
 // MARK: - IBAction
     
     @IBAction func backController(_ sender: AnyObject) {
-        navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func pressEdit(_ sender: AnyObject) {
@@ -209,7 +210,7 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBAction func loadImageButtonTapped(_ sender: UIButton) {
         imagePicker =  UIImagePickerController()
         imagePicker.delegate = self
-        imagePicker.allowsEditing = false
+        imagePicker.allowsEditing = true
         imagePicker.sourceType = .photoLibrary
         imagePicker.modalPresentationStyle = UIModalPresentationStyle.popover
         present(imagePicker, animated: true, completion: nil)
@@ -219,12 +220,23 @@ class RecipeViewController: UIViewController, UINavigationControllerDelegate, UI
         
     }
     
+    
 // MARK: - Take Photo methods
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        imagePicker.dismiss(animated: true, completion: nil)
-        let image: UIImage  = info[UIImagePickerControllerOriginalImage]as! UIImage
-        imageRecipe.image = image
+        
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            // Save your image
+            self.imageRecipe.image = image
+        } else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            //Save your image 
+            self.imageRecipe.image = image
+        } else{
+            print(info.debugDescription)
+        }
+        
+        // Dismiss the picker.
+        dismiss(animated: true, completion: nil)
     }
 
 // MARK: - DB Update & WS
