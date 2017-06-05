@@ -13,8 +13,8 @@ class RecipeCollectionViewCell: UICollectionViewCell {
         
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var titleRecipe: UILabel!
-    @IBOutlet weak var imageRecipe: UIImageView!
-    
+    @IBOutlet weak var imageRecipe: UIImageView!    
+    @IBOutlet weak var buttonDelete: UIButton!
     var recipe: Recipe!
     
     override func awakeFromNib() {
@@ -26,6 +26,8 @@ class RecipeCollectionViewCell: UICollectionViewCell {
     func setupView(){
         self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.black.cgColor
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTap(_:)))
+        self.addGestureRecognizer(longGesture)
     }
     
     func configure(_ recipe: Recipe) {
@@ -36,6 +38,7 @@ class RecipeCollectionViewCell: UICollectionViewCell {
     
     func reset(){
         imageRecipe.image = nil
+        buttonDelete.isHidden = true
     }
     
     func downloadImage(){
@@ -62,5 +65,19 @@ class RecipeCollectionViewCell: UICollectionViewCell {
     func populateCell(_ image: UIImage) {
         loadingIndicator.stopAnimating()
         imageRecipe.image = image
+    }
+    
+    func longTap(_ sender: UIGestureRecognizer){
+        print("Long tap")
+        if sender.state == .ended {
+            print("UIGestureRecognizerStateEnded")
+            //Do Whatever You want on End of Gesture
+            self.shake()
+            buttonDelete.isHidden = false
+        }
+        else if sender.state == .began {
+            print("UIGestureRecognizerStateBegan.")
+            //Do Whatever You want on Began of Gesture
+        }
     }
 }

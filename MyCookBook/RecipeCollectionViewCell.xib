@@ -1,59 +1,77 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="7dD-7G-v1E" customClass="RecipeCollectionViewCell" customModule="MyCookBook" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="345" height="150"/>
+            <rect key="frame" x="0.0" y="0.0" width="260" height="310"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="345" height="150"/>
+                <rect key="frame" x="0.0" y="0.0" width="260" height="310"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uuc-4O-OaX">
-                        <rect key="frame" x="0.0" y="0.0" width="214" height="150"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="214" id="ZmK-ra-fHI"/>
-                            <constraint firstAttribute="height" constant="150" id="gc3-o4-VND"/>
-                        </constraints>
+                        <rect key="frame" x="0.0" y="0.0" width="260" height="260"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="test" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mnM-JA-gj7">
-                        <rect key="frame" x="222" y="8" width="115" height="132"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Ma recette Test" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mnM-JA-gj7">
+                        <rect key="frame" x="0.0" y="260" width="260" height="50"/>
                         <constraints>
-                            <constraint firstAttribute="height" relation="lessThanOrEqual" priority="200" constant="130.5" id="PNm-E4-odw"/>
+                            <constraint firstAttribute="height" constant="50" id="t5U-DY-Gzm"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="20"/>
-                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="9B6-eV-ZrM">
-                        <rect key="frame" x="89" y="56" width="37" height="37"/>
-                        <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="9B6-eV-ZrM">
+                        <rect key="frame" x="107" y="122" width="47" height="67"/>
+                        <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </activityIndicatorView>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="up1-sM-Mgu">
+                        <rect key="frame" x="210" y="10" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="FWT-50-2ZK"/>
+                            <constraint firstAttribute="height" constant="40" id="ZmD-Lh-1lC"/>
+                        </constraints>
+                        <state key="normal" backgroundImage="delete"/>
+                    </button>
                 </subviews>
-                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.67252155172413797" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.67252155172413797" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="uuc-4O-OaX" secondAttribute="bottom" id="Ayl-Jd-shi"/>
-                <constraint firstItem="mnM-JA-gj7" firstAttribute="leading" secondItem="uuc-4O-OaX" secondAttribute="trailing" constant="8" id="FQj-mT-qxJ"/>
-                <constraint firstItem="uuc-4O-OaX" firstAttribute="top" secondItem="7dD-7G-v1E" secondAttribute="top" id="LdB-6P-ryI"/>
-                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="mnM-JA-gj7" secondAttribute="bottom" priority="500" constant="10" id="Utp-FP-goe"/>
-                <constraint firstItem="uuc-4O-OaX" firstAttribute="leading" secondItem="7dD-7G-v1E" secondAttribute="leading" id="bXk-eV-06l"/>
-                <constraint firstItem="mnM-JA-gj7" firstAttribute="top" secondItem="7dD-7G-v1E" secondAttribute="top" constant="8" id="dV5-6i-2M2"/>
-                <constraint firstAttribute="trailing" secondItem="mnM-JA-gj7" secondAttribute="trailing" constant="8" id="ddi-Ox-x7h"/>
+                <constraint firstItem="mnM-JA-gj7" firstAttribute="leading" secondItem="7dD-7G-v1E" secondAttribute="leading" id="1cm-e5-Ob4"/>
+                <constraint firstItem="up1-sM-Mgu" firstAttribute="top" secondItem="7dD-7G-v1E" secondAttribute="top" constant="10" id="2W9-GL-2sl"/>
+                <constraint firstAttribute="trailing" secondItem="up1-sM-Mgu" secondAttribute="trailing" constant="10" id="AIb-cX-9Rl"/>
+                <constraint firstItem="mnM-JA-gj7" firstAttribute="top" secondItem="uuc-4O-OaX" secondAttribute="bottom" id="GM1-1v-F1h"/>
+                <constraint firstAttribute="bottom" secondItem="mnM-JA-gj7" secondAttribute="bottom" id="Q28-b8-aj9"/>
+                <constraint firstAttribute="trailing" secondItem="9B6-eV-ZrM" secondAttribute="trailing" constant="106" id="QpV-RV-hLc"/>
+                <constraint firstAttribute="bottom" secondItem="9B6-eV-ZrM" secondAttribute="bottom" constant="121" id="TA0-vt-unW"/>
+                <constraint firstAttribute="trailing" secondItem="uuc-4O-OaX" secondAttribute="trailing" id="Vks-cm-cyP"/>
+                <constraint firstAttribute="trailing" secondItem="mnM-JA-gj7" secondAttribute="trailing" id="aG9-SG-x6r"/>
+                <constraint firstItem="9B6-eV-ZrM" firstAttribute="leading" secondItem="7dD-7G-v1E" secondAttribute="leading" constant="107" id="gQp-bt-CRI"/>
+                <constraint firstItem="uuc-4O-OaX" firstAttribute="leading" secondItem="7dD-7G-v1E" secondAttribute="leading" id="ldp-BO-Qgv"/>
+                <constraint firstAttribute="bottom" secondItem="uuc-4O-OaX" secondAttribute="bottom" constant="50" id="o4o-Z8-Vhc"/>
+                <constraint firstItem="9B6-eV-ZrM" firstAttribute="top" secondItem="7dD-7G-v1E" secondAttribute="top" constant="122" id="xb9-gh-qUf"/>
+                <constraint firstItem="uuc-4O-OaX" firstAttribute="top" secondItem="7dD-7G-v1E" secondAttribute="top" id="xtP-eI-1Hx"/>
             </constraints>
             <size key="customSize" width="598" height="377"/>
             <connections>
+                <outlet property="buttonDelete" destination="up1-sM-Mgu" id="zVY-ZA-drJ"/>
                 <outlet property="imageRecipe" destination="uuc-4O-OaX" id="OGt-Fw-c6K"/>
                 <outlet property="loadingIndicator" destination="9B6-eV-ZrM" id="V56-7b-2mN"/>
                 <outlet property="titleRecipe" destination="mnM-JA-gj7" id="O4V-pZ-1dH"/>
             </connections>
-            <point key="canvasLocation" x="680.5" y="259"/>
+            <point key="canvasLocation" x="680" y="259"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="delete" width="64" height="64"/>
+    </resources>
 </document>

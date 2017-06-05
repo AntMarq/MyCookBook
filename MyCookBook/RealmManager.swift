@@ -79,6 +79,14 @@ class RealmManager: NSObject {
         }
     }
     
+    func deleteRecipe(_ object:Recipe,completion: (_ success: Bool) -> Void){
+        let realm = try! Realm()
+        try! realm.write {
+            realm.delete(object)
+            completion(true)
+        }
+    }
+    
     //Print all db recipe
     func getAllRecipes() -> Results<(Recipe)> {
         let realm = try! Realm()

@@ -26,6 +26,7 @@ class AlamofireManager: NSObject {
     let get_order_recipes       = NetworkConstants.ip_server+NetworkConstants.order_recipe
     let updateRecipe            = NetworkConstants.ip_server+NetworkConstants.updateRecipe
     let uploadRecipe            = NetworkConstants.ip_server+NetworkConstants.uploadRecipe
+    let deleteRecipe            = NetworkConstants.ip_server+NetworkConstants.deleteRecipe
     let downladImageRecipe      = NetworkConstants.ip_server+NetworkConstants.downloadImage
     
     private static var Manager: Alamofire.SessionManager = {
@@ -235,5 +236,27 @@ class AlamofireManager: NSObject {
     }
     
     func cachedImage(_ urlString: String) -> Image? {
-        return imageCache.image(withIdentifier:(urlString))    }
+        return imageCache.image(withIdentifier:(urlString))
+    }
+    
+    
+    func deleteRecipeById(_ recipe: String, _ completion: @escaping (Bool) -> Void){
+        let url = deleteRecipe+recipe+"?access_token=" + token
+        AlamofireManager.Manager.request(url, method: .delete , parameters:nil, encoding: JSONEncoding.default) .responseJSON{
+            response in
+            switch response.result {
+            case .success:
+                if response.response!.statusCode == 200 {
+                    completion(true)
+                } else {
+                    print("Request failed with error: \(response.response!.statusCode)")
+                    completion(false)
+                }
+            case .failure(let error):
+                print("Request failed with error: \(error)")
+                completion(false)
+            }
+        }
+    }
+
 }

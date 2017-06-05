@@ -25,10 +25,6 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
 
     
     @IBOutlet weak var carousel: iCarousel!
-    @IBOutlet weak var imgEntree: UIImageView!
-    @IBOutlet weak var imgDessert: UIImageView!
-    @IBOutlet weak var imgPlat: UIImageView!
-    @IBOutlet weak var imgApero: UIImageView!
     
    
     override func viewWillAppear(_ animated: Bool)
@@ -40,8 +36,13 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        categoryList = [imgApero.image!,imgEntree.image!,imgPlat.image!,imgDessert.image!]
+        let newRecipe = UIImage(named:"new_recipe")
+        let apero = UIImage(named:"apero2")
+        let entree = UIImage(named:"entree")
+        let plat = UIImage(named:"plat")
+        let dessert = UIImage(named:"dessert2")
+
+        categoryList = [newRecipe!,apero!,entree!,plat!,dessert!]
         carousel.type = iCarouselType.rotary
         carousel.scrollSpeed = 0.4
         AlamofireManager.SharedInstance.getToken { (success) -> Void in
@@ -99,7 +100,7 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
     
     func numberOfItems(in carousel: iCarousel) -> Int
     {
-        return 4
+        return 5
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView
@@ -112,9 +113,9 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
             //don't do anything specific to the index within
             //this `if (view == nil) {...}` statement because the view will be
             //recycled and used with other index values later
-            itemView = UIImageView(frame:CGRect(x:0, y:0, width:350, height:280))
+            itemView = UIImageView(frame:CGRect(x:0, y:0, width:500, height:500))
             itemView.image = self.categoryList[index]
-            itemView.contentMode = .scaleToFill
+            itemView.contentMode = .scaleAspectFit
             itemView.tag = index
         }
         else
@@ -136,7 +137,7 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
     {
         if (option == .spacing)
         {
-            return value * 3
+            return value * 1.1
         }
         return value
     }

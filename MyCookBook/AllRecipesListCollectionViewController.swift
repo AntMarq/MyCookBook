@@ -90,6 +90,9 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:RecipeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! RecipeCollectionViewCell
         cell.titleRecipe.text = listRecipes[indexPath.row].title
+        cell.buttonDelete.tag = indexPath.row
+        cell.buttonDelete.addTarget(self, action: #selector(deleteRecipe(_:)), for: .touchUpInside)
+
         cell.configure(listRecipes[indexPath.row])
         return cell
     }
@@ -100,6 +103,19 @@ class AllRecipesListCollectionViewController: UIViewController, UICollectionView
         }
     }
     
+    func deleteRecipe(_ sender: AnyObject) {
+        AlamofireManager.SharedInstance.deleteRecipeById(listRecipes[sender.tag].id) { (success) in
+            RealmManager.SharedInstance.deleteRecipe(self.listRecipes[sender.tag], completion: { (success) in
+                if(success){
+                    self.getRecipesfromDB(self.categorieFilter, completion: { (recipeArray) -> Void in
+                        self.recipeCollectionView.reloadData()
+                    })
+                }
+            })
+           
+        }
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let indexPath = self.recipeCollectionView?.indexPath(for: sender as! UICollectionViewCell) {
             if segue.identifier == segueID
