@@ -136,7 +136,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eJt-H9-Jh0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="703" y="341"/>
+            <point key="canvasLocation" x="233" y="-277"/>
         </scene>
         <!--MainController-->
         <scene sceneID="tne-QT-ifu">
@@ -154,19 +154,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jrF-ax-rjf">
-                                <rect key="frame" x="804" y="715" width="190" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="24"/>
-                                <state key="normal" title="Nouvelle Recette">
-                                    <color key="titleColor" red="1" green="0.98206378419999996" blue="0.94613245180000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="Qoj-Hj-fQk" kind="show" identifier="newRecipe" id="vVa-cM-dDd"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="abG-6g-2Cx" customClass="iCarousel">
-                                <rect key="frame" x="262" y="184" width="500" height="400"/>
+                                <rect key="frame" x="0.0" y="28" width="1004" height="720"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="zZk-jM-YoI"/>
@@ -176,10 +165,10 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="q0y-b6-KGQ" firstAttribute="top" secondItem="abG-6g-2Cx" secondAttribute="bottom" constant="184" id="Alo-oH-5JF"/>
-                            <constraint firstAttribute="trailing" secondItem="abG-6g-2Cx" secondAttribute="trailing" constant="262" id="PfD-ij-pOc"/>
-                            <constraint firstItem="abG-6g-2Cx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="262" id="iO8-lr-OhL"/>
-                            <constraint firstItem="abG-6g-2Cx" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="184" id="s3P-4D-WEu"/>
+                            <constraint firstItem="q0y-b6-KGQ" firstAttribute="top" secondItem="abG-6g-2Cx" secondAttribute="bottom" constant="20" id="Alo-oH-5JF"/>
+                            <constraint firstAttribute="trailing" secondItem="abG-6g-2Cx" secondAttribute="trailing" constant="20" id="PfD-ij-pOc"/>
+                            <constraint firstItem="abG-6g-2Cx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="iO8-lr-OhL"/>
+                            <constraint firstItem="abG-6g-2Cx" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="28" id="s3P-4D-WEu"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5ke-m1-jdb"/>
@@ -188,6 +177,7 @@
                         <outlet property="carousel" destination="abG-6g-2Cx" id="BLm-0C-WKH"/>
                         <outlet property="view" destination="8bC-Xf-vdC" id="lVW-OY-379"/>
                         <segue destination="66S-A6-t8E" kind="show" identifier="HomeToRecipesList" id="cpL-Gq-wGs"/>
+                        <segue destination="Qoj-Hj-fQk" kind="show" identifier="newRecipe" id="q8g-ZU-vZh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -476,7 +466,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nbj-av-OdY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2078" y="332"/>
+            <point key="canvasLocation" x="233" y="623"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mxB-eH-l6Q">
@@ -508,6 +498,6 @@
         <image name="preparation_time" width="64" height="64"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="vVa-cM-dDd"/>
+        <segue reference="q8g-ZU-vZh"/>
     </inferredMetricsTieBreakers>
 </document>

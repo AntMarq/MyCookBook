@@ -8,7 +8,8 @@
 
 import UIKit
 
-private let segueID = "HomeToRecipesList"
+private var homeSegueId = "HomeToRecipesList"
+private var newRecipeSegueId = "newRecipe"
 
 class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelegate {
     
@@ -23,6 +24,7 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
     let idCategoryPlat:Int = 2
     let idCategoryDessert:Int = 3
 
+    @IBOutlet weak var labelNewRecipe: UILabel!
     
     @IBOutlet weak var carousel: iCarousel!
     
@@ -58,7 +60,7 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == segueID
+        if(segue.identifier == homeSegueId)
         {
             if let destinationVC = segue.destination as? AllRecipesListCollectionViewController{
 
@@ -80,7 +82,7 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
                 }
             }
         }
-        else if(segue.identifier == "newRecipe"){
+        else if(segue.identifier == newRecipeSegueId){
             if let destinationVC = segue.destination as? RecipeViewController{
                 destinationVC.recipeDetail = Recipe()
                 destinationVC.newRecipe = true
@@ -106,6 +108,9 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView
     {
         var itemView: UIImageView
+        var label: UILabel
+        let labelWidth = 240
+        let labelHeight = 30
         
         //create new view if no view is available for recycling
         if (view == nil)
@@ -113,23 +118,36 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
             //don't do anything specific to the index within
             //this `if (view == nil) {...}` statement because the view will be
             //recycled and used with other index values later
-            itemView = UIImageView(frame:CGRect(x:0, y:0, width:500, height:500))
+            itemView = UIImageView(frame:CGRect(x:0, y:0, width:500, height:400))
             itemView.image = self.categoryList[index]
             itemView.contentMode = .scaleAspectFit
             itemView.tag = index
+            //Center label in itemView
+            let labelHeightPosition = (Float(itemView.frame.size.width/2))-(Float(labelWidth/2))
+            let labelWidthPosition = (Float(itemView.frame.size.height/2))-(Float(labelHeight/2))
+            label = UILabel(frame: CGRect(x:Int(labelHeightPosition),y:Int(labelWidthPosition),width:labelWidth,height:labelHeight))
+            label.textColor = UIColor.black
+            label.textAlignment = .center
+            label.font = label.font.withSize(30)
+            label.tag = 1
+            itemView.addSubview(label)
         }
         else
         {
             //get a reference to the label in the recycled view
             itemView = view as! UIImageView;
+            label = view?.viewWithTag(1) as! UILabel
+
         }
-        
-        //set item label
-        //remember to always set any properties of your carousel item
-        //views outside of the `if (view == nil) {...}` check otherwise
-        //you'll get weird issues with carousel item content appearing
-        //in the wrong place in the carousel
-        
+        label.text = "Nouvelle Recette"
+
+        if(index == 0){
+            label.isHidden = false
+        }
+        else{
+            label.isHidden = true
+        }
+
         return itemView
     }
     
@@ -143,8 +161,14 @@ class MainViewController: UIViewController, iCarouselDataSource, iCarouselDelega
     }
     
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
-        imgID = index+1
-        self.performSegue(withIdentifier: segueID, sender: self)
+        var selectedSegueId = homeSegueId
+
+        if(index==0){
+            selectedSegueId = newRecipeSegueId
+        }
+       
+        imgID = index
+        self.performSegue(withIdentifier: selectedSegueId, sender: self)
     }
 
     
