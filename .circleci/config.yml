@@ -6,6 +6,6 @@ workflows:
 jobs:
   runner:
     machine: true
-    resource_class: anthomarquet/test
+    resource_class: anthmarq/test
     steps:
       - run: echo "Hi I'm on Runners!"
